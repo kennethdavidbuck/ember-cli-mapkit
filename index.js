@@ -109,7 +109,7 @@ module.exports = {
             /**
              *
              */
-            enableRetinaIcons: true,
+            enableRetinaIcons: false,
 
             /**
              *
