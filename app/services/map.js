@@ -195,7 +195,6 @@ export default Ember.Namespace.extend({
    * Type of map used for display (ex roadmap, hybrid)
    */
   mapTypeId: function (key, value) {
-    "use strict";
     var type;
     var googleMap = this.get('googleMap');
 
@@ -249,6 +248,10 @@ export default Ember.Namespace.extend({
    * @param marker
    */
   addMarker: function (marker) {
+    // force POJO for stand processing, and because passing an Ember Object
+    // as params to a new google marker does not work.
+    marker = JSON.parse(JSON.stringify(marker));
+
     var self = this;
     var googleMap = this.get('googleMap');
     var markerMap = this.get('markerMap');

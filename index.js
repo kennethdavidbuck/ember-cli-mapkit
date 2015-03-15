@@ -15,7 +15,7 @@ module.exports = {
         MAPKIT: {
           MAP_TYPE: 'satellite',
 
-          MAP_DEFAULT_ZOOM: 5,
+          MAP_DEFAULT_ZOOM: 7,
 
           MAP_DEFAULT_LAT: 62.9945,
 
@@ -118,7 +118,7 @@ module.exports = {
           }
         }
       }
-    }
+    };
 
     return ENV;
   }

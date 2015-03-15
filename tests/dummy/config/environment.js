@@ -16,10 +16,13 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created,
-      MAPKIT: {
-        MAP_EVENTS: [],
-        MARKER_EVENTS: []
-      }
+    },
+
+    contentSecurityPolicy: {
+      'script-src': "'self' * 'unsafe-eval 'unsafe-inline''", // Allow scripts from https://cdn.mxpnl.com
+      'font-src': "'self' *",
+      'style-src': "'self' * 'unsafe-eval' 'unsafe-inline'",
+      'img-src': "'self' *"
     }
   };
 
