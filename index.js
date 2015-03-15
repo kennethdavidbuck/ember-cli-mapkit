@@ -21,7 +21,6 @@ module.exports = {
 
           MAP_DEFAULT_LNG: -96.329,
 
-
           MAP_EVENTS: [
             //'bounds_changed',
             //'center_changed',
