@@ -43,7 +43,6 @@ export default Ember.Namespace.extend({
 
     var googleMap;
     var options;
-    var self = this;
 
     options = {
       zoom: MAPKIT_ENV.MAP_DEFAULT_ZOOM,

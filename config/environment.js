@@ -1,4 +1,5 @@
 module.exports = function (environment, appConfig) {
+
   var ENV = {
     APP: {
       MAPKIT: {
@@ -11,50 +12,50 @@ module.exports = function (environment, appConfig) {
         MAP_DEFAULT_LNG: -96.329,
 
         MAP_EVENTS: [
-          'bounds_changed',
-          'center_changed',
-          'click',
-          'dblclick',
-          'rightclick',
-          'tilesloaded',
-          'tiles_changed',
-          'zoom_changed',
-          'drag',
-          'dragend',
-          'dragstart',
-          'heading_changed',
-          'idle',
-          'maptypeid_changed',
-          'projection_changed',
-          'mousemove',
-          'mouseup',
-          'mousedown',
-          'mouseover',
-          'mouseout'
+          //'bounds_changed',
+          //'center_changed',
+          //'click',
+          //'dblclick',
+          //'rightclick',
+          //'tilesloaded',
+          //'tiles_changed',
+          //'zoom_changed',
+          //'drag',
+          //'dragend',
+          //'dragstart',
+          //'heading_changed',
+          //'idle',
+          //'maptypeid_changed',
+          //'projection_changed',
+          //'mousemove',
+          //'mouseup',
+          //'mousedown',
+          //'mouseover',
+          //'mouseout'
         ],
 
         MARKER_EVENTS: [
-          'animation_changed',
-          'click',
-          'clickable_changed',
-          'cursor_changed',
-          'dblclick',
-          'drag',
-          'dragend',
-          'draggable_changed',
-          'dragstart',
-          'flat_changed',
-          'icon_changed',
-          'mousedown',
-          'mouseout',
-          'mouseover',
-          'mouseup',
-          'position_changed',
-          'rightclick',
-          'shape_changed',
-          'title_changed',
-          'visible_changed',
-          'zindex_changed'
+          //'animation_changed',
+          //'click',
+          //'clickable_changed',
+          //'cursor_changed',
+          //'dblclick',
+          //'drag',
+          //'dragend',
+          //'draggable_changed',
+          //'dragstart',
+          //'flat_changed',
+          //'icon_changed',
+          //'mousedown',
+          //'mouseout',
+          //'mouseover',
+          //'mouseup',
+          //'position_changed',
+          //'rightclick',
+          //'shape_changed',
+          //'title_changed',
+          //'visible_changed',
+          //'zindex_changed'
         ],
 
         MARKER_CLUSTERER: {
@@ -106,8 +107,15 @@ module.exports = function (environment, appConfig) {
           imagePath: false
         }
       }
+    },
+
+    contentSecurityPolicy: {
+      'script-src': "'self' * 'unsafe-eval 'unsafe-inline''", // Allow scripts from https://cdn.mxpnl.com
+      'font-src': "'self' *",
+      'style-src': "'self' * 'unsafe-eval' 'unsafe-inline'",
+      'img-src': "'self' *"
     }
-  }
+  };
 
   return ENV;
 };
