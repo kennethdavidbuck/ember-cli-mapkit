@@ -62,6 +62,8 @@ export default Ember.Namespace.extend({
       this.addListener(eventName);
     }, this);
 
+    console.log(ENV);
+
     //fixes bug where fromLatLnToContainerPixel returns undefined.
     var overlay = new OverlayView();
     overlay.draw = function () {
