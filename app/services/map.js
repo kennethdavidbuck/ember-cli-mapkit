@@ -398,8 +398,8 @@ export default Ember.Namespace.extend({
     var position = component.$().position();
 
     return {
-      x: parseInt(position.left + p.x),
-      y: parseInt(position.top + p.y)
+      x: parseInt(position.left + p.x, 10),
+      y: parseInt(position.top + p.y, 10)
     };
   },
 
