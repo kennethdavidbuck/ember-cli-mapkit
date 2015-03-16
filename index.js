@@ -6,13 +6,16 @@ module.exports = {
 
   contentFor: function (type, config) {
     if (type === 'head') {
-      return '<script src="http://maps.googleapis.com/maps/api/js?v=3"></script>';
+      return '<script src="' + config.APP.MAPKIT.SOURCE + '"></script>';
     }
   },
+
   config: function (env, baseConfig) {
     var ENV = {
       APP: {
         MAPKIT: {
+          SOURCE: 'http://maps.googleapis.com/maps/api/js?v=3"',
+
           MAP_TYPE: 'satellite',
 
           MAP_DEFAULT_ZOOM: 7,
