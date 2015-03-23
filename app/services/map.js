@@ -30,6 +30,7 @@ export default Ember.Namespace.extend({
   markerClusterer: null,
 
   init: function () {
+    this.set('markerClusterer', new MarkerClusterer(null, [], MAPKIT_ENV.MARKER_CLUSTERER));
     this.set('markerMap', Ember.Map.create());
     this._super();
   },
@@ -68,7 +69,7 @@ export default Ember.Namespace.extend({
     };
     overlay.setMap(googleMap);
 
-    this.set('markerClusterer', new MarkerClusterer(googleMap, [], MAPKIT_ENV.MARKER_CLUSTERER));
+    this.get('markerClusterer').setMap(googleMap);
 
     component.sendAction('readyAction');
   },
