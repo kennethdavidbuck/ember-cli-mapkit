@@ -143,7 +143,7 @@ export default Ember.Namespace.extend({
       lat: center.lat(),
       lng: center.lng()
     };
-  }.property('googleMap'),
+  }.property('googleMap').volatile(),
 
   /**
    * Pans the map to a specified position
@@ -163,14 +163,14 @@ export default Ember.Namespace.extend({
     }
 
     return googleMap.getZoom();
-  }.property('googleMap'),
+  }.property('googleMap').volatile(),
 
   /**
    *
    */
   tilt: function () {
     return this.get('googleMap').getTilt();
-  }.property('googleMap'),
+  }.property('googleMap').volatile(),
 
   /**
    * The current map bounds
@@ -190,7 +190,7 @@ export default Ember.Namespace.extend({
         lng: ne.lng()
       }
     };
-  }.property('googleMap'),
+  }.property('googleMap').volatile(),
 
   /**
    * Type of map used for display (ex roadmap, hybrid)
@@ -221,7 +221,7 @@ export default Ember.Namespace.extend({
     }
 
     return googleMap.getMapTypeId();
-  }.property('googleMap'),
+  }.property('googleMap').volatile(),
 
   /**
    * Set map options
