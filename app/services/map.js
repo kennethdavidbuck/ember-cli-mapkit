@@ -13,6 +13,7 @@ var OverlayView = google.maps.OverlayView;
 
 // functions
 var addListener = google.maps.event.addListener;
+var addListenerOnce = google.maps.event.addListenerOnce;
 var clearInstanceListeners = google.maps.event.clearInstanceListeners;
 var SATELLITE = google.maps.MapTypeId.SATELLITE;
 var ROADMAP = google.maps.MapTypeId.ROADMAP;
@@ -44,6 +45,7 @@ export default Ember.Namespace.extend({
 
     var googleMap;
     var options;
+    var markerClusterer = this.get('markerClusterer');
 
     options = {
       zoom: MAPKIT_ENV.MAP_DEFAULT_ZOOM,
@@ -63,15 +65,19 @@ export default Ember.Namespace.extend({
       this.addListener(eventName);
     }, this);
 
+
     //fixes bug where fromLatLnToContainerPixel returns undefined.
     var overlay = new OverlayView();
     overlay.draw = function () {
     };
     overlay.setMap(googleMap);
 
-    this.get('markerClusterer').setMap(googleMap);
+    markerClusterer.setMap(googleMap);
 
-    component.sendAction('readyAction');
+    //this part runs when the map object is created and rendered
+    addListenerOnce(googleMap, 'tilesloaded', function(){
+      component.sendAction('readyAction');
+    });
   },
 
   /**

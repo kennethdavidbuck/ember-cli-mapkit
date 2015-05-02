@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
 
   model: function () {
-    var model = [
+    return [
       Ember.Object.create({
         title: 'Example 1',
         position: {
@@ -25,8 +25,6 @@ export default Ember.Route.extend({
         visible: true
       })
     ];
-
-    return this.loadMap(model);
   },
 
   setupController: function (controller, model) {
