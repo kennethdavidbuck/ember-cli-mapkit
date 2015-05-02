@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
 
   model: function () {
-    return [
+    var model = [
       Ember.Object.create({
         title: 'Example 1',
         position: {
@@ -25,6 +25,8 @@ export default Ember.Route.extend({
         visible: true
       })
     ];
+
+    return this.loadMap(model);
   },
 
   setupController: function (controller, model) {
@@ -37,12 +39,12 @@ export default Ember.Route.extend({
       Ember.Logger.log('Map ready');
     },
 
-    mapEvent: function (name, data) {
-      Ember.Logger.log(name, data);
+    mapEvent: function (name, event) {
+      Ember.Logger.log(name, event);
     },
 
-    markerEvent: function (name, data) {
-      Ember.Logger.log(name, data);
+    markerEvent: function (name, event) {
+      Ember.Logger.log(name, event);
     }
   }
 });
