@@ -255,7 +255,7 @@ export default Ember.Namespace.extend({
    * @param marker
    */
   addMarker: function (marker) {
-    // force POJO for stand processing, and because passing an Ember Object
+    // force POJO for standardized processing, and because passing an Ember Object
     // as params to a new google marker does not work.
     marker = JSON.parse(JSON.stringify(marker));
 
