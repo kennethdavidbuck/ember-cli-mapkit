@@ -252,7 +252,7 @@ export default Ember.Namespace.extend({
   hasMarker: function (id) {
     var markerMap = this.get('markerMap');
 
-    return markerMap.has('id');
+    return markerMap.has(id);
   },
 
   /**
