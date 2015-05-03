@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import MapRouteMixin from '../mixins/routes/map';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(MapRouteMixin, {
 
   model: function () {
     return [
@@ -35,14 +36,6 @@ export default Ember.Route.extend({
   actions: {
     mapReady: function () {
       Ember.Logger.log('Map ready');
-    },
-
-    mapEvent: function (name, event) {
-      Ember.Logger.log(name, event);
-    },
-
-    markerEvent: function (name, event) {
-      Ember.Logger.log(name, event);
     }
   }
 });
