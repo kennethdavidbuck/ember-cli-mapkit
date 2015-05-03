@@ -30,6 +30,8 @@ export default Ember.Namespace.extend({
 
   markerClusterer: null,
 
+  isLoaded: false,
+
   init: function () {
     this.set('markerClusterer', new MarkerClusterer(null, [], MAPKIT_ENV.MARKER_CLUSTERER));
     this.set('markerMap', Ember.Map.create());
@@ -46,6 +48,7 @@ export default Ember.Namespace.extend({
     var googleMap;
     var options;
     var markerClusterer = this.get('markerClusterer');
+    var self = this;
 
     options = {
       zoom: MAPKIT_ENV.MAP_DEFAULT_ZOOM,
@@ -76,6 +79,8 @@ export default Ember.Namespace.extend({
 
     //this part runs when the map object is created and rendered
     addListenerOnce(googleMap, 'tilesloaded', function(){
+      self.set('isLoaded', true);
+
       component.sendAction('readyAction');
     });
   },
