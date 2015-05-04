@@ -28,13 +28,9 @@ export default Ember.Route.extend(MapRouteMixin, {
     ];
   },
 
-  setupController: function (controller, model) {
-    this.get('map').addMarkers(model);
-    this._super(controller, model);
-  },
-
   actions: {
     mapReady: function () {
+      this.get('map').addMarkers(this.get('currentModel'));
       Ember.Logger.log('Map ready');
     }
   }
