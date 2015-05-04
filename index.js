@@ -13,6 +13,16 @@ module.exports = {
   config: function (env, baseConfig) {
     var ENV = {
       APP: {
+        contentSecurityPolicy: {
+          'default-src': "'none'",
+          'script-src':  "'self' 'unsafe-inline' 'unsafe-eval' *.googleapis.com maps.gstatic.com gist.github.com",
+          'font-src':    "'self' fonts.gstatic.com",
+          'connect-src': "'self'",
+          'img-src':     "'self' *.gstatic.com *.googleapis.com",
+          'style-src':   "'self' 'unsafe-inline' gist-assets.github.com fonts.googleapis.com",
+          'frame-src':   "ghbtns.com platform.twitter.com"
+        },
+
         MAPKIT: {
           KEY: null,
 
