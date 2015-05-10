@@ -207,8 +207,9 @@ export default Ember.Service.extend({
    */
   mapTypeId: function (key, value) {
     var type;
-    var googleApi = this.get('googleApi');
-    var googleMap = this.get('googleMap');
+    var props = this.getProperties('googleApi', 'googleMap');
+    var googleApi = props.googleApi;
+    var googleMap = props.googleMap;
 
     var SATELLITE = googleApi.maps.MapTypeId.SATELLITE;
     var ROADMAP = googleApi.maps.MapTypeId.ROADMAP;
