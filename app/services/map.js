@@ -1,4 +1,3 @@
-
 import Ember from 'ember';
 
 export default Ember.Namespace.extend({
@@ -34,10 +33,10 @@ export default Ember.Namespace.extend({
 
     var MAPKIT_ENV = this.get('config');
     var googleApi = this.get('googleApi');
-    var googleMap;
-    var options;
     var markerClusterer = this.get('markerClusterer');
     var self = this;
+    var googleMap;
+    var options;
 
     options = {
       zoom: MAPKIT_ENV.MAP_DEFAULT_ZOOM,
@@ -67,7 +66,7 @@ export default Ember.Namespace.extend({
     markerClusterer.setMap(googleMap);
 
     //this part runs when the map object is created and rendered
-    googleApi.maps.event.addListenerOnce(googleMap, 'tilesloaded', function(){
+    googleApi.maps.event.addListenerOnce(googleMap, 'tilesloaded', function () {
       self.set('isLoaded', true);
 
       component.sendAction('readyAction');
