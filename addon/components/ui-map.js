@@ -22,7 +22,6 @@ export default Ember.Component.extend({
     var map = this.get('map');
     Ember.run.scheduleOnce('afterRender', this, function () {
 
-
       map.on('action', this, function () {
         this.sendAction.apply(this, ['action'].concat([].slice.call(arguments)));
       });
