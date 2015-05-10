@@ -24,8 +24,10 @@ export default Ember.Namespace.extend({
     var MAPKIT_ENV = this.get('config');
     var MarkerClusterer = this.get('container').lookup('google:marker-clusterer');
 
-    this.set('markerClusterer', new MarkerClusterer(null, [], MAPKIT_ENV.MARKER_CLUSTERER));
-    this.set('markerMap', Ember.Map.create());
+    this.setProperties({
+      markerClusterer: new MarkerClusterer(null, [], MAPKIT_ENV.MARKER_CLUSTERER),
+      markerMap: Ember.Map.create()
+    });
   }.on('init'),
 
   /**
