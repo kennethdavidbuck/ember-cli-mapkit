@@ -286,6 +286,7 @@ export default Ember.Service.extend(Ember.Evented, {
     var googleMap = props.googleMap;
     var markerMap = props.markerMap;
     var component = props.component;
+    var markerClusterer = props.markerClusterer;
     var googleMarker = new googleApi.maps.Marker(marker);
 
     markerMap.set(marker.id, googleMarker);
