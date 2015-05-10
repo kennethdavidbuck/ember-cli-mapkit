@@ -106,7 +106,9 @@ export default Ember.Service.extend({
    */
   addListener: function (eventName) {
     var self = this;
-    var googleApi = this.get('googleApi');
+    var props = this.getProperties('googleApi', 'googleMap');
+    var googleApi = props.googleApi;
+    var googleMap = props.googleMap;
 
     googleApi.maps.event.addListener(this.get('googleMap'), eventName, function (event) {
       var component = self.get('component');
