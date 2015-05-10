@@ -4,7 +4,7 @@
 
 import Ember from 'ember';
 
-export default Ember.Namespace.extend({
+export default Ember.Service.extend({
 
   googleMap: null,
 
