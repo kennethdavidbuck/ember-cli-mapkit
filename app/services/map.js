@@ -279,7 +279,7 @@ export default Ember.Service.extend(Ember.Evented, {
     marker = JSON.parse(JSON.stringify(marker));
 
     var self = this;
-    var props = this.getProperties('config', 'googleApi', 'googleMap', 'markerMap', 'component');
+    var props = this.getProperties('config', 'googleApi', 'googleMap', 'markerMap', 'component', 'markerClusterer');
 
     var MAPKIT_ENV = props.config;
     var googleApi = props.googleApi;
@@ -290,7 +290,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
     markerMap.set(marker.id, googleMarker);
 
-    this.get('markerClusterer').addMarker(googleMarker);
+    markerClusterer.addMarker(googleMarker);
 
     // apply default marker events
     MAPKIT_ENV.MARKER_EVENTS.forEach(function (eventName) {
