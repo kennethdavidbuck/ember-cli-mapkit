@@ -4,7 +4,7 @@
 
 import Ember from 'ember';
 
-export default Ember.Service.extend({
+export default Ember.Service.extend(Ember.Evented, {
 
   googleMap: null,
 
@@ -20,7 +20,7 @@ export default Ember.Service.extend({
     return this.get('container').lookup('application:main').MAPKIT;
   }.property().readOnly(),
 
-  _setup: function () {
+  setup: function () {
     var MAPKIT_ENV = this.get('config');
     var MarkerClusterer = this.get('container').lookup('google:marker-clusterer');
 
@@ -34,7 +34,7 @@ export default Ember.Service.extend({
    * Create map, and add handlers etc.
    * @param component
    */
-  setup: function (component) {
+  register: function (component) {
     this.set('component', component);
 
     var props = this.getProperties('config', 'googleApi', 'markerClusterer');
@@ -84,7 +84,7 @@ export default Ember.Service.extend({
   /**
    * Removes handlers etc.
    */
-  teardown: function () {
+  unregister: function () {
     var props = this.getProperties('googleApi', 'googleMap', 'markerMap');
 
     // clean up all listeners
@@ -93,12 +93,6 @@ export default Ember.Service.extend({
     });
 
     props.googleApi.maps.event.clearInstanceListeners(googleMap);
-
-    this.setProperties({
-      googleMap: null,
-      component: null,
-      markerMap: null
-    });
   },
 
   /**
@@ -137,7 +131,9 @@ export default Ember.Service.extend({
    * @param eventName
    */
   removeListener: function (eventName) {
-    this.get('googleApi').maps.event.clearInstanceListeners(this.get('googleMap'), eventName);
+    var props = this.getProperties('googleApi', 'googleMap');
+
+    props.googleApi.maps.event.clearInstanceListeners(props.googleMap, eventName);
   },
 
   /**
