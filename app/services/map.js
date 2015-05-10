@@ -77,7 +77,7 @@ export default Ember.Service.extend(Ember.Evented, {
     googleApi.maps.event.addListenerOnce(googleMap, 'tilesloaded', function () {
       self.set('isLoaded', true);
 
-      component.sendAction('readyAction');
+      self.trigger('readyAction');
     });
   },
 
@@ -122,7 +122,7 @@ export default Ember.Service.extend(Ember.Evented, {
         };
       }
 
-      component.sendAction('action', eventName, data);
+      self.trigger('action', eventName, data);
     });
   },
 
@@ -322,7 +322,7 @@ export default Ember.Service.extend(Ember.Evented, {
         pixel: self._getMarkerPixel(googleMarker)
       };
 
-      component.sendAction('markerAction', eventName, Ember.Object.create(data));
+      self.trigger('markerAction', eventName, Ember.Object.create(data));
     });
   },
 
