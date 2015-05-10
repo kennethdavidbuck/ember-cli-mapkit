@@ -19,8 +19,9 @@ export default Ember.Component.extend({
    *
    */
   setup: function () {
+    var map = this.get('map');
     Ember.run.scheduleOnce('afterRender', this, function () {
-      this.get('map').register(this);
+      map.register(this);
     });
   }.on('didInsertElement'),
 
@@ -28,7 +29,8 @@ export default Ember.Component.extend({
    *
    */
   teardown: function () {
-    this.get('map').unregister(this);
+    var map = this.get('map');
+    map.unregister(this);
   }.on('willDestroyElement')
 });
 
