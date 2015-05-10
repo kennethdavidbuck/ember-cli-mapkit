@@ -35,9 +35,11 @@ export default Ember.Namespace.extend({
   setup: function (component) {
     this.set('component', component);
 
-    var MAPKIT_ENV = this.get('config');
-    var googleApi = this.get('googleApi');
-    var markerClusterer = this.get('markerClusterer');
+    var props = this.getProperties('config', 'googleApi', 'markerClusterer');
+
+    var MAPKIT_ENV = props.config;
+    var googleApi = props.googleApi;
+    var markerClusterer = props.markerClusterer;
     var self = this;
     var googleMap;
     var options;
@@ -80,14 +82,14 @@ export default Ember.Namespace.extend({
    * Removes handlers etc.
    */
   teardown: function () {
-    var googleApi = this.get('googleApi');
+    var props = this.getProperties('googleApi', 'googleMap', 'markerMap');
 
     // clean up all listeners
-    this.get('markerMap').forEach(function (googleMarker) {
-      googleApi.maps.event.clearInstanceListeners(googleMarker);
+    props.markerMap.forEach(function (googleMarker) {
+      props.googleApi.maps.event.clearInstanceListeners(googleMarker);
     });
 
-    googleApi.maps.event.clearInstanceListeners(this.get('googleMap'));
+    props.googleApi.maps.event.clearInstanceListeners(googleMap);
 
     this.setProperties({
       googleMap: null,
