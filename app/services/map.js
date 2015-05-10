@@ -92,7 +92,7 @@ export default Ember.Service.extend(Ember.Evented, {
       props.googleApi.maps.event.clearInstanceListeners(googleMarker);
     });
 
-    props.googleApi.maps.event.clearInstanceListeners(googleMap);
+    props.googleApi.maps.event.clearInstanceListeners(props.googleMap);
   },
 
   /**

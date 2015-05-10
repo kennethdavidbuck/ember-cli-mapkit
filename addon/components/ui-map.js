@@ -20,6 +20,7 @@ export default Ember.Component.extend({
    */
   setup: function () {
     var map = this.get('map');
+
     Ember.run.scheduleOnce('afterRender', this, function () {
 
       map.on('action', this, function () {
