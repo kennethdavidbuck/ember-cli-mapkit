@@ -56,9 +56,10 @@ export default Ember.Namespace.extend({
 
     googleMap = new googleApi.maps.Map(component.$()[0], options);
 
-    this.set('googleMap', googleMap);
-
-    this.set('mapTypeId', MAPKIT_ENV.MAP_TYPE);
+    this.setProperties({
+      googleMap: googleMap,
+      mapTypeId: MAPKIT_ENV.MAP_TYPE
+    });
 
     MAPKIT_ENV.MAP_EVENTS.forEach(function (eventName) {
       this.addListener(eventName);
