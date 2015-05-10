@@ -56,7 +56,6 @@ export default Ember.Namespace.extend({
       this.addListener(eventName);
     }, this);
 
-
     //fixes bug where fromLatLnToContainerPixel returns undefined.
     var overlay = new googleApi.maps.OverlayView();
     overlay.draw = function () {
