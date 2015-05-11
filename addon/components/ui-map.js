@@ -15,19 +15,21 @@ export default Ember.Component.extend({
 
   readyAction: 'mapReady',
 
+  actionHandlers: ['readyAction', 'action', 'markerAction'],
+
   /**
    *
    */
   setup: function () {
     var map = this.get('map');
+    var handlers = this.get('actionHandlers');
 
     Ember.run.scheduleOnce('afterRender', this, function () {
-      ['action', 'markerAction', 'readyAction'].forEach(function (action) {
-        map.on(action, this, function () {
-          this.sendAction.apply(this, [action].concat([].slice.call(arguments)));
+      handlers.forEach(function (handler) {
+        map.on(handler, this, function () {
+          this.sendAction.apply(this, [handler].concat([].slice.call(arguments)));
         });
       }, this);
-
       map.register(this);
     });
   }.on('didInsertElement'),
@@ -37,11 +39,10 @@ export default Ember.Component.extend({
    */
   teardown: function () {
     var map = this.get('map');
-
-    map.off('readyAction', this);
-    map.off('action', this);
-    map.off('markerAction', this);
-
+    var handlers = this.get('actionHandlers');
+    handlers.forEach(function (handler) {
+      map.off(handler, this);
+    }, this);
     map.unregister(this);
   }.on('willDestroyElement')
 });
