@@ -16,15 +16,14 @@ export default Ember.Service.extend(Ember.Evented, {
 
   isLoaded: false,
 
-  config: function () {
-    return this.get('container').lookup('application:main').MAPKIT;
-  }.property().readOnly(),
+  config: null,
 
   setup: function () {
-    var MAPKIT_ENV = this.get('config');
+    var MAPKIT_ENV = this.get('container').lookup('application:main').MAPKIT;
     var MarkerClusterer = this.get('container').lookup('google:marker-clusterer');
 
     this.setProperties({
+      config: MAPKIT_ENV,
       markerClusterer: new MarkerClusterer(null, [], MAPKIT_ENV.MARKER_CLUSTERER),
       markerMap: Ember.Map.create()
     });
