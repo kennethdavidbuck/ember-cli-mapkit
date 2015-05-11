@@ -274,8 +274,7 @@ export default Ember.Service.extend(Ember.Evented, {
    * @param marker
    */
   addMarker: function (marker) {
-    // force POJO for standardized processing, and because passing an Ember Object
-    // as params to a new google marker does not work.
+    // force POJO for standardized processing, and because passing an Ember Object as params to a new google marker does not work.
     marker = JSON.parse(JSON.stringify(marker));
 
     var self = this;
