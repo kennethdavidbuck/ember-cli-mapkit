@@ -99,7 +99,7 @@ export default Ember.Service.extend(Ember.Evented, {
     googleApi.maps.event.clearInstanceListeners(googleMap);
 
     markerMap.clear();
-    markerCluster.clearMarkers();
+    markerClusterer.clearMarkers();
   },
 
   /**
