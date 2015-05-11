@@ -98,7 +98,6 @@ export default Ember.Service.extend(Ember.Evented, {
 
     googleApi.maps.event.clearInstanceListeners(googleMap);
 
-    //markerMap.clear();
     markerClusterer.clearMarkers();
   },
 
@@ -111,7 +110,7 @@ export default Ember.Service.extend(Ember.Evented, {
     var googleApi = props.googleApi;
     var googleMap = props.googleMap;
 
-    googleApi.maps.event.addListener(this.get('googleMap'), eventName, function (event) {
+    googleApi.maps.event.addListener(googleMap, eventName, function (event) {
       var component = self.get('component');
       var position;
       var data = {};
