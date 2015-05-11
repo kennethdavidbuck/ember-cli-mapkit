@@ -85,10 +85,11 @@ export default Ember.Service.extend(Ember.Evented, {
    * Removes handlers etc.
    */
   unregister: function () {
-    var props = this.getProperties('googleApi', 'googleMap', 'markerMap');
+    var props = this.getProperties('googleApi', 'googleMap', 'markerMap', 'markerClusterer');
     var markerMap = props.markerMap;
     var googleApi = props.googleApi;
     var googleMap = props.googleMap;
+    var markerClusterer = props.markerClusterer;
 
     // clean up all listeners
     markerMap.forEach(function (googleMarker) {
@@ -96,6 +97,9 @@ export default Ember.Service.extend(Ember.Evented, {
     });
 
     googleApi.maps.event.clearInstanceListeners(googleMap);
+
+    markerMap.clear();
+    markerCluster.clearMarkers();
   },
 
   /**
