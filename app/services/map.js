@@ -277,11 +277,10 @@ export default Ember.Service.extend(Ember.Evented, {
     marker = JSON.parse(JSON.stringify(marker));
 
     var self = this;
-    var props = this.getProperties('config', 'googleApi', 'googleMap', 'markerMap', 'markerClusterer');
+    var props = this.getProperties('config', 'googleApi', 'markerMap', 'markerClusterer');
 
     var MAPKIT_ENV = props.config;
     var googleApi = props.googleApi;
-    var googleMap = props.googleMap;
     var markerMap = props.markerMap;
     var markerClusterer = props.markerClusterer;
     var googleMarker = new googleApi.maps.Marker(marker);
