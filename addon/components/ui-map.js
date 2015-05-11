@@ -22,18 +22,11 @@ export default Ember.Component.extend({
     var map = this.get('map');
 
     Ember.run.scheduleOnce('afterRender', this, function () {
-
-      map.on('action', this, function () {
-        this.sendAction.apply(this, ['action'].concat([].slice.call(arguments)));
-      });
-
-      map.on('markerAction', this, function () {
-        this.sendAction.apply(this, ['markerAction'].concat([].slice.call(arguments)));
-      });
-
-      map.one('readyAction', this, function () {
-        this.sendAction.apply(this, ['readyAction'].concat([].slice.call(arguments)));
-      });
+      ['action', 'markerAction', 'readyAction'].forEach(function (action) {
+        map.on(action, this, function () {
+          this.sendAction.apply(this, [action].concat([].slice.call(arguments)));
+        });
+      }, this);
 
       map.register(this);
     });
@@ -45,6 +38,7 @@ export default Ember.Component.extend({
   teardown: function () {
     var map = this.get('map');
 
+    map.off('readyAction', this);
     map.off('action', this);
     map.off('markerAction', this);
 
