@@ -19,8 +19,9 @@ export default Ember.Service.extend(Ember.Evented, {
   config: null,
 
   setup: function () {
-    var MAPKIT_ENV = this.get('container').lookup('application:main').MAPKIT;
-    var MarkerClusterer = this.get('container').lookup('google:marker-clusterer');
+    var container = this.get('container');
+    var MAPKIT_ENV = container.lookup('application:main').MAPKIT;
+    var MarkerClusterer = container.lookup('google:marker-clusterer');
 
     this.setProperties({
       config: MAPKIT_ENV,
