@@ -21,17 +21,16 @@ export default Ember.Component.extend({
    *
    */
   setup: Ember.on('didInsertElement', function () {
-    var map = this.get('map');
-    var handlers = this.get('actionHandlers');
+    var props = this.getProperties('map', 'actionHandlers');
 
     Ember.run.scheduleOnce('afterRender', this, function () {
-      handlers.forEach((handler) => {
-        map.on(handler, this, function () {
+      props.actionHandlers.forEach((handler) => {
+        props.map.on(handler, this, function () {
           this.sendAction.apply(this, [handler].concat([].slice.call(arguments)));
         });
       });
 
-      map.register(this);
+      props.map.register(this);
     });
   }),
 
@@ -39,13 +38,13 @@ export default Ember.Component.extend({
    *
    */
   teardown: Ember.on('willDestroyElement', function () {
-    var map = this.get('map');
-    var handlers = this.get('actionHandlers');
-    handlers.forEach((handler) => {
-      map.off(handler, this);
+    var props = this.getProperties('map', 'actionHandlers');
+
+    props.actionHandlers.forEach((handler) => {
+      props.map.off(handler, this);
     });
 
-    map.unregister(this);
+    props.map.unregister(this);
   })
 });
 
