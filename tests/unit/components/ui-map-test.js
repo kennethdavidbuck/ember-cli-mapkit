@@ -11,13 +11,15 @@ moduleForComponent('ui-map', {
 
   setup: function () {
     this.subject().set('map', Ember.Object.create({
-      setup: function () {
-
-      },
-      teardown: function () {
-
-      }
+      on: function () {},
+      off: function () {},
+      register: function () {},
+      unregister:function () {}
     }));
+  },
+
+  teardown: function () {
+    //this.subject().set('map', null);
   }
 });
 
