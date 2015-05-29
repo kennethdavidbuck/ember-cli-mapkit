@@ -42,7 +42,6 @@ export default Ember.Service.extend(Ember.Evented, {
     var MAPKIT_ENV = props.config;
     var googleApi = props.googleApi;
     var markerClusterer = props.markerClusterer;
-    var self = this;
     var googleMap;
     var options;
 
