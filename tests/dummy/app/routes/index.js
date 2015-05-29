@@ -3,7 +3,7 @@ import MapRouteMixin from '../mixins/routes/map';
 
 export default Ember.Route.extend(MapRouteMixin, {
 
-  model: function () {
+  model() {
     return [
       Ember.Object.create({
         title: 'Example 1',
@@ -29,7 +29,7 @@ export default Ember.Route.extend(MapRouteMixin, {
   },
 
   actions: {
-    mapReady: function () {
+    mapReady() {
       this.get('map').addMarkers(this.get('currentModel'));
       Ember.Logger.log('Map ready');
     }
