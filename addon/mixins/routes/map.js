@@ -11,7 +11,7 @@ export default Ember.Mixin.create({
     /**
      *
      */
-    mapEvent: function (eventName, event) {
+    mapEvent(eventName, event) {
       try {
         eventName = 'map-%@'.fmt(eventName).camelize();
 
@@ -24,7 +24,7 @@ export default Ember.Mixin.create({
     /**
      *
      */
-    markerEvent: function (eventName, event) {
+    markerEvent(eventName, event) {
       try {
         eventName = 'marker-%@'.fmt(eventName).camelize();
 
