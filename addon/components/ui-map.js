@@ -20,30 +20,32 @@ export default Ember.Component.extend({
   /**
    *
    */
-  setup: function () {
+  setup: Ember.on('didInsertElement', function () {
     var map = this.get('map');
     var handlers = this.get('actionHandlers');
 
     Ember.run.scheduleOnce('afterRender', this, function () {
-      handlers.forEach(function (handler) {
+      handlers.forEach((handler) => {
         map.on(handler, this, function () {
           this.sendAction.apply(this, [handler].concat([].slice.call(arguments)));
         });
-      }, this);
+      });
+
       map.register(this);
     });
-  }.on('didInsertElement'),
+  }),
 
   /**
    *
    */
-  teardown: function () {
+  teardown: Ember.on('willDestroyElement', function () {
     var map = this.get('map');
     var handlers = this.get('actionHandlers');
-    handlers.forEach(function (handler) {
+    handlers.forEach((handler) => {
       map.off(handler, this);
-    }, this);
+    });
+
     map.unregister(this);
-  }.on('willDestroyElement')
+  })
 });
 
