@@ -247,7 +247,7 @@ export default Ember.Service.extend(Ember.Evented, {
   /**
    * Set map options
    */
-  options: Ember.computed ('googleMap' ,function (key, value) {
+  options: Ember.computed('googleMap', function (key, value) {
     if (arguments.length > 1) {
       this.get('googleMap').setOptions(value);
     }
