@@ -295,7 +295,7 @@ export default Ember.Service.extend(Ember.Evented, {
    * @return {Number} The number of markers on the map.
    */
   size: function () {
-    return this.get('markerClusterer').size();
+    return this.get('markerMap.size');
   },
 
   /* Marker Specific */
