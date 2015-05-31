@@ -1,15 +1,18 @@
 import {
   moduleFor,
   test
-} from 'ember-qunit';
+  } from 'ember-qunit';
 
 moduleFor('service:map', {
-  // Specify the other units that are required for this test.
-  // needs: ['service:foo']
+  needs: ['container'],
+  setup: function () {
+  },
+  teardown: function () {
+  }
 });
 
 // Replace this with your real tests.
-test('it exists', function(assert) {
+test('it exists', function (assert) {
   var service = this.subject();
   assert.ok(service);
 });

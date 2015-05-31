@@ -3,21 +3,21 @@ import {
   test
   } from 'ember-qunit';
 
-import Ember from 'ember';
-
 moduleForComponent('ui-map', {
   // specify the other units that are required for this test
   needs: ['service:map'],
 
   setup: function () {
-    this.subject().set('map', Ember.Object.create({
-      setup: function () {
+    this.subject().set('map', {
+      on: function () {},
+      off: function () {},
+      register: function () {},
+      unregister:function () {}
+    });
+  },
 
-      },
-      teardown: function () {
-
-      }
-    }));
+  teardown: function () {
+    //this.subject().set('map', null);
   }
 });
 
