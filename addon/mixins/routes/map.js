@@ -9,7 +9,9 @@ export default Ember.Mixin.create({
   actions: {
 
     /**
-     *
+     * @method mapEvent
+     * @param {String} eventName
+     * @param {String} event
      */
     mapEvent(eventName, event) {
       try {
@@ -22,7 +24,9 @@ export default Ember.Mixin.create({
     },
 
     /**
-     *
+     * @method markerEvent
+     * @param {String} eventName
+     * @param {String} event
      */
     markerEvent(eventName, event) {
       try {
