@@ -33,8 +33,6 @@ export default Ember.Route.extend(MapRouteMixin, {
   },
 
   actions: {
-    mapReady() {
-
-    }
+    mapReady() {}
   }
 });
