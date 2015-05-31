@@ -284,7 +284,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
   /**
    * Fits the current map bounds to fit all markers.
-   * @method fitMapToMarkers
+   * @method fitToMarkers
    */
   fitToMarkers() {
     this.get('markerClusterer').fitMapToMarkers();
@@ -292,7 +292,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
   /**
    * Returns the number of markers that are currently on the map.
-   * @return {Integer} The number of markers on the map.
+   * @return {Number} The number of markers on the map.
    */
   size: function () {
     return this.get('markerClusterer').size();
@@ -482,7 +482,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
     var proj = overlay.getProjection();
     var pos = googleMarker.getPosition();
-    var p = proj.fromLatLngToContainerPixel(pos);
+    var p = proj.fromLatLngToDivPixel(pos);
 
     var position = props.component.$().position();
 
