@@ -282,6 +282,22 @@ export default Ember.Service.extend(Ember.Evented, {
     }
   }),
 
+  /**
+   * Fits the current map bounds to fit all markers.
+   * @method fitMapToMarkers
+   */
+  fitToMarkers() {
+    this.get('markerClusterer').fitMapToMarkers();
+  },
+
+  /**
+   * Returns the number of markers that are currently on the map.
+   * @return {Integer} The number of markers on the map.
+   */
+  size: function () {
+    return this.get('markerClusterer').size();
+  },
+
   /* Marker Specific */
 
   /**

@@ -33,6 +33,8 @@ export default Ember.Route.extend(MapRouteMixin, {
   },
 
   actions: {
-    mapReady() {}
+    mapReady() {
+      this.get('map').fitToMarkers();
+    }
   }
 });
