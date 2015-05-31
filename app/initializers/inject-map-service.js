@@ -7,7 +7,6 @@ export function initialize(container, application) {
 
   application.inject('service:map', 'googleApi', 'google:main');
   application.inject('controller', 'map', 'service:map');
-  application.inject('component:ui-map', 'map', 'service:map');
   application.inject('route', 'map', 'service:map');
 }
 
