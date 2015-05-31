@@ -4,8 +4,7 @@
   "version": "0.1.0",
   "options": {
     "paths": [
-      "addon",
-      "app"
+      "addon"
     ],
     "exclude": "vendor",
     "outdir": "docs"
