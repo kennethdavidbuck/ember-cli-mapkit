@@ -1,4 +1,5 @@
 /**
+ * @module MapKit
  * @class Map
  */
 
