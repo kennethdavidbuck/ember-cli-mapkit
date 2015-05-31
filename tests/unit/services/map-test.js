@@ -4,7 +4,6 @@ import {
   } from 'ember-qunit';
 
 moduleFor('service:map', {
-  needs: ['container'],
   setup: function () {
   },
   teardown: function () {

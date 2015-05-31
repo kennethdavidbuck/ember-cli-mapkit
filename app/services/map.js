@@ -6,29 +6,27 @@ import Ember from 'ember';
 
 export default Ember.Service.extend(Ember.Evented, {
 
-  googleMap: null,
-
   component: null,
 
-  markerMap: null,
+  googleApi: null,
 
-  markerClusterer: null,
+  googleMap: null,
+
+  markerMap: Ember.computed(function () {
+    return Ember.Map.create();
+  }),
+
+  markerClusterer: Ember.computed('config', function () {
+    var MarkerClusterer = this.get('MarkerClusterer');
+
+    return new MarkerClusterer(null, [], this.get('config.MARKER_CLUSTERER'));
+  }),
+
+  config: Ember.computed(function () {
+    return this.get('application.MAPKIT');
+  }),
 
   isLoaded: false,
-
-  config: null,
-
-  setup: Ember.on('init', function () {
-    var container = this.get('container');
-    var MAPKIT_ENV = this.get('application').MAPKIT;
-    var MarkerClusterer = this.get('markerClusterer');
-
-    this.setProperties({
-      config: MAPKIT_ENV,
-      markerClusterer: new MarkerClusterer(null, [], MAPKIT_ENV.MARKER_CLUSTERER),
-      markerMap: Ember.Map.create()
-    });
-  }),
 
   /**
    * Create map, and add handlers etc.
