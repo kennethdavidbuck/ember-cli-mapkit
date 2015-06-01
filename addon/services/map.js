@@ -482,7 +482,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
     var proj = overlay.getProjection();
     var pos = googleMarker.getPosition();
-    var p = proj.fromLatLngToDivPixel(pos);
+    var p = proj.fromLatLngToContainerPixel(pos);
 
     var position = props.component.$().position();
 
