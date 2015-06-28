@@ -25,24 +25,30 @@ export default Ember.Service.extend(Ember.Evented, {
   /**
    * @property markerMap
    */
-  markerMap: Ember.computed(function () {
-    return Ember.Map.create();
+  markerMap: Ember.computed({
+    get() {
+      return Ember.Map.create();
+    }
   }),
 
   /**
    * @property markerClusterer
    */
-  markerClusterer: Ember.computed('config', function () {
-    var MarkerClusterer = this.get('MarkerClusterer');
+  markerClusterer: Ember.computed('config',{
+    get() {
+      var MarkerClusterer = this.get('MarkerClusterer');
 
-    return new MarkerClusterer(null, [], this.get('config.MARKER_CLUSTERER'));
+      return new MarkerClusterer(null, [], this.get('config.MARKER_CLUSTERER'));
+    }
   }),
 
   /**
    * @property config
    */
-  config: Ember.computed(function () {
-    return this.get('application.MAPKIT');
+  config: Ember.computed({
+    get() {
+      return this.get('application.MAPKIT');
+    }
   }),
 
   /**
@@ -170,19 +176,20 @@ export default Ember.Service.extend(Ember.Evented, {
    * The maps center property.
    * @property center
    */
-  center: function (key, position) {
-    var center;
-    var googleMap = this.get('googleMap');
-    if (arguments.length > 1) {
-      googleMap.setCenter(position);
-    }
+  center: Ember.computed('googleMap', {
+    get() {
+      var center = this.get('googleMap').getCenter();
+      return {
+        lat: center.lat(),
+        lng: center.lng()
+      };
+    },
+    set(key, position) {
+      this.get('googleMap').setCenter(position);
 
-    center = googleMap.getCenter();
-    return {
-      lat: center.lat(),
-      lng: center.lng()
-    };
-  }.property('googleMap').volatile(),
+      return position;
+    }
+  })['volatile'](),
 
   /**
    * Pans the map to a specified position
@@ -196,89 +203,99 @@ export default Ember.Service.extend(Ember.Evented, {
   /**
    * @property zoom
    */
-  zoom: function (key, zoom) {
-    var googleMap = this.get('googleMap');
-    if (arguments.length > 1) {
-      googleMap.setZoom(zoom);
-    }
+  zoom: Ember.computed('googleMap', {
+    get() {
+      return this.get('googleMap').getZoom();
+    },
+    set(key, zoom) {
+      this.get('googleMap').setZoom(zoom);
 
-    return googleMap.getZoom();
-  }.property('googleMap').volatile(),
+      return zoom;
+    }
+  })['volatile'](),
 
   /**
    * @property tilt
    */
-  tilt: function () {
-    return this.get('googleMap').getTilt();
-  }.property('googleMap').volatile(),
+  tilt: Ember.computed('googleMap', {
+    get() {
+      return this.get('googleMap').getTilt();
+    }
+  })['volatile'](),
 
   /**
    * The current map bounds.
    * @property bounds
    */
-  bounds: function () {
-    var bounds = this.get('googleMap').getBounds();
-    var sw = bounds.getSouthWest();
-    var ne = bounds.getNorthEast();
+  bounds: Ember.computed('googleMap', {
+    get() {
+      var bounds = this.get('googleMap').getBounds();
+      var sw = bounds.getSouthWest();
+      var ne = bounds.getNorthEast();
 
-    return {
-      sw: {
-        lat: sw.lat(),
-        lng: sw.lng()
-      },
-      ne: {
-        lat: ne.lat(),
-        lng: ne.lng()
-      }
-    };
-  }.property('googleMap').volatile(),
+      return {
+        sw: {
+          lat: sw.lat(),
+          lng: sw.lng()
+        },
+        ne: {
+          lat: ne.lat(),
+          lng: ne.lng()
+        }
+      };
+    }
+  })['volatile'](),
 
   /**
    * Type of map used for display (ex roadmap, hybrid).
    * @property mapTypeId
    */
-  mapTypeId: function (key, value) {
-    var type;
-    var props = this.getProperties('googleApi', 'googleMap');
-    var googleApi = props.googleApi;
-    var googleMap = props.googleMap;
+  mapTypeId: Ember.computed('googleMap', {
+    set(key, value) {
+      var type;
+      var props = this.getProperties('googleApi', 'googleMap');
+      var googleApi = props.googleApi;
+      var googleMap = props.googleMap;
 
-    var SATELLITE = googleApi.maps.MapTypeId.SATELLITE;
-    var ROADMAP = googleApi.maps.MapTypeId.ROADMAP;
-    var TERRAIN = googleApi.maps.MapTypeId.TERRAIN;
-    var HYBRID = googleApi.maps.MapTypeId.HYBRID;
+      var SATELLITE = googleApi.maps.MapTypeId.SATELLITE;
+      var ROADMAP = googleApi.maps.MapTypeId.ROADMAP;
+      var TERRAIN = googleApi.maps.MapTypeId.TERRAIN;
+      var HYBRID = googleApi.maps.MapTypeId.HYBRID;
 
-    if (arguments.length > 1) {
-      switch (value) {
-        case "roadmap":
-          type = ROADMAP;
-          break;
-        case "satellite":
-          type = SATELLITE;
-          break;
-        case "terrain":
-          type = TERRAIN;
-          break;
-        case "hybrid":
-          type = HYBRID;
-          break;
-        default:
-          type = ROADMAP;
+      if (arguments.length > 1) {
+        switch (value) {
+          case "roadmap":
+            type = ROADMAP;
+            break;
+          case "satellite":
+            type = SATELLITE;
+            break;
+          case "terrain":
+            type = TERRAIN;
+            break;
+          case "hybrid":
+            type = HYBRID;
+            break;
+          default:
+            type = ROADMAP;
+        }
+
+        googleMap.setMapTypeId(type);
       }
 
-      googleMap.setMapTypeId(type);
+      return googleMap.getMapTypeId();
     }
-
-    return googleMap.getMapTypeId();
-  }.property('googleMap').volatile(),
+  })['volatile'](),
 
   /**
    * Set map options.
    * @property options
    */
-  options: Ember.computed('googleMap', function (key, value) {
-    if (arguments.length > 1) {
+  options: Ember.computed('googleMap', {
+    set(key, value) {
       this.get('googleMap').setOptions(value);
+
+      return value;
     }
   }),
 
