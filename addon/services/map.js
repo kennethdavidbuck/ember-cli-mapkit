@@ -374,7 +374,7 @@ export default Ember.Service.extend(Ember.Evented, {
     let data = {};
     const props = this.getProperties('googleApi', 'markerMap', 'component');
 
-    Ember.assert('This marker has no mapping', props.markerMap.has(id));
+    Ember.assert('MapKit: This marker has no mapping', props.markerMap.has(id));
 
     const googleMarker = props.markerMap.get(id);
 
@@ -399,7 +399,7 @@ export default Ember.Service.extend(Ember.Evented, {
   removeMarkerListener(id, eventName) {
     const props = this.getProperties('googleApi', 'markerMap');
 
-    Ember.assert('This marker has no mapping', props.markerMap.has(id));
+    Ember.assert('MapKit: This marker has no mapping', props.markerMap.has(id));
 
     props.googleApi.maps.event.clearInstanceListeners(props.markerMap.get(id), eventName);
   },
@@ -412,7 +412,7 @@ export default Ember.Service.extend(Ember.Evented, {
   removeMarker(id) {
     const props = this.getProperties('googleApi', 'markerMap', 'markerClusterer');
 
-    Ember.assert('This marker has no mapping', props.markerMap.has(id));
+    Ember.assert('MapKit: This marker has no mapping', props.markerMap.has(id));
 
     const googleMarker = props.markerMap.get(id);
 
@@ -429,7 +429,7 @@ export default Ember.Service.extend(Ember.Evented, {
   setMarkerIcon(id, icon) {
     const markerMap = this.get('markerMap');
 
-    Ember.assert('This marker has no mapping', markerMap.has(id));
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
 
     markerMap.get(id).setIcon(icon);
   },
@@ -442,7 +442,7 @@ export default Ember.Service.extend(Ember.Evented, {
   setMarkerPosition(id, position) {
     const markerMap = this.get('markerMap');
 
-    Ember.assert('This marker has no mapping', markerMap.has(id));
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
 
     markerMap.get(id).setPosition(position);
   },
@@ -455,7 +455,7 @@ export default Ember.Service.extend(Ember.Evented, {
   getMarkerPosition(id) {
     const markerMap = this.get('markerMap');
 
-    Ember.assert('This marker has no mapping', markerMap.has(id));
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
 
     const position = markerMap.get(id).getPosition();
 
@@ -475,7 +475,7 @@ export default Ember.Service.extend(Ember.Evented, {
   getMarkerPixel(id) {
     const markerMap = this.get('markerMap');
 
-    Ember.assert('This marker has no mapping', markerMap.has(id));
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
 
     return this._getMarkerPixel(markerMap.get(id));
   },
@@ -515,7 +515,7 @@ export default Ember.Service.extend(Ember.Evented, {
   setMarkerDraggable(id, draggable) {
     const markerMap = this.get('markerMap');
 
-    Ember.assert('This marker has no mapping', markerMap.has(id));
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
 
     markerMap.get(id).setDraggable(draggable);
   },
@@ -529,7 +529,7 @@ export default Ember.Service.extend(Ember.Evented, {
   setMarkerVisible(id, visible) {
     const markerMap = this.get('markerMap');
 
-    Ember.assert('This marker has no mapping', markerMap.has(id));
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
 
     markerMap.get(id).setVisible(visible);
   },
@@ -543,7 +543,7 @@ export default Ember.Service.extend(Ember.Evented, {
   setMarkerTitle(id, title) {
     const markerMap = this.get('markerMap');
 
-    Ember.assert('This marker has no mapping', markerMap.has(id));
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
 
     markerMap.get(id).setTitle(title);
   }
