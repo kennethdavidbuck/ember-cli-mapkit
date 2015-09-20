@@ -8,34 +8,91 @@ export default Ember.Mixin.create({
 
   actions: {
 
-    /**
-     * @method mapEvent
-     * @param {String} eventName
-     * @param {String} event
-     */
     mapEvent(eventName, event) {
-      try {
-        eventName = `map-${eventName}`.camelize();
-
-        this.send(eventName, event);
-      } catch(e) {
-        Ember.Logger.warn(eventName);
-      }
+      this.send(Ember.String.camelize(`map-${eventName}`), event);
     },
 
-    /**
-     * @method markerEvent
-     * @param {String} eventName
-     * @param {String} event
-     */
     markerEvent(eventName, event) {
-      try {
-        eventName = `marker-${eventName}`.camelize();
+      this.send(Ember.String.camelize(`marker-${eventName}`), event);
+    },
 
-        this.send(eventName, event);
-      } catch(e) {
-        Ember.Logger.warn(eventName);
-      }
+    // Marker Events
+
+    markerMouseover() {
+    },
+
+    markerMouseout() {
+    },
+
+    markerMouseup() {
+    },
+
+    markerMousedown() {
+    },
+
+    markerClick() {
+    },
+
+    markerRightclick() {
+    },
+
+    markerDblclick() {
+    },
+
+    // Map Events
+
+    mapMousemove() {
+    },
+
+    mapRightclick() {
+    },
+
+    mapClick() {
+    },
+
+    mapMouseover() {
+    },
+
+    mapMousedown() {
+    },
+
+    mapMouseup() {
+    },
+
+    mapBoundsChanged() {
+    },
+
+    mapCenterChanged() {
+    },
+
+    mapHeadingChanged() {
+    },
+
+    mapTilesloaded() {
+    },
+
+    mapIdle() {
+    },
+
+    mapProjectionChanged() {
+    },
+
+    mapCenterChanged() {
+    },
+
+    mapZoomChanged() {
+    },
+
+    mapMouseout() {
+    },
+
+    mapDrag() {
+    },
+
+    mapDragstart() {
+    },
+
+    mapDragend() {
     }
   }
 });
