@@ -21,7 +21,7 @@ export default Ember.Component.extend({
    *
    */
   setup: Ember.on('didInsertElement', function () {
-    var props = this.getProperties('map', 'actionHandlers');
+    const props = this.getProperties('map', 'actionHandlers');
 
     Ember.run.scheduleOnce('afterRender', this, function () {
       props.actionHandlers.forEach((handler) => {
@@ -38,7 +38,7 @@ export default Ember.Component.extend({
    *
    */
   teardown: Ember.on('willDestroyElement', function () {
-    var props = this.getProperties('map', 'actionHandlers');
+    const props = this.getProperties('map', 'actionHandlers');
 
     props.actionHandlers.forEach((handler) => {
       props.map.off(handler, this);
