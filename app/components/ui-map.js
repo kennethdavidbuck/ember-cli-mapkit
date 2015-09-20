@@ -1,3 +1,1 @@
-import uiMap from 'ember-cli-mapkit/components/ui-map';
-
-export default uiMap;
+export { default } from 'ember-cli-mapkit/components/ui-map';
