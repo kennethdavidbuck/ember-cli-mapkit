@@ -62,9 +62,6 @@ export default Ember.Mixin.create({
     mapBoundsChanged() {
     },
 
-    mapCenterChanged() {
-    },
-
     mapHeadingChanged() {
     },
 
@@ -93,6 +90,9 @@ export default Ember.Mixin.create({
     },
 
     mapDragend() {
+    },
+
+    mapDblclick() {
     }
   }
 });
