@@ -60,7 +60,7 @@ export default Ember.Service.extend(Ember.Evented, {
   /**
    * Create map, and add handlers etc.
    * @method register
-   * @param {Component}
+   * @param {Component} component
    */
   register(component) {
     this.set('component', component);
