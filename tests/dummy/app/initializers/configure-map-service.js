@@ -1,6 +1,6 @@
 
-export function initialize(container, application) {
-  application.inject('route', 'map', 'service:map');
+export function initialize(/*container, application*/) {
+
 }
 
 export default {

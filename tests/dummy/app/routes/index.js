@@ -28,6 +28,8 @@ export default Ember.Route.extend(MapRouteMixin, {
     ];
   },
 
+  map: Ember.inject.service(),
+
   setupController: function (controller, model) {
     const map = this.get('map');
 
