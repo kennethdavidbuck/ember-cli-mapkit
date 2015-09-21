@@ -13,7 +13,8 @@ export default Ember.Route.extend(MapRouteMixin, {
         },
         createdAt: "0000-00-00 00:00:00",
         id: 1,
-        visible: true
+        visible: true,
+        draggable: true
       }),
       Ember.Object.create({
         title: 'Example 2',

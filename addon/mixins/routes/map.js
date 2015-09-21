@@ -39,6 +39,18 @@ export default Ember.Mixin.create({
     markerDblclick() {
     },
 
+    markerDrag() {
+    },
+
+    markerDragstart() {
+    },
+
+    markerDragend() {
+    },
+
+    markerPositionChanged() {
+    },
+
     // Map Events
 
     mapMousemove() {
