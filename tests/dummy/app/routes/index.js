@@ -29,7 +29,11 @@ export default Ember.Route.extend(MapRouteMixin, {
   },
 
   setupController: function (controller, model) {
-    this.get('map').addMarkers(model);
+    const map = this.get('map');
+
+    map.addMarkers(model);
+
+    controller.set('map', map);
   },
 
   actions: {

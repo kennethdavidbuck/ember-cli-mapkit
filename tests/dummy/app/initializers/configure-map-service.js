@@ -1,6 +1,5 @@
 
 export function initialize(container, application) {
-  application.inject('controller', 'map', 'service:map');
   application.inject('route', 'map', 'service:map');
 }
 
