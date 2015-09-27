@@ -1,49 +1,99 @@
 import Ember from 'ember';
+import GoogleUtiltity from '../utilities/google';
 import layout from '../templates/components/ui-google-map';
+
+/*global JSON*/
 
 export default Ember.Component.extend({
 
   layout: layout,
-
   tagName: 'ui-google-map',
-
   classNames: ['ui-map', 'ui-google-map'],
 
   readyAction: 'mapReady',
 
-  /**
-   * @property markerClusterer
-   */
-  markerClusterer: Ember.computed('config',{
-    get() {
-      const MarkerClusterer = this.get('MarkerClusterer');
+  mapClickAction: 'mapClick',
+  mapBoundsChangedAction: 'mapBoundsChanged',
+  mapCenterChangedAction: 'mapCenterChanged',
+  mapDoubleClickAction: 'mapDoubleClick',
+  mapRightClickAction: 'mapRightClick',
+  mapTilesLoadedAction: 'mapTilesLoaded',
+  mapZoomChangedAction: 'mapZoomChanged',
+  mapDragAction: 'mapDrag',
+  mapDragEndAction: 'mapDragEnd',
+  mapDragStartAction: 'mapDragStart',
+  mapHeadingChangedAction: 'mapHeadingChanged',
+  mapIdleAction: 'mapIdle',
+  mapTypeIdChangedAction: 'mapTypeIdChanged',
+  mapProjectionChangedAction: 'mapProjectionChanged',
+  mapMouseMoveAction: 'mapMouseMove',
+  mapMouseUpAction: 'mapMouseUp',
+  mapMouseDownAction: 'mapMouseDown',
+  mapMouseOverAction: 'mapMouseOver',
+  mapMouseOutAction: 'mapMouseOutAction',
 
-      return new MarkerClusterer(null, [], this.get('config.MARKER_CLUSTERER'));
-    }
-  }),
+  markerClickAction: 'markerClick',
+  markerAnimationChangedAction: 'markerAnimationChanged',
+  markerClickableChangedAction: 'markerClickableChanged',
+  markerCursorChangedAction: 'markerCursorChanged',
+  markerDoubleClickAction: 'markerDoubleClick',
+  markerDragAction: 'markerDrag',
+  markerDragEndAction: 'markerDragEnd',
+  markerDraggableChangedAction: 'markerDraggableChanged',
+  markerDragStartAction: 'markerDragStart',
+  markerFlatChangedAction: 'markerFlatChanged',
+  markerIconChangedAction: 'markerIconChanged',
+  markerMouseDownAction: 'markerMouseDown',
+  markerMouseOutAction: 'markerMouseOut',
+  markerMouseOverAction: 'markerMouseOver',
+  markerMouseUpAction: 'markerMouseUp',
+  markerPositionChangedAction: 'markerPositionChanged',
+  markerRightClickAction: 'markerRightClick',
+  markerShapeChangedAction: 'markerShapeChanged',
+  markerTitleChangedAction: 'markerTitleChanged',
+  markerVisibleChangedAction: 'markerVisibleChanged',
+  markerZIndexChangedAction: 'markerZIndexChanged',
 
-  /**
-   * @property config
-   */
-  config: Ember.computed({
+  isLoaded: false,
+
+  markers: [],
+
+  markerClusterer: null,
+
+  markerMap: null,
+
+  mapTypeId: Ember.computed('googleMap', {
     get() {
-      return this.get('application.MAPKIT');
+      return this.get('googleMap').getMapTypeId();
+    },
+    set(key, value) {
+      let type = GoogleUtiltity.map.type(value);
+
+      const googleMap = this.get('googleMap');
+
+      googleMap.setMapTypeId(type);
+
+      return googleMap.getMapTypeId();
     }
+  })['volatile'](),
+
+  preSetup: Ember.on('init', function () {
+    const MarkerClusterer = this.get('MarkerClusterer');
+    this.setProperties({
+      markerMap: Ember.Map.create(),
+      markerClusterer: new MarkerClusterer(null, [], this.get('config.markerClusterer'))
+    });
   }),
 
   setup: Ember.on('didInsertElement', function () {
     Ember.run.next(() => {
-      const props = this.getProperties('config', 'googleApi', 'markerClusterer');
-
-      const MAPKIT_ENV = props.config;
-      const googleApi = props.googleApi;
-      const markerClusterer = props.markerClusterer;
+      const {config, googleApi, markerClusterer} = this.getProperties('config', 'googleApi', 'markerClusterer');
 
       let options = {
-        zoom: MAPKIT_ENV.MAP_DEFAULT_ZOOM,
+        zoom: config.zoom,
         center: {
-          lat: MAPKIT_ENV.MAP_DEFAULT_LAT,
-          lng: MAPKIT_ENV.MAP_DEFAULT_LNG
+          lat: config.lat,
+          lng: config.lng
         }
       };
 
@@ -51,8 +101,10 @@ export default Ember.Component.extend({
 
       this.setProperties({
         googleMap: googleMap,
-        mapTypeId: MAPKIT_ENV.MAP_TYPE
+        mapTypeId: config.mapType
       });
+
+      this.addListeners(this.get('config.mapEvents'));
 
       //fixes bug where fromLatLnToContainerPixel returns undefined.
       const overlay = new googleApi.maps.OverlayView();
@@ -60,8 +112,275 @@ export default Ember.Component.extend({
       };
       overlay.setMap(googleMap);
 
+      markerClusterer.setMap(googleMap);
+
+      this.addMarkers(this.get('markers'));
+
       this.sendAction('readyAction', this);
     });
-  })
+  }),
+
+  teardown: Ember.on('willDestroyElement', function () {
+    const {googleApi, googleMap, markerMap, markerClusterer} = this.getProperties('googleApi', 'googleMap', 'markerMap', 'markerClusterer');
+
+    // clean up all listeners
+    markerMap.forEach((googleMarker) => {
+      googleApi.maps.event.clearInstanceListeners(googleMarker);
+    });
+
+    googleApi.maps.event.clearInstanceListeners(googleMap);
+
+    markerClusterer.clearMarkers();
+    markerMap.clear();
+  }),
+
+  center: Ember.computed('googleMap', {
+    get() {
+      const center = this.get('googleMap').getCenter();
+      return {
+        lat: center.lat(),
+        lng: center.lng()
+      };
+    },
+    set(key, position) {
+      this.get('googleMap').setCenter(position);
+
+      return position;
+    }
+  })['volatile'](),
+
+  panTo(position) {
+    this.get('googleMap').panTo(position);
+  },
+
+  zoom: Ember.computed('googleMap', {
+    get() {
+      return this.get('googleMap').getZoom();
+    },
+    set(key, zoom) {
+      this.get('googleMap').setZoom(zoom);
+
+      return zoom;
+    }
+  })['volatile'](),
+
+  tilt: Ember.computed('googleMap', {
+    get() {
+      return this.get('googleMap').getTilt();
+    }
+  })['volatile'](),
+
+  bounds: Ember.computed('googleMap', {
+    get() {
+      const bounds = this.get('googleMap').getBounds();
+      const sw = bounds.getSouthWest();
+      const ne = bounds.getNorthEast();
+
+      return {
+        sw: {
+          lat: sw.lat(),
+          lng: sw.lng()
+        },
+        ne: {
+          lat: ne.lat(),
+          lng: ne.lng()
+        }
+      };
+    }
+  })['volatile'](),
+
+  options: Ember.computed('googleMap', {
+    set(key, value) {
+      this.get('googleMap').setOptions(value);
+
+      return value;
+    }
+  }),
+
+  fitToMarkers() {
+    this.get('markerClusterer').fitMapToMarkers();
+  },
+
+  size: function () {
+    return this.get('markerMap.size');
+  },
+
+  hasMarker(id) {
+    const markerMap = this.get('markerMap');
+
+    return markerMap.has(id);
+  },
+
+  addListeners(eventNames) {
+    eventNames.forEach((eventName) => {
+      this.addListener(eventName);
+    });
+  },
+
+  addListener(eventName) {
+    const {googleApi, googleMap} = this.getProperties('googleApi', 'googleMap');
+
+    googleApi.maps.event.addListener(googleMap, eventName, (event) => {
+      let position;
+      let data = {};
+      if (event) {
+        position = this.$().position();
+        data = {
+          pixel: {
+            x: position.left + event.pixel.x,
+            y: position.top + event.pixel.y
+          },
+          position: {
+            lat: event.latLng.lat(),
+            lng: event.latLng.lng()
+          }
+        };
+      }
+
+      this.sendAction(GoogleUtiltity.map.eventAction(eventName), this, data);
+    });
+  },
+
+  removeListener(eventName) {
+    const {googleApi, googleMap} = this.getProperties('googleApi', 'googleMap');
+
+    googleApi.maps.event.clearInstanceListeners(googleMap, eventName);
+  },
+
+  addMarkers(markers) {
+    markers.forEach((marker) => {
+      this.addMarker(marker);
+    });
+  },
+
+  addMarker(marker) {
+    // force POJO for standardized processing, and because passing an Ember Object as params to a new google marker does not work.
+    marker = JSON.parse(JSON.stringify(marker));
+
+    const {config, googleApi, markerMap, markerClusterer} = this.getProperties('config', 'googleApi', 'markerMap', 'markerClusterer');
+    const googleMarker = new googleApi.maps.Marker(marker);
+
+    markerMap.set(marker.id, googleMarker);
+
+    markerClusterer.addMarker(googleMarker);
+
+    // apply default marker events
+    const self = this;
+    config.markerEvents.forEach(function (eventName) {
+      self.addMarkerListener(marker.id, eventName);
+    }, googleMarker);
+  },
+
+  addMarkerListener(id, eventName) {
+    let data = {};
+    const {googleApi, markerMap} = this.getProperties('googleApi', 'markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    const googleMarker = markerMap.get(id);
+
+    googleApi.maps.event.addListener(googleMarker, eventName, () => {
+      data = {
+        id: id,
+        position: {
+          lat: googleMarker.getPosition().lat(),
+          lng: googleMarker.getPosition().lng()
+        },
+        pixel: this._getMarkerPixel(googleMarker)
+      };
+
+      this.sendAction(GoogleUtiltity.marker.eventAction(eventName), this, id, data);
+    });
+  },
+
+  removeMarkerListener(id, eventName) {
+    const {googleApi, markerMap} = this.getProperties('googleApi', 'markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    googleApi.maps.event.clearInstanceListeners(markerMap.get(id), eventName);
+  },
+
+  setMarkerIcon(id, icon) {
+    const markerMap = this.get('markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    markerMap.get(id).setIcon(icon);
+  },
+
+  setMarkerPosition(id, position) {
+    const markerMap = this.get('markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    markerMap.get(id).setPosition(position);
+  },
+
+  getMarkerPosition(id) {
+    const markerMap = this.get('markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    const position = markerMap.get(id).getPosition();
+
+    return {
+      lat: position.lat(),
+      lng: position.lng()
+    };
+  },
+
+  getMarkerPixel(id) {
+    const markerMap = this.get('markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    return this._getMarkerPixel(markerMap.get(id));
+  },
+
+  _getMarkerPixel(googleMarker) {
+    const {googleApi, googleMap} = this.getProperties('googleApi', 'googleMap');
+
+    // Calculate the position of the marker click-style event
+    const overlay = new googleApi.maps.OverlayView();
+    overlay.draw = function () {
+    };
+    overlay.setMap(googleMap);
+
+    const proj = overlay.getProjection();
+    const pos = googleMarker.getPosition();
+    const p = proj.fromLatLngToContainerPixel(pos);
+
+    const position = this.$().position();
+
+    return {
+      x: parseInt(position.left + p.x, 10),
+      y: parseInt(position.top + p.y, 10)
+    };
+  },
+
+  setMarkerDraggable(id, draggable) {
+    const markerMap = this.get('markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    markerMap.get(id).setDraggable(draggable);
+  },
+
+  setMarkerVisible(id, visible) {
+    const markerMap = this.get('markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    markerMap.get(id).setVisible(visible);
+  },
+
+  setMarkerTitle(id, title) {
+    const markerMap = this.get('markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    markerMap.get(id).setTitle(title);
+  }
 });
 
