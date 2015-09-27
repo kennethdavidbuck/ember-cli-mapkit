@@ -18,6 +18,12 @@ export default Ember.Component.extend({
 
   markerMap: null,
 
+  config: {
+    lat: 0,
+    lng: 0,
+    zoom: 13
+  },
+
   preSetup: Ember.on('init', function () {
     this.setProperties({
       markerMap: Ember.Map.create()
@@ -35,7 +41,7 @@ export default Ember.Component.extend({
 
       this.addMarkers(markers);
 
-      this.sendAction('readyAction', this);
+      //this.sendAction('readyAction', this);
     });
   }),
 
