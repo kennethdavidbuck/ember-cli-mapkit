@@ -12,18 +12,6 @@ export default UIAbstractMap.extend({
   tagName: 'ui-leaflet-map',
   classNames: ['ui-leaflet-map'],
 
-  config: {
-    lat: 0,
-    lng: 0,
-    zoom: 13
-  },
-
-  preSetup: Ember.on('init', function () {
-    this.setProperties({
-      markerMap: Ember.Map.create()
-    });
-  }),
-
   setup: Ember.on('didInsertElement', function () {
     Ember.run.next(() => {
       const {markers, config} = this.getProperties('markers', 'config');
