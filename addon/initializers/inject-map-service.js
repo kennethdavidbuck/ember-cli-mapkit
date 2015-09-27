@@ -9,9 +9,10 @@ export function initialize(container, application) {
   application.inject('service:map', 'MarkerClusterer', 'google:markerClusterer');
   application.inject('service:map', 'googleApi', 'google:main');
 
-  application.inject('component:ui-map', 'application', 'application:main');
-  application.inject('component:ui-map', 'MarkerClusterer', 'google:markerClusterer');
-  application.inject('component:ui-map', 'googleApi', 'google:main');
+  // ui-google-map
+  application.inject('component:ui-google-map', 'application', 'application:main');
+  application.inject('component:ui-google-map', 'MarkerClusterer', 'google:markerClusterer');
+  application.inject('component:ui-google-map', 'googleApi', 'google:main');
 }
 
 export default {
