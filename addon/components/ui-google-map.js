@@ -1,66 +1,23 @@
 import Ember from 'ember';
 import GoogleUtiltity from '../utilities/google';
+import UIAbstractMap from './ui-abstract-map';
+
 import layout from '../templates/components/ui-google-map';
 
 /*global JSON*/
 
-export default Ember.Component.extend({
+export default UIAbstractMap.extend({
 
   layout: layout,
   tagName: 'ui-google-map',
-  classNames: ['ui-map', 'ui-google-map'],
+  classNames: ['ui-google-map'],
 
-  readyAction: 'mapReady',
-
-  mapClickAction: 'mapClick',
-  mapBoundsChangedAction: 'mapBoundsChanged',
-  mapCenterChangedAction: 'mapCenterChanged',
-  mapDoubleClickAction: 'mapDoubleClick',
-  mapRightClickAction: 'mapRightClick',
-  mapTilesLoadedAction: 'mapTilesLoaded',
-  mapZoomChangedAction: 'mapZoomChanged',
-  mapDragAction: 'mapDrag',
-  mapDragEndAction: 'mapDragEnd',
-  mapDragStartAction: 'mapDragStart',
-  mapHeadingChangedAction: 'mapHeadingChanged',
-  mapIdleAction: 'mapIdle',
-  mapTypeIdChangedAction: 'mapTypeIdChanged',
-  mapProjectionChangedAction: 'mapProjectionChanged',
-  mapMouseMoveAction: 'mapMouseMove',
-  mapMouseUpAction: 'mapMouseUp',
-  mapMouseDownAction: 'mapMouseDown',
-  mapMouseOverAction: 'mapMouseOver',
-  mapMouseOutAction: 'mapMouseOutAction',
-
-  markerClickAction: 'markerClick',
-  markerAnimationChangedAction: 'markerAnimationChanged',
-  markerClickableChangedAction: 'markerClickableChanged',
-  markerCursorChangedAction: 'markerCursorChanged',
-  markerDoubleClickAction: 'markerDoubleClick',
-  markerDragAction: 'markerDrag',
-  markerDragEndAction: 'markerDragEnd',
-  markerDraggableChangedAction: 'markerDraggableChanged',
-  markerDragStartAction: 'markerDragStart',
-  markerFlatChangedAction: 'markerFlatChanged',
-  markerIconChangedAction: 'markerIconChanged',
-  markerMouseDownAction: 'markerMouseDown',
-  markerMouseOutAction: 'markerMouseOut',
-  markerMouseOverAction: 'markerMouseOver',
-  markerMouseUpAction: 'markerMouseUp',
-  markerPositionChangedAction: 'markerPositionChanged',
-  markerRightClickAction: 'markerRightClick',
-  markerShapeChangedAction: 'markerShapeChanged',
-  markerTitleChangedAction: 'markerTitleChanged',
-  markerVisibleChangedAction: 'markerVisibleChanged',
-  markerZIndexChangedAction: 'markerZIndexChanged',
-
-  isLoaded: false,
-
-  markers: [],
-
-  markerClusterer: null,
-
-  markerMap: null,
+  markerClusterer: Ember.computed({
+    get() {
+      const MarkerClusterer = this.get('MarkerClusterer');
+      return new MarkerClusterer(null, [], this.get('config.markerClusterer'));
+    }
+  }),
 
   mapTypeId: Ember.computed('googleMap', {
     get() {
@@ -76,14 +33,6 @@ export default Ember.Component.extend({
       return googleMap.getMapTypeId();
     }
   })['volatile'](),
-
-  preSetup: Ember.on('init', function () {
-    const MarkerClusterer = this.get('MarkerClusterer');
-    this.setProperties({
-      markerMap: Ember.Map.create(),
-      markerClusterer: new MarkerClusterer(null, [], this.get('config.markerClusterer'))
-    });
-  }),
 
   setup: Ember.on('didInsertElement', function () {
     Ember.run.next(() => {

@@ -1,22 +1,16 @@
 import Ember from 'ember';
+import LeafletUtility from '../utilities/leaflet';
+import UIAbstractMap from './ui-abstract-map';
+
 import layout from '../templates/components/ui-leaflet-map';
 
 /*global L, JSON*/
 
-export default Ember.Component.extend({
+export default UIAbstractMap.extend({
+
   layout: layout,
   tagName: 'ui-leaflet-map',
-  classNames: ['ui-map', 'ui-leaflet-map'],
-
-  readyAction: 'mapReady',
-
-  isLoaded: false,
-
-  markers: [],
-
-  markerClusterer: null,
-
-  markerMap: null,
+  classNames: ['ui-leaflet-map'],
 
   config: {
     lat: 0,
@@ -40,8 +34,6 @@ export default Ember.Component.extend({
       this.set('leafletMap', $map);
 
       this.addMarkers(markers);
-
-      //this.sendAction('readyAction', this);
     });
   }),
 
@@ -55,7 +47,7 @@ export default Ember.Component.extend({
     // force POJO for standardized processing, and because passing an Ember Object as params to a new google marker does not work.
     marker = JSON.parse(JSON.stringify(marker));
 
-    const {markerMap, leafletMap} = this.getProperties('markerMap', 'leafletMap');
+    const {config, markerMap, leafletMap} = this.getProperties('config', 'markerMap', 'leafletMap');
 
     const options = {};
 
@@ -72,5 +64,28 @@ export default Ember.Component.extend({
     leafletMarker.addTo(leafletMap);
 
     markerMap.set(marker.id, leafletMarker);
-  }
+
+    // apply default marker events
+    const self = this;
+    config.markerEvents.forEach(function (eventName) {
+      self.addMarkerListener(marker.id, eventName);
+    }, leafletMarker);
+  },
+
+  addMarkerListener(id, eventName) {
+    let data = {};
+    const {googleApi, markerMap} = this.getProperties('googleApi', 'markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    const leafletMarker = markerMap.get(id);
+
+    leafletMarker.on(eventName, () => {
+      data = {
+        id: id
+      };
+
+      this.sendAction(LeafletUtility.marker.eventAction(eventName), this, id, data);
+    });
+  },
 });

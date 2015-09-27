@@ -26,5 +26,14 @@ export default Ember.Route.extend({
         visible: true
       })
     ];
+  },
+
+  actions: {
+    mapReady(/*map*/) {},
+    mapClick(/*map, id, data*/) {},
+    markerDrag(/*map, data*/) { },
+    markerClick(map, markerId, data) {
+      console.log(data);
+    }
   }
 });
