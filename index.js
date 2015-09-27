@@ -6,7 +6,13 @@ module.exports = {
 
   contentFor: function (type, config) {
     if (type === 'head' && config.APP.MAPKIT.googleMaps.enabled) {
-      return '<script src="' + config.APP.MAPKIT.SOURCE + '"></script>';
+      var content = '';
+
+      content += '<script src="' + config.APP.MAPKIT.SOURCE + '"></script>';
+      content += '<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />';
+      content += '<script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>';
+
+      return content;
     }
   },
 
@@ -18,7 +24,8 @@ module.exports = {
             enabled: true
           },
           leafletMaps: {
-            enabled:true
+            enabled:true,
+            provider: ''
           },
 
           KEY: null,
