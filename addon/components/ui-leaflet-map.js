@@ -32,7 +32,6 @@ export default UIAbstractMap.extend({
   },
 
   addMarker(marker) {
-    // force POJO for standardized processing, and because passing an Ember Object as params to a new google marker does not work.
     marker = JSON.parse(JSON.stringify(marker));
 
     const {config, markerMap, leafletMap} = this.getProperties('config', 'markerMap', 'leafletMap');
@@ -62,7 +61,7 @@ export default UIAbstractMap.extend({
 
   addMarkerListener(id, eventName) {
     let data = {};
-    const {googleApi, markerMap} = this.getProperties('googleApi', 'markerMap');
+    const {markerMap} = this.getProperties('markerMap');
 
     Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
 
