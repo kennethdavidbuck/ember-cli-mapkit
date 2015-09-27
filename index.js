@@ -5,7 +5,7 @@ module.exports = {
   name: 'ember-cli-mapkit',
 
   contentFor: function (type, config) {
-    if (type === 'head') {
+    if (type === 'head' && config.APP.MAPKIT.googleMaps.enabled) {
       return '<script src="' + config.APP.MAPKIT.SOURCE + '"></script>';
     }
   },
@@ -14,6 +14,13 @@ module.exports = {
     var ENV = {
       APP: {
         MAPKIT: {
+          googleMaps: {
+            enabled: true
+          },
+          leafletMaps: {
+            enabled:true
+          },
+
           KEY: null,
 
           API_KEY: null,
