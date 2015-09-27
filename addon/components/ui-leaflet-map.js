@@ -8,6 +8,8 @@ export default Ember.Component.extend({
   tagName: 'ui-leaflet-map',
   classNames: ['ui-map', 'ui-leaflet-map'],
 
+  readyAction: 'mapReady',
+
   isLoaded: false,
 
   markers: [],
@@ -32,6 +34,8 @@ export default Ember.Component.extend({
       this.set('leafletMap', $map);
 
       this.addMarkers(markers);
+
+      this.sendAction('readyAction', this);
     });
   }),
 
@@ -46,9 +50,20 @@ export default Ember.Component.extend({
     marker = JSON.parse(JSON.stringify(marker));
 
     const {markerMap, leafletMap} = this.getProperties('markerMap', 'leafletMap');
-    const leafletMarker = L.marker([marker.position.lat, marker.position.lng], {
-      draggable: marker.draggable || false
-    }).addTo(leafletMap);
+
+    const options = {};
+
+    if(marker.draggable) {
+      options.draggable = true;
+    }
+
+    if(marker.title) {
+      options.title = marker.title;
+    }
+
+    const leafletMarker = L.marker([marker.position.lat, marker.position.lng], options);
+
+    leafletMarker.addTo(leafletMap);
 
     markerMap.set(marker.id, leafletMarker);
   }

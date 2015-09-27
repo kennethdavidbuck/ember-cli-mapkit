@@ -26,16 +26,5 @@ export default Ember.Route.extend({
         visible: true
       })
     ];
-  },
-
-  setupController(controller, model, transition) {
-    this._super(controller, model, transition);
-  },
-
-  actions: {
-    mapReady(/*map*/) {},
-    mapClick(/*map, data*/) { },
-    markerDrag(/*map, data*/) { },
-    markerClick(/*map, markerId, data*/) { }
   }
 });
