@@ -62,6 +62,22 @@ export default Ember.Component.extend({
     lat: 0,
     lng: 0,
     zoom: 13
+  },
+
+  getMapPixel() {
+    return this.$().position();
+  },
+
+  getMarkerPixel(id) {
+    const markerMap = this.get('markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    return this._getMarkerPixel(markerMap.get(id));
+  },
+
+  size: function () {
+    return this.get('markerMap.size');
   }
 });
 

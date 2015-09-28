@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
     lng: -96.329,
     mapType: 'satellite',
     mapEvents: ['click'],
-    markerEvents: ['drag', 'click'],
+    markerEvents: ['drag', 'click', 'dragend'],
     markerClusterer: {
       gridSize: 60,
       hideLabel: false,

@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
 
   model() {
-    return [
+    return Ember.A([
       Ember.Object.create({
         title: 'Example 1',
         position: {
@@ -25,15 +25,21 @@ export default Ember.Route.extend({
         id: 2,
         visible: true
       })
-    ];
+    ]);
   },
 
   actions: {
     mapReady(/*map*/) {},
     mapClick(/*map, id, data*/) {},
-    markerDrag(/*map, data*/) { },
-    markerClick(map, markerId, data) {
+    markerDrag(map, markerId, data) {
       console.log(data);
+    },
+    markerClick(map, id, data) {
+      console.log(data);
+    },
+    markerDragEnd(map, id, data) {
+      console.log(data);
+      this.get('currentModel').findBy('id', id).set('position', data.position);
     }
   }
 });

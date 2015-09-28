@@ -150,10 +150,6 @@ export default UIAbstractMap.extend({
     this.get('markerClusterer').fitMapToMarkers();
   },
 
-  size: function () {
-    return this.get('markerMap.size');
-  },
-
   hasMarker(id) {
     const markerMap = this.get('markerMap');
 
@@ -220,7 +216,7 @@ export default UIAbstractMap.extend({
   },
 
   addMarkerListener(id, eventName) {
-    let data = {};
+    let data = {id: id, type: eventName};
     const {googleApi, markerMap} = this.getProperties('googleApi', 'markerMap');
 
     Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
@@ -228,14 +224,12 @@ export default UIAbstractMap.extend({
     const googleMarker = markerMap.get(id);
 
     googleApi.maps.event.addListener(googleMarker, eventName, () => {
-      data = {
-        id: id,
-        position: {
-          lat: googleMarker.getPosition().lat(),
+      data.position = {
+        lat: googleMarker.getPosition().lat(),
           lng: googleMarker.getPosition().lng()
-        },
-        pixel: this._getMarkerPixel(googleMarker)
       };
+
+      data.pixel = this._getMarkerPixel(googleMarker);
 
       this.sendAction(GoogleUtiltity.marker.eventAction(eventName), this, id, data);
     });
@@ -278,14 +272,6 @@ export default UIAbstractMap.extend({
     };
   },
 
-  getMarkerPixel(id) {
-    const markerMap = this.get('markerMap');
-
-    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
-
-    return this._getMarkerPixel(markerMap.get(id));
-  },
-
   _getMarkerPixel(googleMarker) {
     const {googleApi, googleMap} = this.getProperties('googleApi', 'googleMap');
 
@@ -297,13 +283,13 @@ export default UIAbstractMap.extend({
 
     const proj = overlay.getProjection();
     const pos = googleMarker.getPosition();
-    const p = proj.fromLatLngToContainerPixel(pos);
+    const markerPixel = proj.fromLatLngToContainerPixel(pos);
 
-    const position = this.$().position();
+    const mapPixel = this.getMapPixel();
 
     return {
-      x: parseInt(position.left + p.x, 10),
-      y: parseInt(position.top + p.y, 10)
+      x: parseInt(mapPixel.left + markerPixel.x, 10),
+      y: parseInt(mapPixel.top + markerPixel.y, 10)
     };
   },
 

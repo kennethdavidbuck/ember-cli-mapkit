@@ -25,6 +25,16 @@ export default UIAbstractMap.extend({
     });
   }),
 
+  teardown: Ember.on('willDestroyElement', function () {
+    const markerMap = this.get('markerMap');
+
+    markerMap.forEach((leafletMarker) => {
+      leafletMarker.clearAllEventListeners();
+    });
+
+    markerMap.clear();
+  }),
+
   addMarkers(markers) {
     markers.forEach((marker) => {
       this.addMarker(marker);
@@ -38,11 +48,11 @@ export default UIAbstractMap.extend({
 
     const options = {};
 
-    if(marker.draggable) {
+    if (marker.draggable) {
       options.draggable = true;
     }
 
-    if(marker.title) {
+    if (marker.title) {
       options.title = marker.title;
     }
 
@@ -60,19 +70,83 @@ export default UIAbstractMap.extend({
   },
 
   addMarkerListener(id, eventName) {
-    let data = {};
+    let data = {
+      id: id,
+      type: eventName
+    };
     const {markerMap} = this.getProperties('markerMap');
+
+    Ember.assert('[MapKit:Leaflet] This marker has no mapping', markerMap.has(id));
+
+    const leafletMarker = markerMap.get(id);
+
+    leafletMarker.on(eventName, () => {
+      data.position = this.getMarkerPosition(id);
+      data.pixel = this.getMarkerPixel(id);
+
+      this.sendAction(LeafletUtility.marker.eventAction(eventName), this, id, data);
+    });
+  },
+
+  removeAllMarkerListeners(id) {
+    const {markerMap} = this.getProperties('markerMap');
+
+    Ember.assert('[MapKit:Leaflet] This marker has no mapping', markerMap.has(id));
+
+    markerMap.get(id).clearAllEventListeners();
+  },
+
+  removeMarkerListener(id, eventName) {
+    const {markerMap} = this.getProperties('markerMap');
+
+    Ember.assert('[MapKit:Leaflet] This marker has no mapping', markerMap.has(id));
+
+    markerMap.get(id).off(eventName);
+  },
+
+  getMarkerPosition(id) {
+    const markerMap = this.get('markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    const position = markerMap.get(id).getLatLng();
+
+    return {
+      lat: position.lat,
+      lng: position.lng
+    };
+  },
+
+  _getMarkerPixel(leafletMarker) {
+    const markerPixel = this.get('leafletMap').latLngToLayerPoint(leafletMarker.getLatLng());
+    const mapPixel = this.getMapPixel();
+
+    return {
+      x: parseInt(mapPixel.left + markerPixel.x, 10),
+      y: parseInt(mapPixel.top + markerPixel.y, 10)
+    };
+  },
+
+  setMarkerDraggable(id, draggable) {
+    const markerMap = this.get('markerMap');
 
     Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
 
     const leafletMarker = markerMap.get(id);
 
-    leafletMarker.on(eventName, () => {
-      data = {
-        id: id
-      };
-
-      this.sendAction(LeafletUtility.marker.eventAction(eventName), this, id, data);
-    });
+    if (draggable) {
+      leafletMarker.dragging.enable();
+    } else {
+      leafletMarker.dragging.disable();
+    }
   },
+
+  setMarkerTitle(id, title) {
+    const markerMap = this.get('markerMap');
+
+    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
+
+    // TODO - Find way to set leaflet marker title
+    Ember.Logger.log('TODO: Provide means of setting marker title.');
+  }
 });
