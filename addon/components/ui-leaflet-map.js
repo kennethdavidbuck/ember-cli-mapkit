@@ -141,7 +141,7 @@ export default UIAbstractMap.extend({
     }
   },
 
-  setMarkerTitle(id, title) {
+  setMarkerTitle(id/*, title*/) {
     const markerMap = this.get('markerMap');
 
     Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
