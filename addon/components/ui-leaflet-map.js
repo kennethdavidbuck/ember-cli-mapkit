@@ -15,11 +15,11 @@ export default UIAbstractMap.extend({
   setup: Ember.on('didInsertElement', function () {
     Ember.run.next(() => {
       const {markers, config} = this.getProperties('markers', 'config');
-      const $map = L.map(this.$()[0]).setView([config.lat, config.lng], config.zoom);
+      const $map = L.map(this.getMapRawElement()).setView([config.lat, config.lng], config.zoom);
 
       L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo($map);
 
-      this.set('leafletMap', $map);
+      this.set('map', $map);
 
       this.addMarkers(markers);
     });
@@ -38,7 +38,7 @@ export default UIAbstractMap.extend({
   addMarker(marker) {
     marker = JSON.parse(JSON.stringify(marker));
 
-    const {config, markerMap, leafletMap} = this.getProperties('config', 'markerMap', 'leafletMap');
+    const {config, markerMap, map} = this.getProperties('config', 'markerMap', 'map');
 
     const options = {};
 
@@ -52,7 +52,7 @@ export default UIAbstractMap.extend({
 
     const leafletMarker = L.marker([marker.position.lat, marker.position.lng], options);
 
-    leafletMarker.addTo(leafletMap);
+    leafletMarker.addTo(map);
 
     markerMap.set(marker.id, leafletMarker);
 
@@ -95,7 +95,7 @@ export default UIAbstractMap.extend({
   },
 
   _getMarkerPixel(leafletMarker) {
-    const markerPixel = this.get('leafletMap').latLngToLayerPoint(leafletMarker.getLatLng());
+    const markerPixel = this.get('map').latLngToLayerPoint(leafletMarker.getLatLng());
     const mapPixel = this.getMapPixel();
 
     return {

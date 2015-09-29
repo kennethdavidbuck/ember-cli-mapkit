@@ -64,6 +64,10 @@ export default Ember.Component.extend({
     zoom: 13
   },
 
+  getMapRawElement() {
+    return this.$()[0];
+  },
+
   getMapPixel() {
     return this.$().position();
   },

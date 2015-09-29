@@ -19,18 +19,18 @@ export default UIAbstractMap.extend({
     }
   }),
 
-  mapTypeId: Ember.computed('googleMap', {
+  mapTypeId: Ember.computed('map', {
     get() {
-      return this.get('googleMap').getMapTypeId();
+      return this.get('map').getMapTypeId();
     },
     set(key, value) {
       let type = GoogleUtiltity.map.type(value);
 
-      const googleMap = this.get('googleMap');
+      const map = this.get('map');
 
-      googleMap.setMapTypeId(type);
+      map.setMapTypeId(type);
 
-      return googleMap.getMapTypeId();
+      return map.getMapTypeId();
     }
   })['volatile'](),
 
@@ -46,10 +46,10 @@ export default UIAbstractMap.extend({
         }
       };
 
-      let googleMap = new googleApi.maps.Map(this.$()[0], options);
+      let $map = new googleApi.maps.Map(this.getMapRawElement(), options);
 
       this.setProperties({
-        googleMap: googleMap,
+        map: $map,
         mapTypeId: config.mapType
       });
 
@@ -59,9 +59,9 @@ export default UIAbstractMap.extend({
       const overlay = new googleApi.maps.OverlayView();
       overlay.draw = function () {
       };
-      overlay.setMap(googleMap);
+      overlay.setMap($map);
 
-      markerClusterer.setMap(googleMap);
+      markerClusterer.setMap($map);
 
       this.addMarkers(this.get('markers'));
 
@@ -70,58 +70,58 @@ export default UIAbstractMap.extend({
   }),
 
   teardown: Ember.on('willDestroyElement', function () {
-    const {googleApi, googleMap, markerMap, markerClusterer} = this.getProperties('googleApi', 'googleMap', 'markerMap', 'markerClusterer');
+    const {googleApi, map, markerMap, markerClusterer} = this.getProperties('googleApi', 'map', 'markerMap', 'markerClusterer');
 
     // clean up all listeners
     markerMap.forEach((googleMarker) => {
       googleApi.maps.event.clearInstanceListeners(googleMarker);
     });
 
-    googleApi.maps.event.clearInstanceListeners(googleMap);
+    googleApi.maps.event.clearInstanceListeners(map);
 
     markerClusterer.clearMarkers();
     markerMap.clear();
   }),
 
-  center: Ember.computed('googleMap', {
+  center: Ember.computed('map', {
     get() {
-      const center = this.get('googleMap').getCenter();
+      const center = this.get('map').getCenter();
       return {
         lat: center.lat(),
         lng: center.lng()
       };
     },
     set(key, position) {
-      this.get('googleMap').setCenter(position);
+      this.get('map').setCenter(position);
 
       return position;
     }
   })['volatile'](),
 
   panTo(position) {
-    this.get('googleMap').panTo(position);
+    this.get('map').panTo(position);
   },
 
-  zoom: Ember.computed('googleMap', {
+  zoom: Ember.computed('map', {
     get() {
-      return this.get('googleMap').getZoom();
+      return this.get('map').getZoom();
     },
     set(key, zoom) {
-      this.get('googleMap').setZoom(zoom);
+      this.get('map').setZoom(zoom);
 
       return zoom;
     }
   })['volatile'](),
 
-  tilt: Ember.computed('googleMap', {
+  tilt: Ember.computed('map', {
     get() {
-      return this.get('googleMap').getTilt();
+      return this.get('map').getTilt();
     }
   })['volatile'](),
 
-  bounds: Ember.computed('googleMap', {
+  bounds: Ember.computed('map', {
     get() {
-      const bounds = this.get('googleMap').getBounds();
+      const bounds = this.get('map').getBounds();
       const sw = bounds.getSouthWest();
       const ne = bounds.getNorthEast();
 
@@ -138,9 +138,9 @@ export default UIAbstractMap.extend({
     }
   })['volatile'](),
 
-  options: Ember.computed('googleMap', {
+  options: Ember.computed('map', {
     set(key, value) {
-      this.get('googleMap').setOptions(value);
+      this.get('map').setOptions(value);
 
       return value;
     }
@@ -157,13 +157,13 @@ export default UIAbstractMap.extend({
   },
 
   addListener(eventName) {
-    const {googleApi, googleMap} = this.getProperties('googleApi', 'googleMap');
+    const {googleApi, map} = this.getProperties('googleApi', 'map');
 
-    googleApi.maps.event.addListener(googleMap, eventName, (event) => {
+    googleApi.maps.event.addListener(map, eventName, (event) => {
       let position;
       let data = {};
       if (event) {
-        position = this.getMapPixel(),
+        position = this.getMapPixel();
         data = {
           pixel: {
             x: position.left + event.pixel.x,
@@ -181,9 +181,9 @@ export default UIAbstractMap.extend({
   },
 
   removeListener(eventName) {
-    const {googleApi, googleMap} = this.getProperties('googleApi', 'googleMap');
+    const {googleApi, map} = this.getProperties('googleApi', 'map');
 
-    googleApi.maps.event.clearInstanceListeners(googleMap, eventName);
+    googleApi.maps.event.clearInstanceListeners(map, eventName);
   },
 
   addMarker(marker) {
@@ -255,13 +255,13 @@ export default UIAbstractMap.extend({
   },
 
   _getMarkerPixel(googleMarker) {
-    const {googleApi, googleMap} = this.getProperties('googleApi', 'googleMap');
+    const {googleApi, map} = this.getProperties('googleApi', 'map');
 
     // Calculate the position of the marker click-style event
     const overlay = new googleApi.maps.OverlayView();
     overlay.draw = function () {
     };
-    overlay.setMap(googleMap);
+    overlay.setMap(map);
 
     const proj = overlay.getProjection();
     const pos = googleMarker.getPosition();
