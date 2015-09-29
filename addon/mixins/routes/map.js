@@ -60,6 +60,7 @@ export default Ember.Mixin.create({
     },
 
     mapClick() {
+      console.log('map click.');
     },
 
     mapMouseover() {
