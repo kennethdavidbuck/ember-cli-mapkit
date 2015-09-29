@@ -36,7 +36,7 @@ export default UIAbstractMap.extend({
 
   setup: Ember.on('didInsertElement', function () {
     Ember.run.next(() => {
-      const {config, googleApi, markerClusterer} = this.getProperties('config', 'googleApi', 'markerClusterer');
+      const {config, mapApi, markerClusterer} = this.getProperties('config', 'mapApi', 'markerClusterer');
 
       let options = {
         zoom: config.zoom,
@@ -46,7 +46,7 @@ export default UIAbstractMap.extend({
         }
       };
 
-      let $map = new googleApi.maps.Map(this.getMapRawElement(), options);
+      let $map = new mapApi.maps.Map(this.getMapRawElement(), options);
 
       this.setProperties({
         map: $map,
@@ -56,7 +56,7 @@ export default UIAbstractMap.extend({
       this.addListeners(this.get('config.mapEvents'));
 
       //fixes bug where fromLatLnToContainerPixel returns undefined.
-      const overlay = new googleApi.maps.OverlayView();
+      const overlay = new mapApi.maps.OverlayView();
       overlay.draw = function () {
       };
       overlay.setMap($map);
@@ -70,14 +70,14 @@ export default UIAbstractMap.extend({
   }),
 
   teardown: Ember.on('willDestroyElement', function () {
-    const {googleApi, map, markerMap, markerClusterer} = this.getProperties('googleApi', 'map', 'markerMap', 'markerClusterer');
+    const {mapApi, map, markerMap, markerClusterer} = this.getProperties('mapApi', 'map', 'markerMap', 'markerClusterer');
 
     // clean up all listeners
     markerMap.forEach((mapMarker) => {
-      googleApi.maps.event.clearInstanceListeners(mapMarker);
+      mapApi.maps.event.clearInstanceListeners(mapMarker);
     });
 
-    googleApi.maps.event.clearInstanceListeners(map);
+    mapApi.maps.event.clearInstanceListeners(map);
 
     markerClusterer.clearMarkers();
     markerMap.clear();
@@ -157,9 +157,9 @@ export default UIAbstractMap.extend({
   },
 
   addListener(eventName) {
-    const {googleApi, map} = this.getProperties('googleApi', 'map');
+    const {mapApi, map} = this.getProperties('mapApi', 'map');
 
-    googleApi.maps.event.addListener(map, eventName, (event) => {
+    mapApi.maps.event.addListener(map, eventName, (event) => {
       let position;
       let data = {};
       if (event) {
@@ -181,16 +181,16 @@ export default UIAbstractMap.extend({
   },
 
   removeListener(eventName) {
-    const {googleApi, map} = this.getProperties('googleApi', 'map');
+    const {mapApi, map} = this.getProperties('mapApi', 'map');
 
-    googleApi.maps.event.clearInstanceListeners(map, eventName);
+    mapApi.maps.event.clearInstanceListeners(map, eventName);
   },
 
   addMarker(marker) {
     marker = JSON.parse(JSON.stringify(marker));
 
-    const {config, googleApi, markerMap, markerClusterer} = this.getProperties('config', 'googleApi', 'markerMap', 'markerClusterer');
-    const mapMarker = new googleApi.maps.Marker(marker);
+    const {config, mapApi, markerMap, markerClusterer} = this.getProperties('config', 'mapApi', 'markerMap', 'markerClusterer');
+    const mapMarker = new mapApi.maps.Marker(marker);
 
     markerMap.set(marker.id, mapMarker);
 
@@ -205,11 +205,11 @@ export default UIAbstractMap.extend({
 
   addMarkerListener(id, eventName) {
     let data = {id: id, type: eventName};
-    const {googleApi} = this.getProperties('googleApi');
+    const {mapApi} = this.getProperties('mapApi');
 
     const mapMarker = this.getMarker(id);
 
-    googleApi.maps.event.addListener(mapMarker, eventName, () => {
+    mapApi.maps.event.addListener(mapMarker, eventName, () => {
       data.position = {
         lat: mapMarker.getPosition().lat(),
         lng: mapMarker.getPosition().lng()
@@ -222,15 +222,15 @@ export default UIAbstractMap.extend({
   },
 
   removeMarkerListener(id, eventName) {
-    this.get('googleApi').maps.event.clearInstanceListeners(this.getMarker(id), eventName);
+    this.get('mapApi').maps.event.clearInstanceListeners(this.getMarker(id), eventName);
   },
 
   removeMarker(id) {
-    const {googleApi, markerMap, markerClusterer} =  this.getProperties('googleApi', 'markerMap', 'markerClusterer');
+    const {mapApi, markerMap, markerClusterer} =  this.getProperties('mapApi', 'markerMap', 'markerClusterer');
 
     const mapMarker = this.getMarker(id);
 
-    googleApi.maps.event.clearInstanceListeners(mapMarker);
+    mapApi.maps.event.clearInstanceListeners(mapMarker);
 
     markerClusterer.removeMarker(mapMarker);
 
@@ -255,10 +255,10 @@ export default UIAbstractMap.extend({
   },
 
   _getMarkerPixel(mapMarker) {
-    const {googleApi, map} = this.getProperties('googleApi', 'map');
+    const {mapApi, map} = this.getProperties('mapApi', 'map');
 
     // Calculate the position of the marker click-style event
-    const overlay = new googleApi.maps.OverlayView();
+    const overlay = new mapApi.maps.OverlayView();
     overlay.draw = function () {
     };
     overlay.setMap(map);
