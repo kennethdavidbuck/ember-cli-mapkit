@@ -24,7 +24,7 @@ export default Ember.Component.extend({
   mapMouseUpAction: 'mapMouseUp',
   mapMouseDownAction: 'mapMouseDown',
   mapMouseOverAction: 'mapMouseOver',
-  mapMouseOutAction: 'mapMouseOutAction',
+  mapMouseOutAction: 'mapMouseOut',
 
   markerClickAction: 'markerClick',
   markerAnimationChangedAction: 'markerAnimationChanged',
