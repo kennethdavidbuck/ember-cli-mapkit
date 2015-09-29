@@ -120,6 +120,8 @@ export default Ember.Component.extend({
 
   setMarkerVisible: Ember.K,
 
-  setMarkerTitle: Ember.K
+  setMarkerTitle: Ember.K,
+
+  panTo: Ember.K
 });
 
