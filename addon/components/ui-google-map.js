@@ -163,7 +163,7 @@ export default UIAbstractMap.extend({
       let position;
       let data = {};
       if (event) {
-        position = this.$().position();
+        position = this.getMapPixel(),
         data = {
           pixel: {
             x: position.left + event.pixel.x,
