@@ -106,6 +106,8 @@ export default Ember.Component.extend({
 
   addMarkerListener: Ember.K,
 
+  removeMarker: Ember.K,
+
   removeMarkerListener: Ember.K,
 
   setMarkerIcon: Ember.K,

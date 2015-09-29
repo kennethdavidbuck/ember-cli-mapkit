@@ -225,6 +225,18 @@ export default UIAbstractMap.extend({
     this.get('googleApi').maps.event.clearInstanceListeners(this.getMarker(id), eventName);
   },
 
+  removeMarker(id) {
+    const {googleApi, markerMap, markerClusterer} =  this.getProperties('googleApi', 'markerMap', 'markerClusterer');
+
+    const googleMarker = this.getMarker(id);
+
+    googleApi.maps.event.clearInstanceListeners(googleMarker);
+
+    markerClusterer.removeMarker(googleMarker);
+
+    markerMap.delete(id);
+  },
+
   setMarkerIcon(id, icon) {
     this.getMarker(id).setIcon(icon);
   },
