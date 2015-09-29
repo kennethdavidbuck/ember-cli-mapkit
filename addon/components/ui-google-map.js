@@ -205,7 +205,7 @@ export default UIAbstractMap.extend({
 
   addMarkerListener(id, eventName) {
     let data = {id: id, type: eventName};
-    const {googleApi, markerMap} = this.getProperties('googleApi', 'markerMap');
+    const {googleApi} = this.getProperties('googleApi');
 
     const googleMarker = this.getMarker(id);
 
