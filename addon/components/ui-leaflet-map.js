@@ -35,12 +35,6 @@ export default UIAbstractMap.extend({
     markerMap.clear();
   }),
 
-  addMarkers(markers) {
-    markers.forEach((marker) => {
-      this.addMarker(marker);
-    });
-  },
-
   addMarker(marker) {
     marker = JSON.parse(JSON.stringify(marker));
 
@@ -74,13 +68,8 @@ export default UIAbstractMap.extend({
       id: id,
       type: eventName
     };
-    const {markerMap} = this.getProperties('markerMap');
 
-    Ember.assert('[MapKit:Leaflet] This marker has no mapping', markerMap.has(id));
-
-    const leafletMarker = markerMap.get(id);
-
-    leafletMarker.on(eventName, () => {
+    this.getMarker(id).on(eventName, () => {
       data.position = this.getMarkerPosition(id);
       data.pixel = this.getMarkerPixel(id);
 
@@ -89,27 +78,15 @@ export default UIAbstractMap.extend({
   },
 
   removeAllMarkerListeners(id) {
-    const {markerMap} = this.getProperties('markerMap');
-
-    Ember.assert('[MapKit:Leaflet] This marker has no mapping', markerMap.has(id));
-
-    markerMap.get(id).clearAllEventListeners();
+    this.getMarker(id).clearAllEventListeners();
   },
 
   removeMarkerListener(id, eventName) {
-    const {markerMap} = this.getProperties('markerMap');
-
-    Ember.assert('[MapKit:Leaflet] This marker has no mapping', markerMap.has(id));
-
-    markerMap.get(id).off(eventName);
+    this.getMarker(id).off(eventName);
   },
 
   getMarkerPosition(id) {
-    const markerMap = this.get('markerMap');
-
-    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
-
-    const position = markerMap.get(id).getLatLng();
+    const position = this.getMarker(id).getLatLng();
 
     return {
       lat: position.lat,
@@ -128,25 +105,14 @@ export default UIAbstractMap.extend({
   },
 
   setMarkerDraggable(id, draggable) {
-    const markerMap = this.get('markerMap');
-
-    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
-
-    const leafletMarker = markerMap.get(id);
-
     if (draggable) {
-      leafletMarker.dragging.enable();
+      this.getMarker(id).dragging.enable();
     } else {
-      leafletMarker.dragging.disable();
+      this.getMarker(id).dragging.disable();
     }
   },
 
-  setMarkerTitle(id/*, title*/) {
-    const markerMap = this.get('markerMap');
-
-    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
-
+  setMarkerTitle(/*id, title*/) {
     // TODO - Find way to set leaflet marker title
-    Ember.Logger.log('TODO: Provide means of setting marker title.');
   }
 });

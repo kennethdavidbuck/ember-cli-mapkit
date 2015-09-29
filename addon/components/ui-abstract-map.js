@@ -69,15 +69,55 @@ export default Ember.Component.extend({
   },
 
   getMarkerPixel(id) {
-    const markerMap = this.get('markerMap');
-
-    Ember.assert('MapKit: This marker has no mapping', markerMap.has(id));
-
-    return this._getMarkerPixel(markerMap.get(id));
+    return this._getMarkerPixel(this.getMarker(id));
   },
 
   size: function () {
     return this.get('markerMap.size');
-  }
+  },
+
+  hasMarker(id) {
+    return this.get('markerMap').has(id);
+  },
+
+  getMarker(id) {
+    Ember.assert('MapKit: This marker has no mapping', this.hasMarker(id));
+
+    return this.get('markerMap').get(id);
+  },
+
+  addMarkers(markers) {
+    markers.forEach((marker) => {
+      this.addMarker(marker);
+    });
+  },
+
+  addListeners(eventNames) {
+    eventNames.forEach((eventName) => {
+      this.addListener(eventName);
+    });
+  },
+
+  addListener: Ember.K,
+
+  removeListener: Ember.K,
+
+  addMarker: Ember.K,
+
+  addMarkerListener: Ember.K,
+
+  removeMarkerListener: Ember.K,
+
+  setMarkerIcon: Ember.K,
+
+  setMarkerPosition: Ember.K,
+
+  getMarkerPosition: Ember.K,
+
+  setMarkerDraggable: Ember.K,
+
+  setMarkerVisible: Ember.K,
+
+  setMarkerTitle: Ember.K
 });
 
