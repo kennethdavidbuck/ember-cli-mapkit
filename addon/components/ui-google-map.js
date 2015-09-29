@@ -73,8 +73,8 @@ export default UIAbstractMap.extend({
     const {googleApi, map, markerMap, markerClusterer} = this.getProperties('googleApi', 'map', 'markerMap', 'markerClusterer');
 
     // clean up all listeners
-    markerMap.forEach((googleMarker) => {
-      googleApi.maps.event.clearInstanceListeners(googleMarker);
+    markerMap.forEach((mapMarker) => {
+      googleApi.maps.event.clearInstanceListeners(mapMarker);
     });
 
     googleApi.maps.event.clearInstanceListeners(map);
@@ -190,32 +190,32 @@ export default UIAbstractMap.extend({
     marker = JSON.parse(JSON.stringify(marker));
 
     const {config, googleApi, markerMap, markerClusterer} = this.getProperties('config', 'googleApi', 'markerMap', 'markerClusterer');
-    const googleMarker = new googleApi.maps.Marker(marker);
+    const mapMarker = new googleApi.maps.Marker(marker);
 
-    markerMap.set(marker.id, googleMarker);
+    markerMap.set(marker.id, mapMarker);
 
-    markerClusterer.addMarker(googleMarker);
+    markerClusterer.addMarker(mapMarker);
 
     // apply default marker events
     const self = this;
     config.markerEvents.forEach(function (eventName) {
       self.addMarkerListener(marker.id, eventName);
-    }, googleMarker);
+    }, mapMarker);
   },
 
   addMarkerListener(id, eventName) {
     let data = {id: id, type: eventName};
     const {googleApi} = this.getProperties('googleApi');
 
-    const googleMarker = this.getMarker(id);
+    const mapMarker = this.getMarker(id);
 
-    googleApi.maps.event.addListener(googleMarker, eventName, () => {
+    googleApi.maps.event.addListener(mapMarker, eventName, () => {
       data.position = {
-        lat: googleMarker.getPosition().lat(),
-        lng: googleMarker.getPosition().lng()
+        lat: mapMarker.getPosition().lat(),
+        lng: mapMarker.getPosition().lng()
       };
 
-      data.pixel = this._getMarkerPixel(googleMarker);
+      data.pixel = this._getMarkerPixel(mapMarker);
 
       this.sendAction(GoogleUtiltity.marker.eventAction(eventName), this, id, data);
     });
@@ -228,11 +228,11 @@ export default UIAbstractMap.extend({
   removeMarker(id) {
     const {googleApi, markerMap, markerClusterer} =  this.getProperties('googleApi', 'markerMap', 'markerClusterer');
 
-    const googleMarker = this.getMarker(id);
+    const mapMarker = this.getMarker(id);
 
-    googleApi.maps.event.clearInstanceListeners(googleMarker);
+    googleApi.maps.event.clearInstanceListeners(mapMarker);
 
-    markerClusterer.removeMarker(googleMarker);
+    markerClusterer.removeMarker(mapMarker);
 
     markerMap.delete(id);
   },
@@ -254,7 +254,7 @@ export default UIAbstractMap.extend({
     };
   },
 
-  _getMarkerPixel(googleMarker) {
+  _getMarkerPixel(mapMarker) {
     const {googleApi, map} = this.getProperties('googleApi', 'map');
 
     // Calculate the position of the marker click-style event
@@ -264,7 +264,7 @@ export default UIAbstractMap.extend({
     overlay.setMap(map);
 
     const proj = overlay.getProjection();
-    const pos = googleMarker.getPosition();
+    const pos = mapMarker.getPosition();
     const markerPixel = proj.fromLatLngToContainerPixel(pos);
 
     const mapPixel = this.getMapPixel();

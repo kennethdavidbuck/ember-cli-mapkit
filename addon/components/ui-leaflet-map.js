@@ -28,8 +28,8 @@ export default UIAbstractMap.extend({
   teardown: Ember.on('willDestroyElement', function () {
     const markerMap = this.get('markerMap');
 
-    markerMap.forEach((leafletMarker) => {
-      leafletMarker.clearAllEventListeners();
+    markerMap.forEach((mapMarker) => {
+      mapMarker.clearAllEventListeners();
     });
 
     markerMap.clear();
@@ -50,17 +50,17 @@ export default UIAbstractMap.extend({
       options.title = marker.title;
     }
 
-    const leafletMarker = L.marker([marker.position.lat, marker.position.lng], options);
+    const mapMarker = L.marker([marker.position.lat, marker.position.lng], options);
 
-    leafletMarker.addTo(map);
+    mapMarker.addTo(map);
 
-    markerMap.set(marker.id, leafletMarker);
+    markerMap.set(marker.id, mapMarker);
 
     // apply default marker events
     const self = this;
     config.markerEvents.forEach(function (eventName) {
       self.addMarkerListener(marker.id, eventName);
-    }, leafletMarker);
+    }, mapMarker);
   },
 
   addMarkerListener(id, eventName) {
@@ -94,8 +94,8 @@ export default UIAbstractMap.extend({
     };
   },
 
-  _getMarkerPixel(leafletMarker) {
-    const markerPixel = this.get('map').latLngToLayerPoint(leafletMarker.getLatLng());
+  _getMarkerPixel(mapMarker) {
+    const markerPixel = this.get('map').latLngToLayerPoint(mapMarker.getLatLng());
     const mapPixel = this.getMapPixel();
 
     return {
