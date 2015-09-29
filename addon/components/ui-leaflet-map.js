@@ -15,7 +15,7 @@ export default UIAbstractMap.extend({
   setup: Ember.on('didInsertElement', function () {
     Ember.run.next(() => {
       const {markers, config} = this.getProperties('markers', 'config');
-      const $map = L.map(this.getMapRawElement()).setView([config.lat, config.lng], config.zoom);
+      const $map = L.map(this.getMapElement()).setView([config.lat, config.lng], config.zoom);
 
       L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo($map);
 

@@ -46,7 +46,7 @@ export default UIAbstractMap.extend({
         }
       };
 
-      let $map = new mapApi.maps.Map(this.getMapRawElement(), options);
+      let $map = new mapApi.maps.Map(this.getMapElement(), options);
 
       this.setProperties({
         map: $map,
