@@ -8,12 +8,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Ember Map Kit</a>
+            {{#link-to "index" class="navbar-brand"}}
+              Ember Map Kit
+            {{/link-to}}
         </div>
 
         <ul class="nav navbar-nav navbar-right">
           {{#bs-dropdown tagName="li"}}
-            {{#bs-dropdown-toggle}}Dropdown <span class="caret"></span>{{/bs-dropdown-toggle}}
+            {{#bs-dropdown-toggle}}Maps <span class="caret"></span>{{/bs-dropdown-toggle}}
             {{#bs-dropdown-menu}}
                 <li>{{#link-to "maps.ui-google-map"}}Google{{/link-to}}</li>
                 <li>{{#link-to "maps.ui-leaflet-map"}}Leaflet{{/link-to}}</li>
