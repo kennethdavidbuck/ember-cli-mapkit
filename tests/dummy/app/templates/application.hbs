@@ -1,1 +1,30 @@
-{{outlet}}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            {{#link-to "index" class="navbar-brand"}}
+              Ember Map Kit
+            {{/link-to}}
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+          {{#bs-dropdown tagName="li"}}
+            {{#bs-dropdown-toggle}}Maps <span class="caret"></span>{{/bs-dropdown-toggle}}
+            {{#bs-dropdown-menu}}
+                <li>{{#link-to "maps.ui-google-map"}}Google{{/link-to}}</li>
+                <li>{{#link-to "maps.ui-leaflet-map"}}Leaflet{{/link-to}}</li>
+            {{/bs-dropdown-menu}}
+          {{/bs-dropdown}}
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+  {{outlet}}
+</div>
