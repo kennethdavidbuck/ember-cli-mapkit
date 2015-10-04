@@ -184,14 +184,13 @@ export default UIAbstractMap.extend({
   },
 
   removeMarker(id) {
-    const markerMap = this.get('markeMap');
     const mapMarker = this.getMarker(id);
 
     mapMarker.setMap(null);
 
     this.clearMarkerListeners(id);
 
-    markerMap.delete(id);
+    this.get('markerMap').delete(id);
   },
 
   setMarkerIcon(id, icon) {
