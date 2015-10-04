@@ -180,12 +180,11 @@ export default UIAbstractMap.extend({
   },
 
   clearMarkerListeners(id) {
-    mapApi.maps.event.clearInstanceListeners(this.getMarker(id));
+    this.get('mapApi').maps.event.clearInstanceListeners(this.getMarker(id));
   },
 
   removeMarker(id) {
-    const {mapApi, markerMap} =  this.getProperties('mapApi', 'markerMap');
-
+    const markerMap = this.get('markeMap');
     const mapMarker = this.getMarker(id);
 
     mapMarker.setMap(null);
