@@ -124,7 +124,7 @@ export default UIAbstractMap.extend({
   },
 
   setOptions(options) {
-    this.get('map').setOptions(value);
+    this.get('map').setOptions(options);
   },
 
   fitToMarkers() {
