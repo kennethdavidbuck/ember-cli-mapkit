@@ -60,7 +60,7 @@ export default Ember.Object.extend({
     this.get('mapComponent').addMarkerListener(id, eventName);
   },
 
-  removeMarker() {
+  removeMarker(id) {
     this.get('mapComponent').removeMarker(id);
   },
 
