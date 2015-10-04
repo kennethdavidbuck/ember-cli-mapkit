@@ -38,7 +38,7 @@ export default UIAbstractMap.extend({
   },
 
   teardown(markers) {
-    const {mapApi, map} = this.getProperties('mapApi', 'map', 'markerMap');
+    const {mapApi, map} = this.getProperties('mapApi', 'map');
 
     // clean up all listeners
     markers.forEach((mapMarker) => {
