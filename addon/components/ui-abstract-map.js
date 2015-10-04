@@ -90,9 +90,13 @@ export default Ember.Component.extend({
   }),
 
   config: {
-    lat: 0,
-    lng: 0,
-    zoom: 13
+    options: {
+      zoom: 13,
+      center: {
+        lat: 0,
+        lng: 0
+      }
+    }
   },
 
   getMapElement() {
