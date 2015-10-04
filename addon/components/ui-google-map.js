@@ -104,7 +104,7 @@ export default UIAbstractMap.extend({
 
   addListener(eventName) {
     const decodedEventName = GoogleUtiltity.map.decodeEventName(eventName);
-    const eventAction = GoogleUtiltity.map.encodeEventAction(decodedEventName);
+    const encodedEventAction = GoogleUtiltity.map.encodeEventAction(decodedEventName);
 
     const {mapApi, map} = this.getProperties('mapApi', 'map');
 
@@ -125,7 +125,7 @@ export default UIAbstractMap.extend({
         };
       }
 
-      this.sendAction(eventAction, this.get('mapFacade'), data);
+      this.sendAction(encodedEventAction, this.get('mapFacade'), data);
     });
   },
 
@@ -155,7 +155,7 @@ export default UIAbstractMap.extend({
 
   addMarkerListener(id, eventName) {
     const decodedEventName = GoogleUtiltity.marker.decodeEventName(eventName);
-    const eventAction = GoogleUtiltity.marker.encodeEventAction(decodedEventName);
+    const encodedEventAction = GoogleUtiltity.marker.encodeEventAction(decodedEventName);
 
     const data = {id: id, type: 'marker'};
     const mapApi = this.get('mapApi');
@@ -169,7 +169,7 @@ export default UIAbstractMap.extend({
 
       data.pixel = this._getMarkerPixel(mapMarker);
 
-      this.sendAction(eventAction, this.get('markerFacade'), id, data);
+      this.sendAction(encodedEventAction, this.get('markerFacade'), id, data);
     });
   },
 
