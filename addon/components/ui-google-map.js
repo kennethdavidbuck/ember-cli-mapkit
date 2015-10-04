@@ -122,6 +122,9 @@ export default UIAbstractMap.extend({
           lat: event.latLng.lat(),
           lng: event.latLng.lng()
         };
+      } else {
+        data.position = this.getCenter();
+        data.pixel = {}
       }
 
       this.sendAction(encodedEventAction, this.get('mapFacade'), data);

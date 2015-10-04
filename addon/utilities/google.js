@@ -58,7 +58,7 @@ export default Ember.Namespace.create({
       const alias = {
         click: 'click',
         boundsChanged: 'bounds_changed',
-        centerChanged: 'center_chanced',
+        centerChanged: 'center_changed',
         doubleClick: 'dblclick',
         rightClick: 'rightclick',
         tilesLoaded: 'tilesloaded',
@@ -86,7 +86,7 @@ export default Ember.Namespace.create({
       const alias = {
         click: 'mapClickAction',
         bounds_changed: 'mapBoundsChangedAction',
-        center_chanced: 'mapCenterChangedAction',
+        center_changed: 'mapCenterChangedAction',
         dblclick: 'mapDoubleClickAction',
         rightclick: 'mapRightClickAction',
         tilesloaded: 'mapTilesLoadedAction',
