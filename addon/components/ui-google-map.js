@@ -179,6 +179,10 @@ export default UIAbstractMap.extend({
     this.get('mapApi').maps.event.clearInstanceListeners(this.getMarker(id), eventName);
   },
 
+  clearMarkerListeners(id) {
+    mapApi.maps.event.clearInstanceListeners(this.getMarker(id));
+  },
+
   removeMarker(id) {
     const {mapApi, markerMap} =  this.getProperties('mapApi', 'markerMap');
 
@@ -186,7 +190,7 @@ export default UIAbstractMap.extend({
 
     mapMarker.setMap(null);
 
-    mapApi.maps.event.clearInstanceListeners(mapMarker);
+    this.clearMarkerListeners(id);
 
     markerMap.delete(id);
   },
