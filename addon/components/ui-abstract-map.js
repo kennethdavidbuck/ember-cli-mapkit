@@ -56,16 +56,16 @@ export default Ember.Component.extend({
   markers: [],
 
   _setup: on('didInsertElement', function () {
-    let mapFacade = this.get('mapFacade');
-
-    if (isEmpty(mapFacade)) {
-      mapFacade = MapFacade.create();
-      this.set('mapFacade', mapFacade);
-    }
-
-    mapFacade.register(this);
-
     run.next(() => {
+      let mapFacade = this.get('mapFacade');
+
+      if (isEmpty(mapFacade)) {
+        mapFacade = MapFacade.create();
+        this.set('mapFacade', mapFacade);
+      }
+
+      mapFacade.register(this);
+
       this.setup();
     });
   }),
