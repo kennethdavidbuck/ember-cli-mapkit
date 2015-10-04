@@ -11,9 +11,6 @@ export function initialize(container, application) {
 
   // ui-google-map
   application.inject('component:ui-google-map', 'mapApi', 'google:main');
-
-  // ui-leaflet-map
-  application.inject('component:ui-leaflet-map', 'application', 'application:main');
 }
 
 export default {
