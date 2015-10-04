@@ -132,7 +132,7 @@ export default Ember.Component.extend({
     });
   },
 
-  center: computed('map', {
+  center: computed({
     get() {
       return this.getCenter();
     },
@@ -142,11 +142,11 @@ export default Ember.Component.extend({
     }
   })['volatile'](),
 
-  tilt: computed('map', function () {
+  tilt: computed(function () {
       return this.getTilt();
   })['volatile'](),
 
-  zoom: computed('map', {
+  zoom: computed({
     get() {
       this.getZoom();
     },
@@ -156,7 +156,7 @@ export default Ember.Component.extend({
     }
   })['volatile'](),
 
-  bounds: computed('map', function () {
+  bounds: computed(function () {
     return this.getBounds();
   })['volatile'](),
 
