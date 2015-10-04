@@ -13,8 +13,6 @@ export default Ember.Controller.extend({
   actions: {
     mapReady(map) {
       this.set('map', map);
-
-      map.fitToMarkers();
     }
   }
 });
