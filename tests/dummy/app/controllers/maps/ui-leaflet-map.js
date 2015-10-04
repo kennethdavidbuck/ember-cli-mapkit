@@ -6,8 +6,8 @@ export default Ember.Controller.extend({
     lat: 62.9945,
     lng: -96.329,
     mapType: 'satellite',
-    mapEvents: ['click'],
-    markerEvents: ['click', 'dragend'],
+    mapEvents: [],
+    markerEvents: [],
     markerClusterer: {
       gridSize: 60,
       hideLabel: false,

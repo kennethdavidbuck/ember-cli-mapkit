@@ -4,6 +4,7 @@ import Ember from 'ember';
 /*global google*/
 
 export default Ember.Namespace.create({
+
   map: {
     type(type) {
       let mappedType;
@@ -28,8 +29,36 @@ export default Ember.Namespace.create({
       return mappedType;
     },
 
-    eventAction(eventName) {
-      const eventMapper = {
+    decodeEventName(eventName) {
+      const alias = {
+        click: 'click',
+        boundsChanged: 'bounds_changed',
+        centerChanged: 'center_chanced',
+        doubleClick: 'dblclick',
+        rightClick: 'rightclick',
+        tilesLoaded: 'tilesloaded',
+        zoomChanged: 'zoom_changed',
+        drag: 'drag',
+        dragEnd: 'dragend',
+        dragStart: 'dragstart',
+        headingChanged: 'heading_changed',
+        idle: 'idle',
+        mapTypeIdChanged: 'maptypeid_changed',
+        projectionChanged: 'projection_changed',
+        mouseMove: 'mousemove',
+        mouseUp: 'mouseup',
+        mouseDown: 'mousedown',
+        mouseOver: 'mouseovern',
+        mouseOut: 'mouseout'
+      }[eventName];
+
+      Ember.assert(`there is no event mapping for the following map event name: ${eventName}`, !!alias);
+
+      return alias;
+    },
+
+    encodeEventAction(eventName) {
+      const alias = {
         click: 'mapClickAction',
         bounds_changed: 'mapBoundsChangedAction',
         center_chanced: 'mapCenterChangedAction',
@@ -49,15 +78,47 @@ export default Ember.Namespace.create({
         mousedown: 'mapMouseDownAction',
         mouseover: 'mapMouseOverAction',
         mouseout: 'mapMouseOutAction'
-      };
+      }[eventName];
 
-      return eventMapper[eventName];
+      Ember.assert(`there is no action mapping for the following map event name: ${eventName}`, !!alias);
+
+      return alias;
     }
   },
 
   marker: {
-    eventAction(eventName) {
-      const eventMapper = {
+    decodeEventName(eventName) {
+      const alias = {
+        click: 'click',
+        animationChanged: 'animation_changed',
+        clickableChanged: 'clickable_changed',
+        cursorChanged: 'cursorChanged',
+        doubleClick: 'dblclick',
+        drag: 'drag',
+        dragEnd: 'dragend',
+        draggableChanged: 'draggable_changed',
+        dragStart: 'dragstart',
+        flatChanged: 'flat_changed',
+        iconChanged: 'icon_changed',
+        mouseDown: 'mousedown',
+        mouseOut: 'mouseout',
+        mouseOver: 'mouseover',
+        mouseUp: 'mouseup',
+        positionChanged: 'position_changed',
+        rightClick: 'rightclick',
+        shapeChanged: 'shape_changed',
+        titleChanged: 'title_changed',
+        visibleChanged: 'visible_changed',
+        zindex_changed: 'zindex_changed'
+      }[eventName];
+
+      Ember.assert(`there is no event mapping for the following marker event name: ${eventName}`, !!alias);
+
+      return alias;
+    },
+
+    encodeEventAction(eventName) {
+      const alias = {
         'animation_changed': 'markerAnimationChangedAction',
         'click': 'markerClickAction',
         'clickable_changed': 'markerClickableChangedAction',
@@ -79,9 +140,11 @@ export default Ember.Namespace.create({
         'title_changed': 'markerTitleChangedAction',
         'visible_changed': 'markerVisibleChangedAction',
         'zindex_changed': 'markerZIndexChangedAction'
-      };
+      }[eventName];
 
-      return eventMapper[eventName];
+      Ember.assert(`there is no action mapping for the following event name: ${eventName}`, !!alias);
+
+      return alias;
     }
   }
 });

@@ -1,4 +1,3 @@
-
 import Ember from 'ember';
 
 /*global google*/
@@ -28,7 +27,7 @@ export default Ember.Namespace.create({
       return mappedType;
     },
 
-    eventAction(eventName) {
+    encodeEventAction(eventName) {
       const eventMapper = {
         click: 'mapClickAction',
         bounds_changed: 'mapBoundsChangedAction',
@@ -56,7 +55,15 @@ export default Ember.Namespace.create({
   },
 
   marker: {
-    eventAction(eventName) {
+    decodeEventName(eventName) {
+      const alias = {}[eventName];
+
+      Ember.assert(`there is no mapping for the following event name: ${eventName}`, !!alias);
+
+      return alias;
+    },
+
+    encodeEventAction(eventName) {
       const eventMapper = {
         'animation_changed': 'markerAnimationChangedAction',
         'click': 'markerClickAction',

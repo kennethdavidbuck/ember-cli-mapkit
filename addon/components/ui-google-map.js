@@ -138,9 +138,12 @@ export default UIAbstractMap.extend({
   },
 
   addListener(eventName) {
+    const decodedEventName = GoogleUtiltity.map.decodeEventName(eventName);
+    const eventAction = GoogleUtiltity.map.encodeEventAction(decodedEventName);
+
     const {mapApi, map} = this.getProperties('mapApi', 'map');
 
-    mapApi.maps.event.addListener(map, eventName, (event) => {
+    mapApi.maps.event.addListener(map, decodedEventName, (event) => {
       const data = {type: 'map'};
 
       if (event) {
@@ -157,7 +160,7 @@ export default UIAbstractMap.extend({
         };
       }
 
-      this.sendAction(GoogleUtiltity.map.eventAction(eventName), this.get('mapFacade'), data);
+      this.sendAction(eventAction, this.get('mapFacade'), data);
     });
   },
 
@@ -185,12 +188,15 @@ export default UIAbstractMap.extend({
   },
 
   addMarkerListener(id, eventName) {
+    const decodedEventName = GoogleUtiltity.marker.decodeEventName(eventName);
+    const eventAction = GoogleUtiltity.marker.encodeEventAction(decodedEventName);
+
     const data = {id: id, type: 'marker'};
     const {mapApi} = this.getProperties('mapApi');
 
     const mapMarker = this.getMarker(id);
 
-    mapApi.maps.event.addListener(mapMarker, eventName, () => {
+    mapApi.maps.event.addListener(mapMarker, decodedEventName, () => {
       data.position = {
         lat: mapMarker.getPosition().lat(),
         lng: mapMarker.getPosition().lng()
@@ -198,7 +204,7 @@ export default UIAbstractMap.extend({
 
       data.pixel = this._getMarkerPixel(mapMarker);
 
-      this.sendAction(GoogleUtiltity.marker.eventAction(eventName), this.get('markerFacade'), id, data);
+      this.sendAction(eventAction, this.get('markerFacade'), id, data);
     });
   },
 
