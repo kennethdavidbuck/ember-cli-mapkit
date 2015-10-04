@@ -10,7 +10,6 @@ export function initialize(container, application) {
   application.inject('service:map', 'googleApi', 'google:main');
 
   // ui-google-map
-  application.inject('component:ui-google-map', 'MarkerClusterer', 'google:markerClusterer');
   application.inject('component:ui-google-map', 'mapApi', 'google:main');
 
   // ui-leaflet-map
