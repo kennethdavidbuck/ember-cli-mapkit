@@ -131,12 +131,6 @@ export default UIAbstractMap.extend({
     this.get('markerClusterer').fitMapToMarkers();
   },
 
-  addListeners(eventNames) {
-    eventNames.forEach((eventName) => {
-      this.addListener(eventName);
-    });
-  },
-
   addListener(eventName) {
     const decodedEventName = GoogleUtiltity.map.decodeEventName(eventName);
     const eventAction = GoogleUtiltity.map.encodeEventAction(decodedEventName);
