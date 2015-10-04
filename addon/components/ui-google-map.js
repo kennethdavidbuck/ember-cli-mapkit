@@ -219,7 +219,7 @@ export default UIAbstractMap.extend({
 
       data.pixel = this._getMarkerPixel(mapMarker);
 
-      this.sendAction(GoogleUtiltity.marker.eventAction(eventName), this, id, data);
+      this.sendAction(GoogleUtiltity.marker.eventAction(eventName), this.get('markerFacade'), id, data);
     });
   },
 

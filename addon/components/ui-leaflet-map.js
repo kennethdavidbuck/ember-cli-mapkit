@@ -73,7 +73,7 @@ export default UIAbstractMap.extend({
       data.position = this.getMarkerPosition(id);
       data.pixel = this.getMarkerPixel(id);
 
-      this.sendAction(LeafletUtility.marker.eventAction(eventName), this, id, data);
+      this.sendAction(LeafletUtility.marker.eventAction(eventName), this.get('markerFacade'), id, data);
     });
   },
 
