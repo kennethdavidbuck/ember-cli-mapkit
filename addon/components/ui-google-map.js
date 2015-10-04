@@ -160,22 +160,20 @@ export default UIAbstractMap.extend({
     const {mapApi, map} = this.getProperties('mapApi', 'map');
 
     mapApi.maps.event.addListener(map, eventName, (event) => {
-      let position;
-      let data = {
-        type: eventName
-      };
+      const data = {type: 'map'};
+
       if (event) {
-        position = this.getMapPixel();
-        data = Ember.merge(data, {
-          pixel: {
-            x: position.left + event.pixel.x,
-            y: position.top + event.pixel.y
-          },
-          position: {
-            lat: event.latLng.lat(),
-            lng: event.latLng.lng()
-          }
-        });
+        const position = this.getMapPixel();
+
+        data.pixel = {
+          x: position.left + event.pixel.x,
+          y: position.top + event.pixel.y
+        };
+
+        data.position = {
+          lat: event.latLng.lat(),
+          lng: event.latLng.lng()
+        };
       }
 
       this.sendAction(GoogleUtiltity.map.eventAction(eventName), this.get('mapFacade'), data);
@@ -206,7 +204,7 @@ export default UIAbstractMap.extend({
   },
 
   addMarkerListener(id, eventName) {
-    let data = {id: id, type: eventName};
+    const data = {id: id, type: 'marker'};
     const {mapApi} = this.getProperties('mapApi');
 
     const mapMarker = this.getMarker(id);

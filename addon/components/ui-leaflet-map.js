@@ -64,10 +64,7 @@ export default UIAbstractMap.extend({
   },
 
   addMarkerListener(id, eventName) {
-    let data = {
-      id: id,
-      type: eventName
-    };
+    let data = {id: id, type: eventName};
 
     this.getMarker(id).on(eventName, () => {
       data.position = this.getMarkerPosition(id);
