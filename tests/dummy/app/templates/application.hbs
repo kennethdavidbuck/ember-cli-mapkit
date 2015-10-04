@@ -17,6 +17,7 @@
           {{#bs-dropdown tagName="li"}}
             {{#bs-dropdown-toggle}}Maps <span class="caret"></span>{{/bs-dropdown-toggle}}
             {{#bs-dropdown-menu}}
+                <li>{{#link-to "maps.ui-test-map"}}Test{{/link-to}}</li>
                 <li>{{#link-to "maps.ui-google-map"}}Google{{/link-to}}</li>
                 <li>{{#link-to "maps.ui-leaflet-map"}}Leaflet{{/link-to}}</li>
             {{/bs-dropdown-menu}}
