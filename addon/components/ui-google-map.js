@@ -1,10 +1,7 @@
-import Ember from 'ember';
 import GoogleUtiltity from '../utilities/google';
 import UIAbstractMap from './ui-abstract-map';
 
 import layout from '../templates/components/ui-google-map';
-
-const {computed} = Ember;
 
 /*global JSON*/
 
@@ -14,30 +11,8 @@ export default UIAbstractMap.extend({
   tagName: 'ui-google-map',
   classNames: ['ui-google-map'],
 
-  markerClusterer: computed({
-    get() {
-      const MarkerClusterer = this.get('MarkerClusterer');
-      return new MarkerClusterer(null, [], this.get('config.markerClusterer'));
-    }
-  }),
-
-  mapTypeId: computed('map', {
-    get() {
-      return this.get('map').getMapTypeId();
-    },
-    set(key, value) {
-      let type = GoogleUtiltity.map.type(value);
-
-      const map = this.get('map');
-
-      map.setMapTypeId(type);
-
-      return map.getMapTypeId();
-    }
-  })['volatile'](),
-
   setup() {
-    const {config, mapApi, markerClusterer} = this.getProperties('config', 'mapApi', 'markerClusterer');
+    const {config, mapApi} = this.getProperties('config', 'mapApi');
 
     let options = {
       zoom: config.zoom,
@@ -49,10 +24,9 @@ export default UIAbstractMap.extend({
 
     let $map = new mapApi.maps.Map(this.getMapElement(), options);
 
-    this.setProperties({
-      map: $map,
-      mapTypeId: config.mapType
-    });
+    this.set('map', $map);
+
+    this.setMapType(config.mapType);
 
     this.addListeners(this.get('config.mapEvents'));
 
@@ -61,12 +35,10 @@ export default UIAbstractMap.extend({
     overlay.draw = function () {
     };
     overlay.setMap($map);
-
-    markerClusterer.setMap($map);
   },
 
   teardown(markers) {
-    const {mapApi, map, markerClusterer} = this.getProperties('mapApi', 'map', 'markerMap', 'markerClusterer');
+    const {mapApi, map} = this.getProperties('mapApi', 'map');
 
     // clean up all listeners
     markers.forEach((mapMarker) => {
@@ -74,8 +46,20 @@ export default UIAbstractMap.extend({
     });
 
     mapApi.maps.event.clearInstanceListeners(map);
+  },
 
-    markerClusterer.clearMarkers();
+  getMapType() {
+    return this.get('map').getMapTypeId();
+  },
+
+  setMapType(value) {
+    let type = GoogleUtiltity.map.type(value);
+
+    const map = this.get('map');
+
+    map.setMapTypeId(type);
+
+    return map.getMapTypeId();
   },
 
   getCenter() {
@@ -127,10 +111,6 @@ export default UIAbstractMap.extend({
     this.get('map').setOptions(options);
   },
 
-  fitToMarkers() {
-    this.get('markerClusterer').fitMapToMarkers();
-  },
-
   addListener(eventName) {
     const decodedEventName = GoogleUtiltity.map.decodeEventName(eventName);
     const eventAction = GoogleUtiltity.map.encodeEventAction(decodedEventName);
@@ -167,12 +147,13 @@ export default UIAbstractMap.extend({
   addMarker(marker) {
     marker = JSON.parse(JSON.stringify(marker));
 
-    const {config, mapApi, markerMap, markerClusterer} = this.getProperties('config', 'mapApi', 'markerMap', 'markerClusterer');
+    const {config, mapApi, markerMap, map} = this.getProperties('config', 'mapApi', 'markerMap', 'map');
+
+    marker.map = map;
+
     const mapMarker = new mapApi.maps.Marker(marker);
 
     markerMap.set(marker.id, mapMarker);
-
-    markerClusterer.addMarker(mapMarker);
 
     // apply default marker events
     const self = this;
@@ -207,13 +188,13 @@ export default UIAbstractMap.extend({
   },
 
   removeMarker(id) {
-    const {mapApi, markerMap, markerClusterer} =  this.getProperties('mapApi', 'markerMap', 'markerClusterer');
+    const {mapApi, markerMap} =  this.getProperties('mapApi', 'markerMap');
 
     const mapMarker = this.getMarker(id);
 
-    mapApi.maps.event.clearInstanceListeners(mapMarker);
+    mapMarker.setMap(null);
 
-    markerClusterer.removeMarker(mapMarker);
+    mapApi.maps.event.clearInstanceListeners(mapMarker);
 
     markerMap.delete(id);
   },
