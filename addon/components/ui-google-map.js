@@ -14,15 +14,7 @@ export default UIAbstractMap.extend({
   setup() {
     const {config, mapApi} = this.getProperties('config', 'mapApi');
 
-    let options = {
-      zoom: config.zoom,
-      center: {
-        lat: config.lat,
-        lng: config.lng
-      }
-    };
-
-    let $map = new mapApi.maps.Map(this.getMapElement(), options);
+    let $map = new mapApi.maps.Map(this.getMapElement(), config.options);
 
     this.set('map', $map);
 

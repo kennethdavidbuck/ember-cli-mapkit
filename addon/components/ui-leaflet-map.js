@@ -13,7 +13,8 @@ export default UIAbstractMap.extend({
 
   setup() {
     const config = this.get('config');
-    const $map = L.map(this.getMapElement()).setView([config.lat, config.lng], config.zoom);
+    const options = config.options;
+    const $map = L.map(this.getMapElement()).setView([options.center.lat, options.center.lng], options.zoom);
 
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo($map);
 
