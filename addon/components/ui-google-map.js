@@ -4,6 +4,8 @@ import UIAbstractMap from './ui-abstract-map';
 
 import layout from '../templates/components/ui-google-map';
 
+const {computed} = Ember;
+
 /*global JSON*/
 
 export default UIAbstractMap.extend({
@@ -12,14 +14,14 @@ export default UIAbstractMap.extend({
   tagName: 'ui-google-map',
   classNames: ['ui-google-map'],
 
-  markerClusterer: Ember.computed({
+  markerClusterer: computed({
     get() {
       const MarkerClusterer = this.get('MarkerClusterer');
       return new MarkerClusterer(null, [], this.get('config.markerClusterer'));
     }
   }),
 
-  mapTypeId: Ember.computed('map', {
+  mapTypeId: computed('map', {
     get() {
       return this.get('map').getMapTypeId();
     },
@@ -80,7 +82,7 @@ export default UIAbstractMap.extend({
     markerClusterer.clearMarkers();
   },
 
-  center: Ember.computed('map', {
+  center: computed('map', {
     get() {
       const center = this.get('map').getCenter();
       return {
@@ -99,7 +101,7 @@ export default UIAbstractMap.extend({
     this.get('map').panTo(position);
   },
 
-  zoom: Ember.computed('map', {
+  zoom: computed('map', {
     get() {
       return this.get('map').getZoom();
     },
@@ -110,13 +112,13 @@ export default UIAbstractMap.extend({
     }
   })['volatile'](),
 
-  tilt: Ember.computed('map', {
+  tilt: computed('map', {
     get() {
       return this.get('map').getTilt();
     }
   })['volatile'](),
 
-  bounds: Ember.computed('map', {
+  bounds: computed('map', {
     get() {
       const bounds = this.get('map').getBounds();
       const sw = bounds.getSouthWest();
@@ -135,7 +137,7 @@ export default UIAbstractMap.extend({
     }
   })['volatile'](),
 
-  options: Ember.computed('map', {
+  options: computed('map', {
     set(key, value) {
       this.get('map').setOptions(value);
 
