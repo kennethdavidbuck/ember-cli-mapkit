@@ -53,7 +53,7 @@ export default Ember.Component.extend({
 
   isLoaded: false,
 
-  markers: [],
+  markers: Ember.A([]),
 
   _registerFacade: on('willInsertElement', function () {
     let mapFacade = this.get('mapFacade');
