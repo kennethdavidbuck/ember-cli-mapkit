@@ -3,6 +3,8 @@ import Ember from 'ember';
 
 /*global google*/
 
+const {assert} = Ember;
+
 export default Ember.Namespace.create({
 
   map: {
@@ -52,7 +54,7 @@ export default Ember.Namespace.create({
         mouseOut: 'mouseout'
       }[eventName];
 
-      Ember.assert(`there is no event mapping for the following map event name: ${eventName}`, !!alias);
+      assert(`there is no event mapping for the following map event name: ${eventName}`, !!alias);
 
       return alias;
     },
@@ -80,7 +82,7 @@ export default Ember.Namespace.create({
         mouseout: 'mapMouseOutAction'
       }[eventName];
 
-      Ember.assert(`there is no action mapping for the following map event name: ${eventName}`, !!alias);
+      assert(`there is no action mapping for the following map event name: ${eventName}`, !!alias);
 
       return alias;
     }
@@ -112,7 +114,7 @@ export default Ember.Namespace.create({
         zindex_changed: 'zindex_changed'
       }[eventName];
 
-      Ember.assert(`there is no event mapping for the following marker event name: ${eventName}`, !!alias);
+      assert(`there is no event mapping for the following marker event name: ${eventName}`, !!alias);
 
       return alias;
     },
@@ -142,7 +144,7 @@ export default Ember.Namespace.create({
         'zindex_changed': 'markerZIndexChangedAction'
       }[eventName];
 
-      Ember.assert(`there is no action mapping for the following event name: ${eventName}`, !!alias);
+      assert(`there is no action mapping for the following event name: ${eventName}`, !!alias);
 
       return alias;
     }
