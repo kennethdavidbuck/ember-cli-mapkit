@@ -4,9 +4,7 @@ import UIAbstractMap from './ui-abstract-map';
 
 import layout from '../templates/components/ui-google-map';
 
-const {computed} = Ember;
-
-/*global JSON*/
+const {computed, get} = Ember;
 
 export default UIAbstractMap.extend({
 
@@ -186,19 +184,17 @@ export default UIAbstractMap.extend({
   },
 
   addMarker(marker) {
-    marker = JSON.parse(JSON.stringify(marker));
-
     const {config, mapApi, markerMap, markerClusterer} = this.getProperties('config', 'mapApi', 'markerMap', 'markerClusterer');
     const mapMarker = new mapApi.maps.Marker(marker);
 
-    markerMap.set(marker.id, mapMarker);
+    markerMap.set(get(marker, 'id', mapMarker);
 
     markerClusterer.addMarker(mapMarker);
 
     // apply default marker events
     const self = this;
     config.markerEvents.forEach(function (eventName) {
-      self.addMarkerListener(marker.id, eventName);
+      self.addMarkerListener(get(marker, 'id'), eventName);
     }, mapMarker);
   },
 
