@@ -158,8 +158,7 @@ export default UIAbstractMap.extend({
     const eventAction = GoogleUtiltity.marker.encodeEventAction(decodedEventName);
 
     const data = {id: id, type: 'marker'};
-    const {mapApi} = this.getProperties('mapApi');
-
+    const mapApi = this.get('mapApi');
     const mapMarker = this.getMarker(id);
 
     mapApi.maps.event.addListener(mapMarker, decodedEventName, () => {
