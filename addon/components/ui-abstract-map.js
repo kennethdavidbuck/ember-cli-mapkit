@@ -180,6 +180,8 @@ export default Ember.Component.extend({
 
   setMarkerTitle: K,
 
-  panTo: K
+  panTo: K,
+
+  fitToMarkers: K
 });
 
