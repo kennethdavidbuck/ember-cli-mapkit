@@ -18,8 +18,7 @@ export default UIAbstractMap.extend({
     this.set('map', $map);
 
     this.setMapType(config.mapType);
-
-    this.addListeners(this.get('config.mapEvents'));
+    this.addListeners(config.mapEvents);
 
     //fixes bug where fromLatLnToContainerPixel returns undefined.
     const overlay = new mapApi.maps.OverlayView();
