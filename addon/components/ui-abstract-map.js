@@ -52,6 +52,22 @@ export default Ember.Component.extend({
 
   markers: [],
 
+  registerMapFacade: Ember.on('init', function () {
+    const mapFacade = this.get('mapFacade');
+
+    if (!!mapFacade) {
+      mapFacade.register(this);
+    }
+  }),
+
+  unregisterMapFacade: Ember.on('willDestroyElement', function () {
+    const mapFacade = this.get('mapFacade');
+
+    if (!!mapFacade) {
+      mapFacade.unregister(this);
+    }
+  }),
+
   markerMap: Ember.computed({
     get() {
       return Ember.Map.create();

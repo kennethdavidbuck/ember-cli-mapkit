@@ -4,11 +4,11 @@ export default Ember.Object.extend({
 
   mapComponent: null,
 
-  registerComponent(component) {
+  register(component) {
     this.set('mapComponent', component);
   },
 
-  unregisterComponent(/*component*/) {
+  unregister(/*component*/) {
     this.set('mapComponent', null);
   },
 

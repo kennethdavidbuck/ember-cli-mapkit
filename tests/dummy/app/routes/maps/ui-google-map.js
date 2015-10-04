@@ -5,7 +5,7 @@ export default Ember.Route.extend({
 
   setupController(controller, model) {
     this._super(controller,model);
-    controller.set('map', MapFacade.create());
+    controller.set('mapFacade', MapFacade.create());
   },
 
   actions: {
