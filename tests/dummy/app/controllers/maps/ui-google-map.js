@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const {merge} = 'ember';
+
 export default Ember.Controller.extend({
   config: {
     zoom: 7,
@@ -22,8 +24,20 @@ export default Ember.Controller.extend({
   },
 
   actions: {
-    mapDoubleClick(id, data) {
-      //this.get('mapFacade').addMarker(data);
+    mapReady(map) {
+      this.set('map', map);
+    },
+
+    mapDoubleClick(map, data) {
+      const marker = Ember.Object.create(merge({
+        id: 1234,
+        draggable: true
+      }, data));
+
+      this.get('model').pushObject(marker);
+
+      map.addMarker(marker);
+
       return true;
     }
   }

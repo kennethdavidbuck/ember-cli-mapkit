@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import MapFacade from '../facades/map';
 
 export default Ember.Component.extend({
 
@@ -52,20 +53,19 @@ export default Ember.Component.extend({
 
   markers: [],
 
-  registerMapFacade: Ember.on('init', function () {
-    const mapFacade = this.get('mapFacade');
+  registerMapFacade: Ember.on('willInsertElement', function () {
+    let mapFacade = this.get('mapFacade');
 
-    if (!!mapFacade) {
-      mapFacade.register(this);
+    if (Ember.isEmpty(mapFacade)) {
+      mapFacade = MapFacade.create();
+      this.set('mapFacade', mapFacade);
     }
+
+    mapFacade.register(this);
   }),
 
   unregisterMapFacade: Ember.on('willDestroyElement', function () {
-    const mapFacade = this.get('mapFacade');
-
-    if (!!mapFacade) {
-      mapFacade.unregister(this);
-    }
+    this.get('mapFacade').unregister(this);
   }),
 
   markerMap: Ember.computed({

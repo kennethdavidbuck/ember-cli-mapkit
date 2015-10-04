@@ -65,7 +65,7 @@ export default UIAbstractMap.extend({
 
       this.addMarkers(this.get('markers'));
 
-      this.sendAction('readyAction', this);
+      this.sendAction('readyAction', this.get('mapFacade'));
     });
   }),
 
@@ -178,7 +178,7 @@ export default UIAbstractMap.extend({
         });
       }
 
-      this.sendAction(GoogleUtiltity.map.eventAction(eventName), this, data);
+      this.sendAction(GoogleUtiltity.map.eventAction(eventName), this.get('mapFacade'), data);
     });
   },
 
