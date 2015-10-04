@@ -7,4 +7,3 @@ export default UIAbstractMap.extend({
   tagName: 'ui-test-map',
   classNames: ['ui-test-map']
 });
-
