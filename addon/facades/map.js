@@ -28,6 +28,30 @@ export default Ember.Object.extend({
     return this.get('mapComponent').size();
   },
 
+  getCenter() {
+    return this.get('mapComponent').getCenter();
+  },
+
+  setCenter(position) {
+    return this.get('mapComponent').setCenter(position);
+  },
+
+  getZoom() {
+    return this.get('mapComponent').getZoom();
+  },
+
+  setZoom(zoom) {
+    return this.get('mapComponent').setZoom(zoom);
+  },
+
+  getBounds() {
+    return this.get('mapComponent').getBounds();
+  },
+
+  getTilt() {
+    return this.get('mapComponent').getTilt();
+  },
+
   hasMarker(id) {
     return this.get('mapComponent').hasMarker(id);
   },
