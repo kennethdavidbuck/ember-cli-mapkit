@@ -1,7 +1,5 @@
 import Ember from 'ember';
 
-const {merge} = Ember;
-
 export default Ember.Controller.extend({
   config: {
     zoom: 7,

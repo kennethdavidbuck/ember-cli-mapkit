@@ -12,7 +12,7 @@ export default UIAbstractMap.extend({
   classNames: ['ui-leaflet-map'],
 
   setup() {
-    const {markers, config} = this.getProperties('markers', 'config');
+    const config = this.getProperties('config');
     const $map = L.map(this.getMapElement()).setView([config.lat, config.lng], config.zoom);
 
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo($map);
