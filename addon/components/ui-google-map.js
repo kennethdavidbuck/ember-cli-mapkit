@@ -78,68 +78,54 @@ export default UIAbstractMap.extend({
     markerClusterer.clearMarkers();
   },
 
-  center: computed('map', {
-    get() {
-      const center = this.get('map').getCenter();
-      return {
-        lat: center.lat(),
-        lng: center.lng()
-      };
-    },
-    set(key, position) {
-      this.get('map').setCenter(position);
+  getCenter() {
+    const center = this.get('map').getCenter();
+    return {
+      lat: center.lat(),
+      lng: center.lng()
+    };
+  },
 
-      return position;
-    }
-  })['volatile'](),
+  setCenter(position) {
+    this.get('map').setCenter(position);
+  },
+
+  getTilt() {
+    return this.get('map').getTilt();
+  },
 
   panTo(position) {
     this.get('map').panTo(position);
   },
 
-  zoom: computed('map', {
-    get() {
-      return this.get('map').getZoom();
-    },
-    set(key, zoom) {
-      this.get('map').setZoom(zoom);
+  getZoom() {
+    return this.get('map').getZoom();
+  },
 
-      return zoom;
-    }
-  })['volatile'](),
+  setZoom(zoom) {
+    this.get('map').setZoom(zoom);
+  },
 
-  tilt: computed('map', {
-    get() {
-      return this.get('map').getTilt();
-    }
-  })['volatile'](),
+  getBounds() {
+    const bounds = this.get('map').getBounds();
+    const sw = bounds.getSouthWest();
+    const ne = bounds.getNorthEast();
 
-  bounds: computed('map', {
-    get() {
-      const bounds = this.get('map').getBounds();
-      const sw = bounds.getSouthWest();
-      const ne = bounds.getNorthEast();
+    return {
+      sw: {
+        lat: sw.lat(),
+        lng: sw.lng()
+      },
+      ne: {
+        lat: ne.lat(),
+        lng: ne.lng()
+      }
+    };
+  },
 
-      return {
-        sw: {
-          lat: sw.lat(),
-          lng: sw.lng()
-        },
-        ne: {
-          lat: ne.lat(),
-          lng: ne.lng()
-        }
-      };
-    }
-  })['volatile'](),
-
-  options: computed('map', {
-    set(key, value) {
-      this.get('map').setOptions(value);
-
-      return value;
-    }
-  }),
+  setOptions(options) {
+    this.get('map').setOptions(value);
+  },
 
   fitToMarkers() {
     this.get('markerClusterer').fitMapToMarkers();

@@ -132,9 +132,53 @@ export default Ember.Component.extend({
     });
   },
 
+  center: computed('map', {
+    get() {
+      return this.getCenter();
+    },
+    set(key, position) {
+      this.setCenter(position);
+      return position;
+    }
+  })['volatile'](),
+
+  tilt: computed('map', function () {
+      return this.getTilt();
+  })['volatile'](),
+
+  zoom: computed('map', {
+    get() {
+      this.getZoom();
+    },
+    set(key, zoom) {
+      this.setZoom(zoom);
+      return zoom;
+    }
+  })['volatile'](),
+
+  bounds: computed('map', function () {
+    return this.getBounds();
+  })['volatile'](),
+
   setup: K,
 
   teardown: K,
+
+  getCenter: K,
+
+  setCenter: K,
+
+  getZoom: K,
+
+  setZoom: K,
+
+  getBounds: K,
+
+  setOptions: K,
+
+  getTilt: K,
+
+  setTitle: K,
 
   addListener: K,
 
