@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
     lat: 62.9945,
     lng: -96.329,
     mapType: 'satellite',
-    mapEvents: ['click', 'mousemove'],
+    mapEvents: ['click', 'dblclick'],
     markerEvents: ['click', 'dragend'],
     markerClusterer: {
       gridSize: 60,
@@ -18,6 +18,13 @@ export default Ember.Controller.extend({
       ignoreHidden: false,
       enableRetinaIcons: false,
       imagePath: false
+    }
+  },
+
+  actions: {
+    mapDoubleClick(id, data) {
+      //this.get('mapFacade').addMarker(data);
+      return true;
     }
   }
 });

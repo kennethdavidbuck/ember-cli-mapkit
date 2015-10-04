@@ -49,6 +49,9 @@ export default Ember.Route.extend({
     mapMouseMove(map, data) {
       this.displayData(data);
     },
+    mapDoubleClick(id, data) {
+      this.displayData(data);
+    },
     mapClick(map, data) {
       this.displayData(data);
     },
