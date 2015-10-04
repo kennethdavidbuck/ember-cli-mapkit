@@ -37,7 +37,11 @@ export default Ember.Route.extend({
   },
 
   displayData(data) {
-    this.get('controller.eventData').insertAt(0, JSON.stringify(data, undefined, 2));
+    const eventData = this.get('controller.eventData');
+    eventData.insertAt(0, JSON.stringify(data, undefined, 2));
+    if(eventData.get('length') > 100) {
+      eventData.splice(100, 1);
+    }
   },
 
   actions: {
