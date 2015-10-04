@@ -44,6 +44,14 @@ export default Ember.Object.extend({
     return this.get('mapComponent').setZoom(zoom);
   },
 
+  getMapType() {
+    return this.get('mapComponent').getMapType();
+  },
+
+  setMapType(type) {
+    return this.get('mapComponent').setMapType(type);
+  },
+
   getBounds() {
     return this.get('mapComponent').getBounds();
   },

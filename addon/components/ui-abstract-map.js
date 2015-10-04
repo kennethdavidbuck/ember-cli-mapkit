@@ -188,6 +188,10 @@ export default Ember.Component.extend({
 
   getTilt: K,
 
+  getMapType: K,
+
+  setMapType: K,
+
   setTitle: K,
 
   addListener: K,
