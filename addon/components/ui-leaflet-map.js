@@ -98,9 +98,5 @@ export default UIAbstractMap.extend({
     } else {
       this.getMarker(id).dragging.disable();
     }
-  },
-
-  setMarkerTitle(/*id, title*/) {
-    // TODO - Find way to set leaflet marker title
   }
 });
