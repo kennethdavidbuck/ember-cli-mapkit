@@ -94,5 +94,9 @@ export default Ember.Object.extend({
 
   panTo(position) {
     this.get('mapComponent').panTo(position);
+  },
+
+  fitToMarkers() {
+    this.get('mapComponent').fitToMarkers();
   }
 });
