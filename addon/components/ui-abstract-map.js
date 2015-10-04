@@ -77,9 +77,9 @@ export default Ember.Component.extend({
   _teardown: on('willDestroyElement', function () {
     const {mapFacade, markerMap} = this.getProperties('mapFacade', 'markerMap');
 
-    mapFacade.unregister(this);
-
     this.teardown(markerMap);
+
+    mapFacade.unregister(this);
 
     markerMap.clear();
   }),
