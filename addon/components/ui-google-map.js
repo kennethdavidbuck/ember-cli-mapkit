@@ -40,11 +40,11 @@ export default UIAbstractMap.extend({
   },
 
   getMapType() {
-    return this.get('map').getMapTypeId();
+    return GoogleUtiltity.encodeMapType(this.get('map').getMapTypeId());
   },
 
   setMapType(value) {
-    let type = GoogleUtiltity.map.type(value);
+    let type = GoogleUtiltity.map.decodeMapType(value);
 
     const map = this.get('map');
 

@@ -8,7 +8,30 @@ const {assert} = Ember;
 export default Ember.Namespace.create({
 
   map: {
-    type(type) {
+    encodeMapType(type) {
+      let mappedType;
+
+      switch (type) {
+        case google.maps.MapTypeId.ROADMAP:
+          mappedType = "roadmap";
+          break;
+        case google.maps.MapTypeId.SATELLITE:
+          mappedType = "satellite";
+          break;
+        case google.maps.MapTypeId.TERRAIN:
+          mappedType = "terrain";
+          break;
+        case google.maps.MapTypeId.HYBRID:
+          mappedType = "hybrid";
+          break;
+        default:
+          mappedType = "roadmap";
+      }
+
+      return mappedType;
+    },
+
+    decodeMapType(type) {
       let mappedType;
 
       switch (type) {
