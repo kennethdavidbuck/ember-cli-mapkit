@@ -80,10 +80,8 @@ export default Ember.Component.extend({
     markerMap.clear();
   }),
 
-  markerMap: computed({
-    get() {
-      return Ember.Map.create();
-    }
+  markerMap: computed(function () {
+    return Ember.Map.create();
   }),
 
   config: {
