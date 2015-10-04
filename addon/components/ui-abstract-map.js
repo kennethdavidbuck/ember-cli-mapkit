@@ -132,6 +132,16 @@ export default Ember.Component.extend({
     });
   },
 
+  mapType: computed({
+    get() {
+      return this.getMapType();
+    },
+    set(key, value) {
+      this.setMapType(value);
+      return value;
+    }
+  })['volatile'](),
+
   center: computed({
     get() {
       return this.getCenter();
