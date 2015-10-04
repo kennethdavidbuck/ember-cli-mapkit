@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import MapFacade from '../facades/map';
 
+const {isEmpty, computed, on, K, run} = Ember;
+
 export default Ember.Component.extend({
 
   classNames: ['ui-map'],
@@ -53,24 +55,22 @@ export default Ember.Component.extend({
 
   markers: [],
 
-  registerMapFacade: Ember.on('willInsertElement', function () {
+  _setup: on('didInsertElement', function () {
     let mapFacade = this.get('mapFacade');
 
-    if (Ember.isEmpty(mapFacade)) {
+    if (isEmpty(mapFacade)) {
       mapFacade = MapFacade.create();
       this.set('mapFacade', mapFacade);
     }
 
     mapFacade.register(this);
-  }),
 
-  _setup: Ember.on('didInsertElement', function () {
-    Ember.run.next(() => {
+    run.next(() => {
       this.setup();
     });
   }),
 
-  _teardown: Ember.on('willDestroyElement', function () {
+  _teardown: on('willDestroyElement', function () {
     const {mapFacade, markerMap} = this.getProperties('mapFacade', 'markerMap');
 
     mapFacade.unregister(this);
@@ -80,7 +80,7 @@ export default Ember.Component.extend({
     markerMap.clear();
   }),
 
-  markerMap: Ember.computed({
+  markerMap: computed({
     get() {
       return Ember.Map.create();
     }
@@ -130,34 +130,34 @@ export default Ember.Component.extend({
     });
   },
 
-  setup: Ember.K,
+  setup: K,
 
-  teardown: Ember.K,
+  teardown: K,
 
-  addListener: Ember.K,
+  addListener: K,
 
-  removeListener: Ember.K,
+  removeListener: K,
 
-  addMarker: Ember.K,
+  addMarker: K,
 
-  addMarkerListener: Ember.K,
+  addMarkerListener: K,
 
-  removeMarker: Ember.K,
+  removeMarker: K,
 
-  removeMarkerListener: Ember.K,
+  removeMarkerListener: K,
 
-  setMarkerIcon: Ember.K,
+  setMarkerIcon: K,
 
-  setMarkerPosition: Ember.K,
+  setMarkerPosition: K,
 
-  getMarkerPosition: Ember.K,
+  getMarkerPosition: K,
 
-  setMarkerDraggable: Ember.K,
+  setMarkerDraggable: K,
 
-  setMarkerVisible: Ember.K,
+  setMarkerVisible: K,
 
-  setMarkerTitle: Ember.K,
+  setMarkerTitle: K,
 
-  panTo: Ember.K
+  panTo: K
 });
 
