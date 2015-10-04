@@ -124,7 +124,7 @@ export default UIAbstractMap.extend({
         };
       } else {
         data.position = this.getCenter();
-        data.pixel = {}
+        data.pixel = {};
       }
 
       this.sendAction(encodedEventAction, this.get('mapFacade'), data);
