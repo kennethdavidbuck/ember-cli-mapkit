@@ -65,11 +65,11 @@ export default UIAbstractMap.extend({
     markerClusterer.setMap($map);
   },
 
-  teardown(markerMap) {
+  teardown(markers) {
     const {mapApi, map, markerClusterer} = this.getProperties('mapApi', 'map', 'markerMap', 'markerClusterer');
 
     // clean up all listeners
-    markerMap.forEach((mapMarker) => {
+    markers.forEach((mapMarker) => {
       mapApi.maps.event.clearInstanceListeners(mapMarker);
     });
 
