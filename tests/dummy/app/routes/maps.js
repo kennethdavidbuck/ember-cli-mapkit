@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import MapFacade from '../facades/map';
 
 export default Ember.Route.extend({
 
