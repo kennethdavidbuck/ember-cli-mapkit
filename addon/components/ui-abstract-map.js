@@ -70,6 +70,7 @@ export default Ember.Component.extend({
     run.next(() => {
       this.setup();
       this.addMarkers(this.get('markers'));
+      this.set('isLoaded', true);
       this.sendAction('readyAction', this.get('mapFacade'));
     });
   }),
