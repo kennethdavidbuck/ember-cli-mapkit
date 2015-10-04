@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const {merge} = 'ember';
+const {merge} = Ember;
 
 export default Ember.Controller.extend({
   config: {

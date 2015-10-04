@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+/*global JSON*/
+
 export default Ember.Route.extend({
 
   cache: Ember.A(),
