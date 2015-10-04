@@ -132,44 +132,6 @@ export default Ember.Component.extend({
     });
   },
 
-  mapType: computed({
-    get() {
-      return this.getMapType();
-    },
-    set(key, value) {
-      this.setMapType(value);
-      return value;
-    }
-  })['volatile'](),
-
-  center: computed({
-    get() {
-      return this.getCenter();
-    },
-    set(key, position) {
-      this.setCenter(position);
-      return position;
-    }
-  })['volatile'](),
-
-  tilt: computed(function () {
-      return this.getTilt();
-  })['volatile'](),
-
-  zoom: computed({
-    get() {
-      this.getZoom();
-    },
-    set(key, zoom) {
-      this.setZoom(zoom);
-      return zoom;
-    }
-  })['volatile'](),
-
-  bounds: computed(function () {
-    return this.getBounds();
-  })['volatile'](),
-
   setup: K,
 
   teardown: K,
