@@ -133,6 +133,14 @@ export default Ember.Component.extend({
     });
   },
 
+  getMarkers() {
+    return this.get('markerMap');
+  },
+
+  getMap() {
+    return this.get('map');
+  },
+
   setup: K,
 
   teardown: K,

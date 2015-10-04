@@ -247,6 +247,17 @@ export default UIAbstractMap.extend({
 
   setMarkerTitle(id, title) {
     this.getMarker(id).setTitle(title);
+  },
+
+  fitToMarkers() {
+    const {mapApi, map} = this.getProperties('mapApi', 'map');
+    const bounds = new mapApi.maps.LatLngBounds();
+
+    this.getMarkers().forEach((marker) => {
+      bounds.extend(marker.getPosition());
+    });
+
+    map.fitBounds(bounds);
   }
 });
 
