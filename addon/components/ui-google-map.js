@@ -34,43 +34,41 @@ export default UIAbstractMap.extend({
     }
   })['volatile'](),
 
-  setup: Ember.on('didInsertElement', function () {
-    Ember.run.next(() => {
-      const {config, mapApi, markerClusterer} = this.getProperties('config', 'mapApi', 'markerClusterer');
+  setup() {
+    const {config, mapApi, markerClusterer} = this.getProperties('config', 'mapApi', 'markerClusterer');
 
-      let options = {
-        zoom: config.zoom,
-        center: {
-          lat: config.lat,
-          lng: config.lng
-        }
-      };
+    let options = {
+      zoom: config.zoom,
+      center: {
+        lat: config.lat,
+        lng: config.lng
+      }
+    };
 
-      let $map = new mapApi.maps.Map(this.getMapElement(), options);
+    let $map = new mapApi.maps.Map(this.getMapElement(), options);
 
-      this.setProperties({
-        map: $map,
-        mapTypeId: config.mapType
-      });
-
-      this.addListeners(this.get('config.mapEvents'));
-
-      //fixes bug where fromLatLnToContainerPixel returns undefined.
-      const overlay = new mapApi.maps.OverlayView();
-      overlay.draw = function () {
-      };
-      overlay.setMap($map);
-
-      markerClusterer.setMap($map);
-
-      this.addMarkers(this.get('markers'));
-
-      this.sendAction('readyAction', this.get('mapFacade'));
+    this.setProperties({
+      map: $map,
+      mapTypeId: config.mapType
     });
-  }),
 
-  teardown: Ember.on('willDestroyElement', function () {
-    const {mapApi, map, markerMap, markerClusterer} = this.getProperties('mapApi', 'map', 'markerMap', 'markerClusterer');
+    this.addListeners(this.get('config.mapEvents'));
+
+    //fixes bug where fromLatLnToContainerPixel returns undefined.
+    const overlay = new mapApi.maps.OverlayView();
+    overlay.draw = function () {
+    };
+    overlay.setMap($map);
+
+    markerClusterer.setMap($map);
+
+    this.addMarkers(this.get('markers'));
+
+    this.sendAction('readyAction', this.get('mapFacade'));
+  },
+
+  teardown(markerMap) {
+    const {mapApi, map, markerClusterer} = this.getProperties('mapApi', 'map', 'markerMap', 'markerClusterer');
 
     // clean up all listeners
     markerMap.forEach((mapMarker) => {
@@ -80,8 +78,7 @@ export default UIAbstractMap.extend({
     mapApi.maps.event.clearInstanceListeners(map);
 
     markerClusterer.clearMarkers();
-    markerMap.clear();
-  }),
+  },
 
   center: Ember.computed('map', {
     get() {

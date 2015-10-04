@@ -64,8 +64,20 @@ export default Ember.Component.extend({
     mapFacade.register(this);
   }),
 
-  unregisterMapFacade: Ember.on('willDestroyElement', function () {
-    this.get('mapFacade').unregister(this);
+  _setup: Ember.on('didInsertElement', function () {
+    Ember.run.next(() => {
+      this.setup();
+    });
+  }),
+
+  _teardown: Ember.on('willDestroyElement', function () {
+    const {mapFacade, markerMap} = this.getProperties('mapFacade', 'markerMap');
+
+    mapFacade.unregister(this);
+
+    this.teardown(markerMap);
+
+    markerMap.clear();
   }),
 
   markerMap: Ember.computed({
@@ -117,6 +129,10 @@ export default Ember.Component.extend({
       this.addListener(eventName);
     });
   },
+
+  setup: Ember.K,
+
+  teardown: Ember.K,
 
   addListener: Ember.K,
 

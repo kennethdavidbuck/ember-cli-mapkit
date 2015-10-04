@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import LeafletUtility from '../utilities/leaflet';
 import UIAbstractMap from './ui-abstract-map';
 
@@ -12,28 +11,22 @@ export default UIAbstractMap.extend({
   tagName: 'ui-leaflet-map',
   classNames: ['ui-leaflet-map'],
 
-  setup: Ember.on('didInsertElement', function () {
-    Ember.run.next(() => {
-      const {markers, config} = this.getProperties('markers', 'config');
-      const $map = L.map(this.getMapElement()).setView([config.lat, config.lng], config.zoom);
+  setup() {
+    const {markers, config} = this.getProperties('markers', 'config');
+    const $map = L.map(this.getMapElement()).setView([config.lat, config.lng], config.zoom);
 
-      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo($map);
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo($map);
 
-      this.set('map', $map);
+    this.set('map', $map);
 
-      this.addMarkers(markers);
-    });
-  }),
+    this.addMarkers(markers);
+  },
 
-  teardown: Ember.on('willDestroyElement', function () {
-    const markerMap = this.get('markerMap');
-
-    markerMap.forEach((mapMarker) => {
+  teardown(markers) {
+    markers.forEach((mapMarker) => {
       mapMarker.clearAllEventListeners();
     });
-
-    markerMap.clear();
-  }),
+  },
 
   addMarker(marker) {
     marker = JSON.parse(JSON.stringify(marker));
