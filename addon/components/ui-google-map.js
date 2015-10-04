@@ -63,10 +63,6 @@ export default UIAbstractMap.extend({
     overlay.setMap($map);
 
     markerClusterer.setMap($map);
-
-    this.addMarkers(this.get('markers'));
-
-    this.sendAction('readyAction', this.get('mapFacade'));
   },
 
   teardown(markerMap) {

@@ -26,19 +26,6 @@ export default Ember.Controller.extend({
   actions: {
     mapReady(map) {
       this.set('map', map);
-    },
-
-    mapDoubleClick(map, data) {
-      const marker = Ember.Object.create(merge({
-        id: 1234,
-        draggable: true
-      }, data));
-
-      this.get('model').pushObject(marker);
-
-      map.addMarker(marker);
-
-      return true;
     }
   }
 });

@@ -18,8 +18,6 @@ export default UIAbstractMap.extend({
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo($map);
 
     this.set('map', $map);
-
-    this.addMarkers(markers);
   },
 
   teardown(markers) {

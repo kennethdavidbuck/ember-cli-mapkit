@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
 
   actions: {
     mapReady(map) {
-      console.log(map);
+      this.set('map', map);
     }
   }
 });

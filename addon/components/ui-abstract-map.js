@@ -69,6 +69,8 @@ export default Ember.Component.extend({
   _setup: on('didInsertElement', function () {
     run.next(() => {
       this.setup();
+      this.addMarkers(this.get('markers'));
+      this.sendAction('readyAction', this.get('mapFacade'));
     });
   }),
 
