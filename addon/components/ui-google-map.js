@@ -161,10 +161,12 @@ export default UIAbstractMap.extend({
 
     mapApi.maps.event.addListener(map, eventName, (event) => {
       let position;
-      let data = {};
+      let data = {
+        type: eventName
+      };
       if (event) {
         position = this.getMapPixel();
-        data = {
+        data = Ember.merge(data, {
           pixel: {
             x: position.left + event.pixel.x,
             y: position.top + event.pixel.y
@@ -173,7 +175,7 @@ export default UIAbstractMap.extend({
             lat: event.latLng.lat(),
             lng: event.latLng.lng()
           }
-        };
+        });
       }
 
       this.sendAction(GoogleUtiltity.map.eventAction(eventName), this, data);

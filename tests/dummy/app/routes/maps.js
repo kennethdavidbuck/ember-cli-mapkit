@@ -36,18 +36,27 @@ export default Ember.Route.extend({
     return cache;
   },
 
+  displayData(data) {
+    this.get('controller.eventData').insertAt(0, JSON.stringify(data, undefined, 2));
+  },
+
   actions: {
     mapReady(/*map*/) {},
-    mapClick(/*map, id, data*/) {},
+    mapMouseMove(map, data) {
+      this.displayData(data);
+    },
+    mapClick(map, data) {
+      this.displayData(data);
+    },
     markerDrag(map, markerId, data) {
-      console.log(data);
+      this.displayData(data);
     },
     markerClick(map, id, data) {
-      console.log(data);
+      this.displayData(data);
     },
     markerDragEnd(map, id, data) {
-      console.log(data);
       this.get('currentModel').findBy('id', id).set('position', data.position);
+      this.displayData(data);
     }
   }
 });
