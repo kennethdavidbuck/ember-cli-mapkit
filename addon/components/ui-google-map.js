@@ -218,9 +218,9 @@ export default UIAbstractMap.extend({
     };
     overlay.setMap(map);
 
-    const proj = overlay.getProjection();
-    const pos = mapMarker.getPosition();
-    const markerPixel = proj.fromLatLngToContainerPixel(pos);
+    const overlayProjection = overlay.getProjection();
+    const markerPosition = mapMarker.getPosition();
+    const markerPixel = overlayProjection.fromLatLngToContainerPixel(markerPosition);
 
     const mapPixel = this.getMapPixel();
 
