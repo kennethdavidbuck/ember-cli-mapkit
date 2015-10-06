@@ -133,7 +133,7 @@ export default UIAbstractMap.extend({
   removeListener(eventName) {
     const {mapApi, map} = this.getProperties('mapApi', 'map');
 
-    mapApi.maps.event.clearInstanceListeners(map, eventName);
+    mapApi.maps.event.clearInstanceListeners(map, this.decodeEventName(eventName));
   },
 
   addMarker(marker) {
@@ -175,7 +175,7 @@ export default UIAbstractMap.extend({
   },
 
   removeMarkerListener(id, eventName) {
-    this.get('mapApi').maps.event.clearInstanceListeners(this.getMarker(id), eventName);
+    this.get('mapApi').maps.event.clearInstanceListeners(this.getMarker(id), this.decodeEventName(eventName));
   },
 
   clearMarkerListeners(id) {
