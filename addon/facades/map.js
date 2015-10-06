@@ -12,8 +12,8 @@ export default Ember.Object.extend({
     this.set('mapComponent', null);
   },
 
-  getMapElement() {
-    return this.get('mapComponent').getMapElement();
+  getElement() {
+    return this.get('mapComponent').getElement();
   },
 
   getMapPixel() {
