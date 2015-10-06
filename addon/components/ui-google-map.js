@@ -107,7 +107,7 @@ export default UIAbstractMap.extend({
     const {mapApi, map} = this.getProperties('mapApi', 'map');
 
     mapApi.maps.event.addListener(map, decodedEventName, (event) => {
-      const data = {type: 'map'};
+      const data = {type: 'map', eventName: eventName};
 
       if (event) {
         const position = this.getMapPixel();
@@ -158,7 +158,7 @@ export default UIAbstractMap.extend({
     const decodedEventName = this.decodeEventName(eventName);
     const encodedEventAction = this.encodeMarkerEventAction(decodedEventName);
 
-    const data = {id: id, type: 'marker'};
+    const data = {id: id, type: 'marker', event: eventName};
     const mapApi = this.get('mapApi');
     const mapMarker = this.getMarker(id);
 
