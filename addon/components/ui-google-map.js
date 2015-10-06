@@ -304,26 +304,17 @@ export default UIAbstractMap.extend({
 
   encodeMapType(type) {
     const mapTypes = this.get('mapApi').maps.MapTypeId;
-    let mappedType;
-
     switch (type) {
       case mapTypes.ROADMAP:
-        mappedType = "roadmap";
-        break;
+        return 'roadmap';
       case mapTypes.SATELLITE:
-        mappedType = "satellite";
-        break;
+        return 'satellite';
       case mapTypes.TERRAIN:
-        mappedType = "terrain";
-        break;
+        return 'terrain';
       case mapTypes.HYBRID:
-        mappedType = "hybrid";
-        break;
-      default:
-        mappedType = "roadmap";
+        return 'hybrid';
     }
-
-    return mappedType;
+    return 'roadmap';
   },
 
   encodeMapEventAction(eventName) {
