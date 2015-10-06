@@ -14,7 +14,7 @@ export default UIAbstractMap.extend({
 
   setup() {
     const {config, mapApi} = this.getProperties('config', 'mapApi');
-    const $map = new mapApi.maps.Map(this.getMapElement(), config.options);
+    const $map = new mapApi.maps.Map(this.getElement(), config.options);
 
     this.set('map', $map);
 

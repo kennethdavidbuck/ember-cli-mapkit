@@ -99,7 +99,7 @@ export default Ember.Component.extend({
     }
   },
 
-  getMapElement() {
+  getElement() {
     return this.$()[0];
   },
 
