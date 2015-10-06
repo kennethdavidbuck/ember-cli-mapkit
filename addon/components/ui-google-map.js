@@ -293,44 +293,30 @@ export default UIAbstractMap.extend({
   },
 
   decodeMapType(type) {
-    const google = this.get('mapApi');
-    let mappedType;
-
-    switch (type) {
-      case "roadmap":
-        mappedType = google.maps.MapTypeId.ROADMAP;
-        break;
-      case "satellite":
-        mappedType = google.maps.MapTypeId.SATELLITE;
-        break;
-      case "terrain":
-        mappedType = google.maps.MapTypeId.TERRAIN;
-        break;
-      case "hybrid":
-        mappedType = google.maps.MapTypeId.HYBRID;
-        break;
-      default:
-        mappedType = google.maps.MapTypeId.ROADMAP;
-    }
-
-    return mappedType;
+    const mapTypes = this.get('mapApi').maps.MapTypeId;
+    return {
+      roadmap: mapTypes.ROADMAP,
+      satellite: mapTypes.SATELLITE,
+      terrain: mapTypes.TERRAIN,
+      hybrid: mapTypes.HYBRID
+    }[type] || mapTypes.ROADMAP;
   },
 
   encodeMapType(type) {
-    const google = this.get('mapApi');
+    const mapTypes = this.get('mapApi').maps.MapTypeId;
     let mappedType;
 
     switch (type) {
-      case google.maps.MapTypeId.ROADMAP:
+      case mapTypes.ROADMAP:
         mappedType = "roadmap";
         break;
-      case google.maps.MapTypeId.SATELLITE:
+      case mapTypes.SATELLITE:
         mappedType = "satellite";
         break;
-      case google.maps.MapTypeId.TERRAIN:
+      case mapTypes.TERRAIN:
         mappedType = "terrain";
         break;
-      case google.maps.MapTypeId.HYBRID:
+      case mapTypes.HYBRID:
         mappedType = "hybrid";
         break;
       default:
