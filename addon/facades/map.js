@@ -89,46 +89,46 @@ export default Ember.Object.extend({
   },
 
   addMarkerListener(id, eventName) {
-    this.get('mapComponent').addMarkerListener(id, eventName);
+    return this.get('mapComponent').addMarkerListener(id, eventName);
   },
 
   removeMarker(id) {
-    this.get('mapComponent').removeMarker(id);
+    return this.get('mapComponent').removeMarker(id);
   },
 
   removeMarkerListener(id, eventName) {
-    this.get('mapComponent').removeMarkerListener(id, eventName);
+    return this.get('mapComponent').removeMarkerListener(id, eventName);
   },
 
   setMarkerIcon(id, icon) {
-    this.get('mapComponent').setMarkerIcon(id, icon);
+    return this.get('mapComponent').setMarkerIcon(id, icon);
   },
 
   setMarkerPosition(id, position) {
-    this.get('mapComponent').setMarkerPosition(id, position);
+    return this.get('mapComponent').setMarkerPosition(id, position);
   },
 
   getMarkerPosition(id) {
-    this.get('mapComponent').getMarkerPosition(id);
+    return this.get('mapComponent').getMarkerPosition(id);
   },
 
   setMarkerDraggable(id, draggable) {
-    this.get('mapComponent').setMarkerDraggable(id, draggable);
+    return this.get('mapComponent').setMarkerDraggable(id, draggable);
   },
 
   setMarkerVisible(id, visible) {
-    this.get('mapComponent').setMarkerVisible(id, visible);
+    return this.get('mapComponent').setMarkerVisible(id, visible);
   },
 
   setMarkerTitle(id, title) {
-    this.get('mapComponent').setMarkerTitle(id, title);
+    return this.get('mapComponent').setMarkerTitle(id, title);
   },
 
   panTo(position) {
-    this.get('mapComponent').panTo(position);
+    return this.get('mapComponent').panTo(position);
   },
 
   fitToMarkers() {
-    this.get('mapComponent').fitToMarkers();
+    return this.get('mapComponent').fitToMarkers();
   }
 });
