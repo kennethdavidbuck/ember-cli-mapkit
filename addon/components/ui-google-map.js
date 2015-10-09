@@ -170,7 +170,7 @@ export default UIAbstractMap.extend({
 
       data.pixel = this._getMarkerPixel(mapMarker);
 
-      this.sendAction(encodedEventAction, this.get('markerFacade'), id, data);
+      this.sendAction(encodedEventAction, this.get('mapFacade'), id, data);
     });
   },
 

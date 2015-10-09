@@ -61,6 +61,7 @@ export default Ember.Route.extend({
       this.displayData(data);
     },
     markerClick(map, id, data) {
+      console.log(map);
       this.displayData(data);
     },
     markerDragEnd(map, id, data) {
