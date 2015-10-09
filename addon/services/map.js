@@ -34,7 +34,7 @@ export default Ember.Service.extend(Ember.Evented, {
   /**
    * @property markerClusterer
    */
-  markerClusterer: Ember.computed('config',{
+  markerClusterer: Ember.computed('config', {
     get() {
       const MarkerClusterer = this.get('MarkerClusterer');
 
