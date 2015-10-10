@@ -6,12 +6,12 @@ export default Ember.Object.extend(Ember.Evented, {
 
   register(mapComponent) {
     this.set('mapComponent', mapComponent);
-    this.trigger('mapReady');
+    this.trigger('isReady');
   },
 
   unregister(/*component*/) {
     this.set('mapComponent', null);
-    this.trigger('mapCleared');
+    this.trigger('isCleared');
   },
 
   getElement() {
@@ -62,10 +62,10 @@ export default Ember.Object.extend(Ember.Evented, {
     return this.get('mapComponent').getTilt();
   },
 
-  mapIsReady() {
+  isReady() {
     const mapComponent = this.get('mapComponent');
 
-    return !!mapComponent && mapComponent.get('isLoaded');
+    return !!mapComponent && mapComponent.get('isReady');
   },
 
   hasMarker(id) {

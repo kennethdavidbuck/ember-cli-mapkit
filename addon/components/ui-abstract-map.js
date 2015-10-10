@@ -51,7 +51,7 @@ export default Ember.Component.extend({
   markerVisibleChangedAction: 'markerVisibleChanged',
   markerZIndexChangedAction: 'markerZIndexChanged',
 
-  isLoaded: false,
+  _isReady: false,
 
   markers: Ember.A([]),
 
@@ -69,7 +69,7 @@ export default Ember.Component.extend({
       this.setup();
       this.addMarkers(this.get('markers'));
       this.get('mapFacade').register(this);
-      this.set('isLoaded', true);
+      this.set('_isReady', true);
       this.sendAction('readyAction', this.get('mapFacade'));
     });
   }),
@@ -80,6 +80,8 @@ export default Ember.Component.extend({
     this.teardown(markerMap);
 
     mapFacade.unregister(this);
+
+    this.set('_isReady', false);
 
     markerMap.clear();
   }),
@@ -96,6 +98,10 @@ export default Ember.Component.extend({
         lng: 0
       }
     }
+  },
+
+  isReady() {
+    return this.get('_isReady');
   },
 
   getElement() {
