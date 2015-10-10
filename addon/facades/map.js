@@ -1,15 +1,17 @@
 import Ember from 'ember';
 
-export default Ember.Object.extend({
+export default Ember.Object.extend(Ember.Evented, {
 
   mapComponent: null,
 
-  register(component) {
-    this.set('mapComponent', component);
+  register(mapComponent) {
+    this.set('mapComponent', mapComponent);
+    this.trigger('mapReady');
   },
 
   unregister(/*component*/) {
     this.set('mapComponent', null);
+    this.trigger('mapCleared');
   },
 
   getElement() {
@@ -58,6 +60,12 @@ export default Ember.Object.extend({
 
   getTilt() {
     return this.get('mapComponent').getTilt();
+  },
+
+  mapIsReady() {
+    const mapComponent = this.get('mapComponent');
+
+    return !!mapComponent && mapComponent.get('isLoaded');
   },
 
   hasMarker(id) {
