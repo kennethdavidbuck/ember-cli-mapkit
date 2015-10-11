@@ -151,9 +151,17 @@ export default Ember.Component.extend({
     return this.get('map');
   },
 
-  setup: K,
+  setup() {
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve();
+    });
+  },
 
-  teardown: K,
+  teardown() {
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve();
+    });
+  },
 
   getCenter: K,
 

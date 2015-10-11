@@ -28,7 +28,9 @@ export default UIAbstractMap.extend({
     overlay.setMap($map);
 
     return new Ember.RSVP.Promise((resolve) => {
-      resolve();
+      mapApi.maps.event.addListenerOnce($map, 'tilesloaded', () => {
+        resolve();
+      });
     });
   },
 

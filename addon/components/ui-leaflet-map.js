@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import LeafletUtility from '../utilities/leaflet';
 import UIAbstractMap from './ui-abstract-map';
 
