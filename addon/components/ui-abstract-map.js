@@ -65,7 +65,7 @@ export default Ember.Component.extend({
   }),
 
   _setup: on('didInsertElement', function () {
-    run.next(() => {
+    run.scheduleOnce('afterRender', () => {
       this.setup();
       this.addMarkers(this.get('markers'));
       this.get('mapFacade').register(this);
