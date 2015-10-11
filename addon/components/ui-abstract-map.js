@@ -66,24 +66,25 @@ export default Ember.Component.extend({
 
   _setup: on('didInsertElement', function () {
     run.scheduleOnce('afterRender', () => {
-      this.setup();
-      this.addMarkers(this.get('markers'));
-      this.get('mapFacade').register(this);
-      this.set('_isReady', true);
-      this.sendAction('readyAction', this.get('mapFacade'));
+      this.setup().then(() => {
+        this.addMarkers(this.get('markers'));
+        this.get('mapFacade').register(this);
+        this.set('_isReady', true);
+        this.sendAction('readyAction', this.get('mapFacade'));
+      });
     });
   }),
 
   _teardown: on('willDestroyElement', function () {
     const {mapFacade, markerMap} = this.getProperties('mapFacade', 'markerMap');
 
-    this.teardown(markerMap);
+    this.teardown(markerMap).then(() => {
+      mapFacade.unregister(this);
 
-    mapFacade.unregister(this);
+      this.set('_isReady', false);
 
-    this.set('_isReady', false);
-
-    markerMap.clear();
+      markerMap.clear();
+    });
   }),
 
   markerMap: computed(function () {

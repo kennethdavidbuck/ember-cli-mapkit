@@ -19,11 +19,19 @@ export default UIAbstractMap.extend({
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo($map);
 
     this.set('map', $map);
+
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve();
+    });
   },
 
   teardown(markers) {
     markers.forEach((mapMarker) => {
       mapMarker.clearAllEventListeners();
+    });
+
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve();
     });
   },
 

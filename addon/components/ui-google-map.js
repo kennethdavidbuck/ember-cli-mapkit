@@ -26,6 +26,10 @@ export default UIAbstractMap.extend({
     overlay.draw = function () {
     };
     overlay.setMap($map);
+
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve();
+    });
   },
 
   teardown(markers) {
@@ -37,6 +41,10 @@ export default UIAbstractMap.extend({
     });
 
     mapApi.maps.event.clearInstanceListeners(map);
+
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve();
+    });
   },
 
   getMapType() {
