@@ -32,8 +32,7 @@ export default UIAbstractMap.extend({
 
       this.set('overlay', overlay);
 
-      const listener = mapApi.maps.event.addListenerOnce($map, 'idle', () => {
-        mapApi.maps.event.removeListener(listener);
+      mapApi.maps.event.addListenerOnce($map, 'idle', () => {
         resolve();
       });
     });
