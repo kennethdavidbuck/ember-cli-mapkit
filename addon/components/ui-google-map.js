@@ -12,6 +12,8 @@ export default UIAbstractMap.extend({
   tagName: 'ui-google-map',
   classNames: ['ui-google-map'],
 
+  overlay: null,
+
   setup() {
     const {config, mapApi} = this.getProperties('config', 'mapApi');
     const $map = new mapApi.maps.Map(this.getElement(), config.options);
@@ -21,14 +23,17 @@ export default UIAbstractMap.extend({
     this.setMapType(config.mapType);
     this.addListeners(config.mapEvents);
 
-    //fixes bug where fromLatLnToContainerPixel returns undefined.
-    const overlay = new mapApi.maps.OverlayView();
-    overlay.draw = function () {
-    };
-    overlay.setMap($map);
-
     return new Ember.RSVP.Promise((resolve) => {
-      mapApi.maps.event.addListenerOnce($map, 'tilesloaded', () => {
+      //fixes bug where fromLatLnToContainerPixel returns undefined.
+      const overlay = new mapApi.maps.OverlayView();
+      overlay.draw = function () {
+      };
+      overlay.setMap($map);
+
+      this.set('overlay', overlay);
+
+      const listener = mapApi.maps.event.addListenerOnce($map, 'idle', () => {
+        mapApi.maps.event.removeListener(listener);
         resolve();
       });
     });
@@ -220,15 +225,8 @@ export default UIAbstractMap.extend({
   },
 
   _getMarkerPixel(mapMarker) {
-    const {mapApi, map} = this.getProperties('mapApi', 'map');
-
     // Calculate the position of the marker click-style event
-    const overlay = new mapApi.maps.OverlayView();
-    overlay.draw = function () {
-    };
-    overlay.setMap(map);
-
-    const overlayProjection = overlay.getProjection();
+    const overlayProjection = this.get('overlay').getProjection();
     const markerPosition = mapMarker.getPosition();
     const markerPixel = overlayProjection.fromLatLngToContainerPixel(markerPosition);
 
