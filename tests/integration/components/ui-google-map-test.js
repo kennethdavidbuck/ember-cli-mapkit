@@ -7,7 +7,7 @@ moduleForComponent('ui-google-map', 'Integration | Component | ui google map', {
   integration: true
 });
 
-test('sends mapReadyAction on successful initialization', function(assert) {
+test('sends mapReadyAction on successful initialization', function (assert) {
   assert.expect(1);
 
   this.setProperties({
@@ -24,20 +24,27 @@ test('sends mapReadyAction on successful initialization', function(assert) {
   });
 });
 
-test('handles map clickAction', function (assert) {
-  assert.expect(0);
+test('sends configured map click action', function (assert) {
+  assert.expect(1);
 
   this.setProperties({
     markers: [],
-    mapApi: google
+    mapApi: google,
+    config: {
+      mapEvents: ['click']
+    }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi}}`);
+  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+
+  this.on('mapClick', function () {
+    assert.ok(true, 'should send marker click');
+  });
 
   stop();
-  this.on('mapReady', () => {
+  this.on('mapReady', (map) => {
     start();
-  });
 
-  console.log('yo');
+    map.triggerMapEvent('click', {lat: 0, lng: 0});
+  });
 });
