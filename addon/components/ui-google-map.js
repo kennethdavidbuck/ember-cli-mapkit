@@ -154,7 +154,7 @@ export default UIAbstractMap.extend({
   triggerMapEvent(eventName, position) {
     const mapApi = this.get('mapApi');
 
-    this.triggerEvent(this.get('map'), eventName, {
+    this.triggerEvent(this.get('map'), this.decodeEventName(eventName), {
       stop: null,
       latLng: new mapApi.maps.LatLng(position.lat, position.lng)
     });
