@@ -1,5 +1,30 @@
 export default function() {
 
+  // points
+  this.get('/points', function (db) {
+    return {
+      data: db.points.map(attrs => {
+        return {
+          id: attrs.id,
+          type: 'points',
+          attributes: attrs
+        };
+      })
+    };
+  });
+
+  this.get('/points/:id', function (db, request) {
+    const id = request.params.id;
+
+    return {
+      data: {
+        type: 'points',
+        id: id,
+        attributes: db.points.find(id)
+      }
+    };
+  });
+
   // These comments are here to help you get started. Feel free to delete them.
 
   /*
