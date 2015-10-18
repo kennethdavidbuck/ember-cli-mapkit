@@ -98,7 +98,9 @@ export default Ember.Component.extend({
         lat: 0,
         lng: 0
       }
-    }
+    },
+    mapEvents: [],
+    markerEvents: []
   },
 
   isReady() {
