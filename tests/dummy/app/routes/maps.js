@@ -11,13 +11,14 @@ export default Ember.Route.extend({
   displayData(data) {
     const eventData = this.get('controller.eventData');
     eventData.insertAt(0, JSON.stringify(data, undefined, 2));
-    if(eventData.get('length') > 100) {
+    if (eventData.get('length') > 100) {
       eventData.splice(100, 1);
     }
   },
 
   actions: {
-    mapReady(/*map*/) {},
+    mapReady(/*map*/) {
+    },
     mapMouseMove(map, data) {
       this.displayData(data);
     },
@@ -38,6 +39,8 @@ export default Ember.Route.extend({
         lat: data.position.lat,
         lng: data.position.lng
       });
+
+      map.triggerMapEvent('click', {lat: 63, lng: -96});
 
       this.displayData(data);
     }

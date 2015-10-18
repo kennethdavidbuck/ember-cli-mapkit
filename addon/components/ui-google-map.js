@@ -2,7 +2,7 @@ import UIAbstractMap from './ui-abstract-map';
 import Ember from 'ember';
 import layout from '../templates/components/ui-google-map';
 
-const {assert, merge} = Ember;
+const {assert} = Ember;
 
 /*global JSON*/
 
@@ -150,8 +150,15 @@ export default UIAbstractMap.extend({
     mapApi.maps.event.clearInstanceListeners(map, this.decodeEventName(eventName));
   },
 
-  triggerMapEvent(eventName, options) {
-    this.triggerEvent(this.get('map'), eventName, options);
+  triggerMapEvent(eventName, position) {
+    const {lat, lng} = position;
+    const latLng = new this.get('mapApi').maps.LatLng(lat, lng);
+
+    this.triggerEvent(this.get('map'), eventName, {
+      stop: null,
+      latLng: latLng,
+      pixel: this.positionToPixel(latLng)
+    });
   },
 
   addMarker(marker) {
@@ -200,13 +207,14 @@ export default UIAbstractMap.extend({
     this.get('mapApi').maps.event.clearInstanceListeners(this.getMarker(id));
   },
 
-  triggerMarkerEvent(id, eventName, options) {
-    this.triggerEvent(this.getMarker(id), eventName, options);
+  triggerMarkerEvent(id, eventName) {
+    this.triggerEvent(this.getMarker(id), this.decodeEventName(eventName));
   },
 
-  triggerEvent(object, eventName, options) {
-    const _options = merge({}, options || {});
-    this.get('mapApi').maps.event.trigger(object, this.decodeEventName(eventName));
+  triggerEvent() {
+    const eventApi = this.get('mapApi').maps.event;
+
+    eventApi.trigger.apply(eventApi, [].slice.call(arguments));
   },
 
   removeMarker(id) {
@@ -237,10 +245,12 @@ export default UIAbstractMap.extend({
   },
 
   _getMarkerPixel(mapMarker) {
-    // Calculate the position of the marker click-style event
+    return this.positionToPixel(mapMarker.getPosition());
+  },
+
+  positionToPixel(position) {
     const overlayProjection = this.get('overlay').getProjection();
-    const markerPosition = mapMarker.getPosition();
-    const markerPixel = overlayProjection.fromLatLngToContainerPixel(markerPosition);
+    const markerPixel = overlayProjection.fromLatLngToContainerPixel(position);
 
     const mapPixel = this.getMapPixel();
 
