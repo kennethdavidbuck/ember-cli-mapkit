@@ -2,7 +2,7 @@ import UIAbstractMap from './ui-abstract-map';
 import Ember from 'ember';
 import layout from '../templates/components/ui-google-map';
 
-const {assert} = Ember;
+const {assert, get} = Ember;
 
 /*global JSON*/
 
@@ -125,10 +125,11 @@ export default UIAbstractMap.extend({
 
       if (event) {
         const position = this.getMapPixel();
+        const pixel = event.pixel || this.positionToPixel(event.latLng);
 
         data.pixel = {
-          x: position.left + event.pixel.x,
-          y: position.top + event.pixel.y
+          x: position.left + pixel.x,
+          y: position.top + pixel.y
         };
 
         data.position = {
@@ -151,13 +152,11 @@ export default UIAbstractMap.extend({
   },
 
   triggerMapEvent(eventName, position) {
-    const {lat, lng} = position;
-    const latLng = new this.get('mapApi').maps.LatLng(lat, lng);
+    const mapApi = this.get('mapApi');
 
     this.triggerEvent(this.get('map'), eventName, {
       stop: null,
-      latLng: latLng,
-      pixel: this.positionToPixel(latLng)
+      latLng: new mapApi.maps.LatLng(position.lat, position.lng)
     });
   },
 
@@ -193,7 +192,7 @@ export default UIAbstractMap.extend({
         lng: mapMarker.getPosition().lng()
       };
 
-      data.pixel = this._getMarkerPixel(mapMarker);
+      data.pixel = this.positionToPixel(mapMarker.getPosition());
 
       this.sendAction(encodedEventAction, this.get('mapFacade'), id, data);
     });
