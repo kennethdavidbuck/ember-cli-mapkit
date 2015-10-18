@@ -39,8 +39,6 @@ export default Ember.Route.extend({
         lng: data.position.lng
       });
 
-      map.triggerMapEvent('click');
-
       this.displayData(data);
     }
   }
