@@ -366,3 +366,123 @@ test('sends map projection changed action', function (assert) {
     // map project changed is sent automatically
   });
 });
+
+test('sends map mouse move action', function (assert) {
+  assert.expect(1);
+
+  this.setProperties({
+    markers: [],
+    mapApi: google,
+    config: {
+      mapEvents: ['mouseMove']
+    }
+  });
+
+  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+
+  this.on('mapMouseMove', function () {
+    assert.ok(true, 'should send mouse move');
+  });
+
+  stop();
+  this.on('mapReady', (map) => {
+    start();
+    map.triggerMapEvent('mouseMove', {lat: 0, lng: 0});
+  });
+});
+
+test('sends map mouse up action', function (assert) {
+  assert.expect(1);
+
+  this.setProperties({
+    markers: [],
+    mapApi: google,
+    config: {
+      mapEvents: ['mouseUp']
+    }
+  });
+
+  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+
+  this.on('mapMouseUp', function () {
+    assert.ok(true, 'should send mouse up');
+  });
+
+  stop();
+  this.on('mapReady', (map) => {
+    start();
+    map.triggerMapEvent('mouseUp', {lat: 0, lng: 0});
+  });
+});
+
+test('sends map mouse down action', function (assert) {
+  assert.expect(1);
+
+  this.setProperties({
+    markers: [],
+    mapApi: google,
+    config: {
+      mapEvents: ['mouseDown']
+    }
+  });
+
+  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+
+  this.on('mapMouseDown', function () {
+    assert.ok(true, 'should send mouse down');
+  });
+
+  stop();
+  this.on('mapReady', (map) => {
+    start();
+    map.triggerMapEvent('mouseDown', {lat: 0, lng: 0});
+  });
+});
+
+test('sends map mouse over action', function (assert) {
+  assert.expect(1);
+
+  this.setProperties({
+    markers: [],
+    mapApi: google,
+    config: {
+      mapEvents: ['mouseOver']
+    }
+  });
+
+  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+
+  this.on('mapMouseOver', function () {
+    assert.ok(true, 'should send mouse over');
+  });
+
+  stop();
+  this.on('mapReady', (map) => {
+    start();
+    map.triggerMapEvent('mouseOver', {lat: 0, lng: 0});
+  });
+});
+
+test('sends map mouse out action', function (assert) {
+  assert.expect(1);
+
+  this.setProperties({
+    markers: [],
+    mapApi: google,
+    config: {
+      mapEvents: ['mouseOut']
+    }
+  });
+
+  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+
+  this.on('mapMouseOut', function () {
+    assert.ok(true, 'should send mouse out');
+  });
+
+  stop();
+  this.on('mapReady', (map) => {
+    start();
+    map.triggerMapEvent('mouseOut', {lat: 0, lng: 0});
+  });
+});
