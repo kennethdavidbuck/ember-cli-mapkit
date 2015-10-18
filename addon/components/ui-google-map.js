@@ -2,7 +2,7 @@ import UIAbstractMap from './ui-abstract-map';
 import Ember from 'ember';
 import layout from '../templates/components/ui-google-map';
 
-const {assert, get} = Ember;
+const {assert} = Ember;
 
 /*global JSON*/
 
