@@ -244,3 +244,101 @@ test('sends configured map drag start action', function (assert) {
     map.triggerMapEvent('dragStart', {lat: 0, lng: 0});
   });
 });
+
+test('sends configured map drag end action', function (assert) {
+  assert.expect(1);
+
+  this.setProperties({
+    markers: [],
+    mapApi: google,
+    config: {
+      mapEvents: ['dragEnd']
+    }
+  });
+
+  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+
+  this.on('mapDragEnd', function () {
+    assert.ok(true, 'should send map drag end');
+  });
+
+  stop();
+  this.on('mapReady', (map) => {
+    start();
+
+    map.triggerMapEvent('dragEnd', {lat: 0, lng: 0});
+  });
+});
+
+test('sends map heading changed action', function (assert) {
+  assert.expect(1);
+
+  this.setProperties({
+    markers: [],
+    mapApi: google,
+    config: {
+      mapEvents: ['headingChanged']
+    }
+  });
+
+  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+
+  this.on('mapHeadingChanged', function () {
+    assert.ok(true, 'should send map heading changed');
+  });
+
+  stop();
+  this.on('mapReady', (map) => {
+    start();
+
+    map.triggerMapEvent('headingChanged', {lat: 0, lng: 0});
+  });
+});
+
+test('sends map idle action', function (assert) {
+  assert.expect(1);
+
+  this.setProperties({
+    markers: [],
+    mapApi: google,
+    config: {
+      mapEvents: ['idle']
+    }
+  });
+
+  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+
+  this.on('mapIdle', function () {
+    assert.ok(true, 'should send map idle');
+  });
+
+  stop();
+  this.on('mapReady', (map) => {
+    start();
+    // map sends idle action automatically
+  });
+});
+
+test('sends map type id changed action', function (assert) {
+  assert.expect(1);
+
+  this.setProperties({
+    markers: [],
+    mapApi: google,
+    config: {
+      mapEvents: ['mapTypeIdChanged']
+    }
+  });
+
+  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+
+  this.on('mapTypeIdChanged', function () {
+    assert.ok(true, 'should send map type id changed');
+  });
+
+  stop();
+  this.on('mapReady', (map) => {
+    start();
+    map.triggerMapEvent('mapTypeIdChanged', {lat: 0, lng: 0});
+  });
+});
