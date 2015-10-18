@@ -34,10 +34,11 @@ export default Ember.Route.extend({
       this.displayData(data);
     },
     markerDragEnd(map, id, data) {
-      this.get('currentModel').findBy('id', id).setProperties({
+      this.get('store').peekRecord('point', id).setProperties({
         lat: data.position.lat,
         lng: data.position.lng
       });
+
       this.displayData(data);
     }
   }
