@@ -342,3 +342,27 @@ test('sends map type id changed action', function (assert) {
     map.triggerMapEvent('mapTypeIdChanged', {lat: 0, lng: 0});
   });
 });
+
+test('sends map projection changed action', function (assert) {
+  assert.expect(1);
+
+  this.setProperties({
+    markers: [],
+    mapApi: google,
+    config: {
+      mapEvents: ['projectionChanged']
+    }
+  });
+
+  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+
+  this.on('mapProjectionChanged', function () {
+    assert.ok(true, 'should send projection changed');
+  });
+
+  stop();
+  this.on('mapReady', () => {
+    start();
+    // map project changed is sent automatically
+  });
+});
