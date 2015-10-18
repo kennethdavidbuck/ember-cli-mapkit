@@ -92,6 +92,10 @@ export default Ember.Object.extend(Ember.Evented, {
     return this.get('mapComponent').removeListener(eventName);
   },
 
+  triggerMapEvent(id, eventName) {
+    return this.get('mapComponent').triggerMapEvent(id, eventName);
+  },
+
   addMarker(marker) {
     return this.get('mapComponent').addMarker(marker);
   },
@@ -106,6 +110,10 @@ export default Ember.Object.extend(Ember.Evented, {
 
   removeMarkerListener(id, eventName) {
     return this.get('mapComponent').removeMarkerListener(id, eventName);
+  },
+
+  triggerMarkerEvent(id, eventName) {
+    return this.get('mapComponent').triggerMarkerEvent(id, eventName);
   },
 
   setMarkerIcon(id, icon) {

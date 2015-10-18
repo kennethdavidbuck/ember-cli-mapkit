@@ -2,7 +2,7 @@ import UIAbstractMap from './ui-abstract-map';
 import Ember from 'ember';
 import layout from '../templates/components/ui-google-map';
 
-const {assert} = Ember;
+const {assert, merge} = Ember;
 
 /*global JSON*/
 
@@ -150,6 +150,10 @@ export default UIAbstractMap.extend({
     mapApi.maps.event.clearInstanceListeners(map, this.decodeEventName(eventName));
   },
 
+  triggerMapEvent(eventName, options) {
+    this.triggerEvent(this.get('map'), eventName, options);
+  },
+
   addMarker(marker) {
     marker = JSON.parse(JSON.stringify(marker));
 
@@ -194,6 +198,15 @@ export default UIAbstractMap.extend({
 
   clearMarkerListeners(id) {
     this.get('mapApi').maps.event.clearInstanceListeners(this.getMarker(id));
+  },
+
+  triggerMarkerEvent(id, eventName, options) {
+    this.triggerEvent(this.getMarker(id), eventName, options);
+  },
+
+  triggerEvent(object, eventName, options) {
+    const _options = merge({}, options || {});
+    this.get('mapApi').maps.event.trigger(object, this.decodeEventName(eventName));
   },
 
   removeMarker(id) {
@@ -302,11 +315,11 @@ export default UIAbstractMap.extend({
   decodeMapType(type) {
     const mapTypes = this.get('mapApi').maps.MapTypeId;
     return {
-      roadmap: mapTypes.ROADMAP,
-      satellite: mapTypes.SATELLITE,
-      terrain: mapTypes.TERRAIN,
-      hybrid: mapTypes.HYBRID
-    }[type] || mapTypes.ROADMAP;
+        roadmap: mapTypes.ROADMAP,
+        satellite: mapTypes.SATELLITE,
+        terrain: mapTypes.TERRAIN,
+        hybrid: mapTypes.HYBRID
+      }[type] || mapTypes.ROADMAP;
   },
 
   encodeMapType(type) {
