@@ -24,7 +24,7 @@ test('sends mapReadyAction on successful initialization', function (assert) {
   });
 });
 
-test('sends configured map click action', function (assert)
+test('sends configured map click action', function (assert) {
   assert.expect(1);
 
   this.setProperties({
