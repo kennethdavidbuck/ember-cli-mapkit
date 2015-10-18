@@ -34,7 +34,10 @@ export default Ember.Route.extend({
       this.displayData(data);
     },
     markerDragEnd(map, id, data) {
-      this.get('currentModel').findBy('id', id).set('position', data.position);
+      this.get('currentModel').findBy('id', id).setProperties({
+        lat: data.position.lat,
+        lng: data.position.lng
+      });
       this.displayData(data);
     }
   }

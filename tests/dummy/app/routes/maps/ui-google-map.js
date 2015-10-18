@@ -12,7 +12,8 @@ export default Ember.Route.extend({
         position: {
           lat: lat,
           lng: lng
-        }
+        },
+        draggable: true
       };
     }));
   }
