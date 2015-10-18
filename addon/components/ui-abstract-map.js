@@ -209,6 +209,10 @@ export default Ember.Component.extend({
 
   panTo: K,
 
-  fitToMarkers: K
+  fitToMarkers: K,
+
+  triggerMarkerEvent: K,
+
+  triggerMapEvent: K
 });
 
