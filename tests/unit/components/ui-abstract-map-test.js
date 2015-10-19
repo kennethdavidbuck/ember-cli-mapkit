@@ -1,6 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
-moduleForComponent('ui-abstract-map', {});
+moduleForComponent('ui-abstract-map', {
+  unit: true
+});
 
 test('it renders', function (assert) {
   assert.expect(2);

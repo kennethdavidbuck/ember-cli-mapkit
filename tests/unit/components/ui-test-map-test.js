@@ -3,7 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('ui-test-map', {});
+moduleForComponent('ui-test-map', {
+  unit: true
+});
 
 test('it renders', function (assert) {
   assert.expect(2);

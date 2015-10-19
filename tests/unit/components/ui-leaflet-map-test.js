@@ -3,7 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('ui-leaflet-map', {});
+moduleForComponent('ui-leaflet-map', {
+  unit: true
+});
 
 test('it renders', function (assert) {
   assert.expect(2);
