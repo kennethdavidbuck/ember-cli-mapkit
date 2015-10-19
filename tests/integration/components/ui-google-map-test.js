@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import MapFacade from 'ember-cli-mapkit/facades/map';
 
 /*global stop, start*/
 
@@ -479,5 +480,27 @@ test('sends map mouse out action', function (assert) {
   this.on('mapReady', (map) => {
     start();
     map.triggerMapEvent(eventName, {lat: 0, lng: 0});
+  });
+});
+
+test('Can register for mapReady event with map facade', function (assert) {
+  assert.expect(1);
+
+  const mapFacade = MapFacade.create();
+
+  this.setProperties({
+    mapFacade: mapFacade
+  });
+
+  this.render(hbs`{{ui-google-map mapFacade=mapFacade}}`);
+
+  stop();
+  this.on('mapReady', () => {
+    // mapReady as action
+  });
+
+  mapFacade.one('isReady', () => {
+    start();
+    assert.ok(true);
   });
 });
