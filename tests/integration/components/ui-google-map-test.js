@@ -27,11 +27,13 @@ test('sends map ready action on successful initialization', function (assert) {
 test('sends configured map click action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'click';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['click']
+      mapEvents: [eventName]
     }
   });
 
@@ -45,18 +47,20 @@ test('sends configured map click action', function (assert) {
   this.on('mapReady', (map) => {
     start();
 
-    map.triggerMapEvent('click', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName , {lat: 0, lng: 0});
   });
 });
 
 test('sends configured map bounds changed action', function (assert) {
   // no expect because bounds changed is fired variably
 
+  const eventName = 'boundsChanged';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['boundsChanged']
+      mapEvents: [eventName]
     }
   });
 
@@ -75,11 +79,13 @@ test('sends configured map bounds changed action', function (assert) {
 test('sends configured map bounds changed action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'centerChanged';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['centerChanged']
+      mapEvents: [eventName]
     }
   });
 
@@ -93,18 +99,20 @@ test('sends configured map bounds changed action', function (assert) {
   this.on('mapReady', (map) => {
     start();
 
-    map.triggerMapEvent('centerChanged', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
 test('sends configured map double click action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'doubleClick';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['doubleClick']
+      mapEvents: [eventName]
     }
   });
 
@@ -118,18 +126,20 @@ test('sends configured map double click action', function (assert) {
   this.on('mapReady', (map) => {
     start();
 
-    map.triggerMapEvent('doubleClick', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName , {lat: 0, lng: 0});
   });
 });
 
 test('sends configured map right click action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'rightClick';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['rightClick']
+      mapEvents: [eventName]
     }
   });
 
@@ -143,18 +153,19 @@ test('sends configured map right click action', function (assert) {
   this.on('mapReady', (map) => {
     start();
 
-    map.triggerMapEvent('rightClick', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName , {lat: 0, lng: 0});
   });
 });
 
 test('sends configured map tiles loaded action', function (assert) {
-  assert.expect(1);
+
+  const eventName = 'tilesLoaded';
 
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['tilesLoaded']
+      mapEvents: [eventName]
     }
   });
 
@@ -167,17 +178,20 @@ test('sends configured map tiles loaded action', function (assert) {
   stop();
   this.on('mapReady', () => {
     start();
+    map.triggerMapEvent(eventName , {lat: 0, lng: 0});
   });
 });
 
 test('sends configured map zoom changed action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'zoomChanged';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['zoomChanged']
+      mapEvents: [eventName]
     }
   });
 
@@ -191,18 +205,20 @@ test('sends configured map zoom changed action', function (assert) {
   this.on('mapReady', (map) => {
     start();
 
-    map.triggerMapEvent('zoomChanged', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
 test('sends configured map drag action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'drag';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['drag']
+      mapEvents: [eventName]
     }
   });
 
@@ -216,18 +232,20 @@ test('sends configured map drag action', function (assert) {
   this.on('mapReady', (map) => {
     start();
 
-    map.triggerMapEvent('drag', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
 test('sends configured map drag start action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'dragStart';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['dragStart']
+      mapEvents: [eventName]
     }
   });
 
@@ -241,18 +259,20 @@ test('sends configured map drag start action', function (assert) {
   this.on('mapReady', (map) => {
     start();
 
-    map.triggerMapEvent('dragStart', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
 test('sends configured map drag end action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'dragEnd';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['dragEnd']
+      mapEvents: [eventName]
     }
   });
 
@@ -266,18 +286,20 @@ test('sends configured map drag end action', function (assert) {
   this.on('mapReady', (map) => {
     start();
 
-    map.triggerMapEvent('dragEnd', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
 test('sends map heading changed action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'headingChanged';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['headingChanged']
+      mapEvents: [eventName]
     }
   });
 
@@ -291,18 +313,20 @@ test('sends map heading changed action', function (assert) {
   this.on('mapReady', (map) => {
     start();
 
-    map.triggerMapEvent('headingChanged', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
 test('sends map idle action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'idle';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['idle']
+      mapEvents: [eventName]
     }
   });
 
@@ -313,7 +337,7 @@ test('sends map idle action', function (assert) {
   });
 
   stop();
-  this.on('mapReady', (map) => {
+  this.on('mapReady', () => {
     start();
     // map sends idle action automatically
   });
@@ -322,11 +346,13 @@ test('sends map idle action', function (assert) {
 test('sends map type id changed action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'mapTypeIdChanged';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['mapTypeIdChanged']
+      mapEvents: [eventName]
     }
   });
 
@@ -339,18 +365,20 @@ test('sends map type id changed action', function (assert) {
   stop();
   this.on('mapReady', (map) => {
     start();
-    map.triggerMapEvent('mapTypeIdChanged', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
 test('sends map projection changed action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'projectionChanged';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['projectionChanged']
+      mapEvents: [eventName]
     }
   });
 
@@ -370,11 +398,13 @@ test('sends map projection changed action', function (assert) {
 test('sends map mouse move action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'mouseMove';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['mouseMove']
+      mapEvents: [eventName]
     }
   });
 
@@ -387,18 +417,20 @@ test('sends map mouse move action', function (assert) {
   stop();
   this.on('mapReady', (map) => {
     start();
-    map.triggerMapEvent('mouseMove', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
 test('sends map mouse up action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'mouseUp';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['mouseUp']
+      mapEvents: [eventName]
     }
   });
 
@@ -411,18 +443,20 @@ test('sends map mouse up action', function (assert) {
   stop();
   this.on('mapReady', (map) => {
     start();
-    map.triggerMapEvent('mouseUp', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
 test('sends map mouse down action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'mouseDown';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['mouseDown']
+      mapEvents: [eventName]
     }
   });
 
@@ -435,18 +469,20 @@ test('sends map mouse down action', function (assert) {
   stop();
   this.on('mapReady', (map) => {
     start();
-    map.triggerMapEvent('mouseDown', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
 test('sends map mouse over action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'mouseOver';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['mouseOver']
+      mapEvents: [eventName]
     }
   });
 
@@ -459,18 +495,20 @@ test('sends map mouse over action', function (assert) {
   stop();
   this.on('mapReady', (map) => {
     start();
-    map.triggerMapEvent('mouseOver', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
 test('sends map mouse out action', function (assert) {
   assert.expect(1);
 
+  const eventName = 'mouseOut';
+
   this.setProperties({
     markers: [],
     mapApi: google,
     config: {
-      mapEvents: ['mouseOut']
+      mapEvents: [eventName]
     }
   });
 
@@ -483,6 +521,6 @@ test('sends map mouse out action', function (assert) {
   stop();
   this.on('mapReady', (map) => {
     start();
-    map.triggerMapEvent('mouseOut', {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
