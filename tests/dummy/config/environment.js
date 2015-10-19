@@ -14,58 +14,7 @@ module.exports = function(environment) {
     },
 
     APP: {
-      // Here you can pass flags/options to your application instance
-      // when it is created
-      // Here you can pass flags/options to your application instance
-      // when it is created,
-      MAPKIT: {
-        MAP_EVENTS: [
-          //'bounds_changed',
-          //'center_changed',
-          'click'//,
-          //'dblclick',
-          //'rightclick',
-          //'tilesloaded',
-          //'tiles_changed',
-          //'zoom_changed',
-          //'drag',
-          //'dragend',
-          //'dragstart',
-          //'heading_changed',
-          //'idle',
-          //'maptypeid_changed',
-          //'projection_changed',
-          //'mousemove',
-          //'mouseup',
-          //'mousedown',
-          //'mouseover',
-          //'mouseout'
-        ],
 
-        MARKER_EVENTS: [
-          //'animation_changed',
-          //'click',
-          //'clickable_changed',
-          //'cursor_changed',
-          //'dblclick',
-          //'drag',
-          //'dragend',
-          //'draggable_changed',
-          //'dragstart',
-          //'flat_changed',
-          //'icon_changed',
-          //'mousedown',
-          //'mouseout',
-          //'mouseover',
-          //'mouseup',
-          //'position_changed',
-          //'rightclick',
-          //'shape_changed',
-          //'title_changed',
-          //'visible_changed',
-          //'zindex_changed'
-        ]
-      }
     },
     contentSecurityPolicy: {
       'default-src': "'none'",
