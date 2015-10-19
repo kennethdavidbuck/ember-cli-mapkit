@@ -40,7 +40,7 @@ test('sends configured map click action', function (assert) {
   this.on('mapReady', (map) => {
     start();
 
-    map.triggerMapEvent(eventName , {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
@@ -113,7 +113,7 @@ test('sends configured map double click action', function (assert) {
   this.on('mapReady', (map) => {
     start();
 
-    map.triggerMapEvent(eventName , {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
@@ -138,7 +138,7 @@ test('sends configured map right click action', function (assert) {
   this.on('mapReady', (map) => {
     start();
 
-    map.triggerMapEvent(eventName , {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
@@ -161,7 +161,7 @@ test('sends configured map tiles loaded action', function (assert) {
   stop();
   this.on('mapReady', (map) => {
     start();
-    map.triggerMapEvent(eventName , {lat: 0, lng: 0});
+    map.triggerMapEvent(eventName, {lat: 0, lng: 0});
   });
 });
 
