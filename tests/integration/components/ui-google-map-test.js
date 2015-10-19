@@ -11,7 +11,6 @@ test('sends map ready action on successful initialization', function (assert) {
   assert.expect(1);
 
   this.setProperties({
-    markers: [],
     mapApi: google
   });
 
@@ -30,14 +29,13 @@ test('sends configured map click action', function (assert) {
   const eventName = 'click';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapClick', function () {
     assert.ok(true, 'should send marker click');
@@ -57,14 +55,13 @@ test('sends configured map bounds changed action', function (assert) {
   const eventName = 'boundsChanged';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapBoundsChanged', function () {
     assert.ok(true, 'should send bounds changed');
@@ -82,14 +79,13 @@ test('sends configured map bounds changed action', function (assert) {
   const eventName = 'centerChanged';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapCenterChanged', function () {
     assert.ok(true, 'should send center changed');
@@ -109,14 +105,13 @@ test('sends configured map double click action', function (assert) {
   const eventName = 'doubleClick';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapDoubleClick', function () {
     assert.ok(true, 'should map double click');
@@ -136,14 +131,13 @@ test('sends configured map right click action', function (assert) {
   const eventName = 'rightClick';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapRightClick', function () {
     assert.ok(true, 'should send marker right click');
@@ -162,14 +156,13 @@ test('sends configured map tiles loaded action', function (assert) {
   const eventName = 'tilesLoaded';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapTilesLoaded', function () {
     assert.ok(true, 'should send map tiles loaded');
@@ -188,14 +181,13 @@ test('sends configured map zoom changed action', function (assert) {
   const eventName = 'zoomChanged';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapZoomChanged', function () {
     assert.ok(true, 'should send map zoom changed');
@@ -215,14 +207,13 @@ test('sends configured map drag action', function (assert) {
   const eventName = 'drag';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapDrag', function () {
     assert.ok(true, 'should send map drag');
@@ -242,14 +233,13 @@ test('sends configured map drag start action', function (assert) {
   const eventName = 'dragStart';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapDragStart', function () {
     assert.ok(true, 'should send map drag start');
@@ -269,14 +259,13 @@ test('sends configured map drag end action', function (assert) {
   const eventName = 'dragEnd';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapDragEnd', function () {
     assert.ok(true, 'should send map drag end');
@@ -296,14 +285,13 @@ test('sends map heading changed action', function (assert) {
   const eventName = 'headingChanged';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapHeadingChanged', function () {
     assert.ok(true, 'should send map heading changed');
@@ -323,14 +311,13 @@ test('sends map idle action', function (assert) {
   const eventName = 'idle';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapIdle', function () {
     assert.ok(true, 'should send map idle');
@@ -349,14 +336,13 @@ test('sends map type id changed action', function (assert) {
   const eventName = 'mapTypeIdChanged';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapTypeIdChanged', function () {
     assert.ok(true, 'should send map type id changed');
@@ -375,14 +361,13 @@ test('sends map projection changed action', function (assert) {
   const eventName = 'projectionChanged';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapProjectionChanged', function () {
     assert.ok(true, 'should send projection changed');
@@ -401,14 +386,13 @@ test('sends map mouse move action', function (assert) {
   const eventName = 'mouseMove';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapMouseMove', function () {
     assert.ok(true, 'should send mouse move');
@@ -427,14 +411,13 @@ test('sends map mouse up action', function (assert) {
   const eventName = 'mouseUp';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapMouseUp', function () {
     assert.ok(true, 'should send mouse up');
@@ -453,14 +436,13 @@ test('sends map mouse down action', function (assert) {
   const eventName = 'mouseDown';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapMouseDown', function () {
     assert.ok(true, 'should send mouse down');
@@ -479,14 +461,13 @@ test('sends map mouse over action', function (assert) {
   const eventName = 'mouseOver';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapMouseOver', function () {
     assert.ok(true, 'should send mouse over');
@@ -505,14 +486,13 @@ test('sends map mouse out action', function (assert) {
   const eventName = 'mouseOut';
 
   this.setProperties({
-    markers: [],
     mapApi: google,
     config: {
       mapEvents: [eventName]
     }
   });
 
-  this.render(hbs`{{ui-google-map markers=markers mapApi=mapApi config=config}}`);
+  this.render(hbs`{{ui-google-map mapApi=mapApi config=config}}`);
 
   this.on('mapMouseOut', function () {
     assert.ok(true, 'should send mouse out');
