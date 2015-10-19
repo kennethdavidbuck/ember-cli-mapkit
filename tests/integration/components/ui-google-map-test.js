@@ -176,7 +176,7 @@ test('sends configured map tiles loaded action', function (assert) {
   });
 
   stop();
-  this.on('mapReady', () => {
+  this.on('mapReady', (map) => {
     start();
     map.triggerMapEvent(eventName , {lat: 0, lng: 0});
   });
