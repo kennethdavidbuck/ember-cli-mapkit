@@ -184,9 +184,11 @@ export default UIAbstractMap.extend({
     const mapMarker = this.getMarker(id);
 
     google.maps.event.addListener(mapMarker, decodedEventName, () => {
+      const markerPosition = mapMarker.getPosition();
+
       data.position = {
-        lat: mapMarker.getPosition().lat(),
-        lng: mapMarker.getPosition().lng()
+        lat: markerPosition.lat(),
+        lng: markerPosition.lng()
       };
 
       data.pixel = this.positionToPixel(mapMarker.getPosition());
