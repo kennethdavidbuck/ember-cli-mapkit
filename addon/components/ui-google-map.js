@@ -4,7 +4,7 @@ import layout from '../templates/components/ui-google-map';
 
 const {assert} = Ember;
 
-/*global JSON*/
+/*global JSON, google*/
 
 export default UIAbstractMap.extend({
 
@@ -15,8 +15,8 @@ export default UIAbstractMap.extend({
   overlay: null,
 
   setup() {
-    const {config, mapApi} = this.getProperties('config', 'mapApi');
-    const $map = new mapApi.maps.Map(this.getElement(), config.options);
+    const config = this.get('config');
+    const $map = new google.maps.Map(this.getElement(), config.options);
 
     this.set('map', $map);
 
@@ -25,28 +25,28 @@ export default UIAbstractMap.extend({
 
     return new Ember.RSVP.Promise((resolve) => {
       //fixes bug where fromLatLnToContainerPixel returns undefined.
-      const overlay = new mapApi.maps.OverlayView();
+      const overlay = new google.maps.OverlayView();
       overlay.draw = function () {
       };
       overlay.setMap($map);
 
       this.set('overlay', overlay);
 
-      mapApi.maps.event.addListenerOnce($map, 'idle', () => {
+      google.maps.event.addListenerOnce($map, 'idle', () => {
         resolve();
       });
     });
   },
 
   teardown(markers) {
-    const {mapApi, map} = this.getProperties('mapApi', 'map');
+    const map = this.get('map');
 
     // clean up all listeners
     markers.forEach((mapMarker) => {
-      mapApi.maps.event.clearInstanceListeners(mapMarker);
+      google.maps.event.clearInstanceListeners(mapMarker);
     });
 
-    mapApi.maps.event.clearInstanceListeners(map);
+    google.maps.event.clearInstanceListeners(map);
 
     return new Ember.RSVP.Promise((resolve) => {
       resolve();
@@ -118,9 +118,9 @@ export default UIAbstractMap.extend({
     const decodedEventName = this.decodeEventName(eventName);
     const encodedEventAction = this.encodeMapEventAction(decodedEventName);
 
-    const {mapApi, map} = this.getProperties('mapApi', 'map');
+    const map = this.get('map');
 
-    mapApi.maps.event.addListener(map, decodedEventName, (event) => {
+    google.maps.event.addListener(map, decodedEventName, (event) => {
       const data = {type: 'map', eventName: eventName};
 
       if (event) {
@@ -146,28 +146,26 @@ export default UIAbstractMap.extend({
   },
 
   removeListener(eventName) {
-    const {mapApi, map} = this.getProperties('mapApi', 'map');
+    const map = this.get('map');
 
-    mapApi.maps.event.clearInstanceListeners(map, this.decodeEventName(eventName));
+    google.maps.event.clearInstanceListeners(map, this.decodeEventName(eventName));
   },
 
   triggerMapEvent(eventName, position) {
-    const mapApi = this.get('mapApi');
-
-    this.triggerEvent(this.get('map'), eventName, {
+    this.triggerEvent(this.get('map'), this.decodeEventName(eventName), {
       stop: null,
-      latLng: new mapApi.maps.LatLng(position.lat, position.lng)
+      latLng: new google.maps.LatLng(position.lat, position.lng)
     });
   },
 
   addMarker(marker) {
     marker = JSON.parse(JSON.stringify(marker));
 
-    const {config, mapApi, markerMap, map} = this.getProperties('config', 'mapApi', 'markerMap', 'map');
+    const {config, markerMap, map} = this.getProperties('config', 'markerMap', 'map');
 
     marker.map = map;
 
-    const mapMarker = new mapApi.maps.Marker(marker);
+    const mapMarker = new google.maps.Marker(marker);
 
     markerMap.set(marker.id, mapMarker);
 
@@ -183,13 +181,14 @@ export default UIAbstractMap.extend({
     const encodedEventAction = this.encodeMarkerEventAction(decodedEventName);
 
     const data = {id: id, type: 'marker', event: eventName};
-    const mapApi = this.get('mapApi');
     const mapMarker = this.getMarker(id);
 
-    mapApi.maps.event.addListener(mapMarker, decodedEventName, () => {
+    google.maps.event.addListener(mapMarker, decodedEventName, () => {
+      const markerPosition = mapMarker.getPosition();
+
       data.position = {
-        lat: mapMarker.getPosition().lat(),
-        lng: mapMarker.getPosition().lng()
+        lat: markerPosition.lat(),
+        lng: markerPosition.lng()
       };
 
       data.pixel = this.positionToPixel(mapMarker.getPosition());
@@ -199,11 +198,11 @@ export default UIAbstractMap.extend({
   },
 
   removeMarkerListener(id, eventName) {
-    this.get('mapApi').maps.event.clearInstanceListeners(this.getMarker(id), this.decodeEventName(eventName));
+    google.maps.event.clearInstanceListeners(this.getMarker(id), this.decodeEventName(eventName));
   },
 
   clearMarkerListeners(id) {
-    this.get('mapApi').maps.event.clearInstanceListeners(this.getMarker(id));
+    google.maps.event.clearInstanceListeners(this.getMarker(id));
   },
 
   triggerMarkerEvent(id, eventName) {
@@ -211,8 +210,7 @@ export default UIAbstractMap.extend({
   },
 
   triggerEvent() {
-    const eventApi = this.get('mapApi').maps.event;
-
+    const eventApi = google.maps.event;
     eventApi.trigger.apply(eventApi, [].slice.call(arguments));
   },
 
@@ -272,8 +270,8 @@ export default UIAbstractMap.extend({
   },
 
   fitToMarkers() {
-    const {mapApi, map} = this.getProperties('mapApi', 'map');
-    const bounds = new mapApi.maps.LatLngBounds();
+    const map = this.get('map');
+    const bounds = new google.maps.LatLngBounds();
 
     this.getMarkers().forEach((marker) => {
       bounds.extend(marker.getPosition());
@@ -322,7 +320,7 @@ export default UIAbstractMap.extend({
   },
 
   decodeMapType(type) {
-    const mapTypes = this.get('mapApi').maps.MapTypeId;
+    const mapTypes = google.maps.MapTypeId;
     return {
         roadmap: mapTypes.ROADMAP,
         satellite: mapTypes.SATELLITE,
@@ -332,7 +330,7 @@ export default UIAbstractMap.extend({
   },
 
   encodeMapType(type) {
-    const mapTypes = this.get('mapApi').maps.MapTypeId;
+    const mapTypes = google.maps.MapTypeId;
     switch (type) {
       case mapTypes.ROADMAP:
         return 'roadmap';

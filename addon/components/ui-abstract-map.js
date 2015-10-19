@@ -91,15 +91,28 @@ export default Ember.Component.extend({
     return Ember.Map.create();
   }),
 
-  config: {
-    options: {
-      zoom: 13,
-      center: {
-        lat: 0,
-        lng: 0
-      }
+  _config: Ember.computed(function () {
+    return {
+      options: {
+        zoom: 13,
+        center: {
+          lat: 0,
+          lng: 0
+        }
+      },
+      mapEvents: [],
+      markerEvents: []
+    };
+  }),
+
+  config: Ember.computed({
+    get: function () {
+      return this.get('_config');
+    },
+    set: function (key, value) {
+      return Ember.merge(this.get('_config'), value);
     }
-  },
+  }),
 
   isReady() {
     return this.get('_isReady');
