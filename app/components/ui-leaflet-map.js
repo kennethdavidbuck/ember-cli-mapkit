@@ -1,0 +1,1 @@
+export { default } from 'ember-cli-mapkit/components/ui-leaflet-map';

@@ -6,6 +6,11 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('maps', function () {
+    this.route('ui-google-map');
+    this.route('ui-leaflet-map');
+    this.route('ui-test-map');
+  });
 });
 
 export default Router;

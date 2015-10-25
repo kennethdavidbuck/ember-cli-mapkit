@@ -1,7 +1,7 @@
 # ember-cli-mapkit [![Build Status](https://travis-ci.org/kennethdavidbuck/ember-cli-mapkit.svg?branch=develop)](https://travis-ci.org/kennethdavidbuck/ember-cli-mapkit)
 A map facade / component with standardized interfaces for leveraging different javascript mapping libraries.
 
-Is it production ready? No. Not even close.
+[WIP]. Is it production ready? No. Not even close.
 
 This README outlines the details of collaborating on this Ember addon.
 
