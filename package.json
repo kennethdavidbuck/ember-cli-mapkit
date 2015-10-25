@@ -1,7 +1,7 @@
 {
   "name": "ember-cli-mapkit",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "A map facade / component with standardized interfaces for leveraging different javascript mapping libraries",
   "directories": {
     "doc": "doc",
     "test": "tests"
