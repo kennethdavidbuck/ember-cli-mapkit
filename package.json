@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-mapkit",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "[WIP] A map facade / component with standardized interfaces for leveraging different javascript mapping libraries",
   "directories": {
     "doc": "doc",
