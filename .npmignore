@@ -1,7 +1,10 @@
 bower_components/
 tests/
 tmp/
+<<<<<<< HEAD
 dist/
+=======
+>>>>>>> 9aebd77fedfe644d5c6b8abcabca385672637e8a
 
 .bowerrc
 .editorconfig
